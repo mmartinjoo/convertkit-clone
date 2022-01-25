@@ -1,0 +1,12 @@
+models:
+  Subscriber:
+    email: string unique
+    first_name: string
+    last_name: string
+    relationships:
+      belongsToMany: Tag
+
+  Tag:
+    title: string unique
+    relationships:
+      belongsToMany: Subscriber
