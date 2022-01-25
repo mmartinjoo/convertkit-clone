@@ -3,6 +3,8 @@
 namespace App\DataTransferObjects;
 
 use App\Models\Subscriber;
+use App\Models\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
@@ -18,6 +20,14 @@ class SubscriberData extends Data
         /** @var DataCollection<TagData> */
         public readonly null|Lazy|DataCollection $tags,
     ) {}
+
+    public static function fromRequest(Request $request): self
+    {
+        return self::from([
+            ...$request->all(),
+            'tags' => TagData::collection(Tag::whereIn('id', $request->collect('tags'))->get()),
+        ]);
+    }
 
     public static function fromModel(Subscriber $subscriber): self
     {
