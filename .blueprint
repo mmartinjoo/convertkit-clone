@@ -1,2 +1,12 @@
+created:
+    - database/factories/SubscriberFactory.php
+    - database/factories/TagFactory.php
+    - database/migrations/2022_01_25_205649_create_subscribers_table.php
+    - database/migrations/2022_01_25_205650_create_tags_table.php
+    - database/migrations/2022_01_25_205651_create_subscriber_tag_table.php
+    - app/Models/Subscriber.php
+    - app/Models/Tag.php
 models:
     User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable' }
+    Subscriber: { email: 'string unique', first_name: string, last_name: string, relationships: { belongsToMany: Tag } }
+    Tag: { title: 'string unique', relationships: { belongsToMany: Subscriber } }
