@@ -2,7 +2,7 @@ models:
   Subscriber:
     email: string unique
     first_name: string
-    last_name: string
+    last_name: string nullable
     relationships:
       belongsToMany: Tag
 
