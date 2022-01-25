@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Builders\TagBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,5 +31,10 @@ class Tag extends Model
     public function subscribers()
     {
         return $this->belongsToMany(Subscriber::class);
+    }
+
+    public function newEloquentBuilder($query): TagBuilder
+    {
+        return new TagBuilder($query);
     }
 }
