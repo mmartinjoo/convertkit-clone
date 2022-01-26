@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Actions;
+namespace Domain\Subscriber\Actions;
 
-use App\DataTransferObjects\SubscriberData;
-use App\DataTransferObjects\TagData;
-use App\Models\Subscriber;
+use Domain\Subscriber\DataTransferObjects\SubscriberData;
+use Domain\Subscriber\DataTransferObjects\TagData;
+use Domain\Subscriber\Models\Subscriber;
 
 class CreateSubscriberAction
 {

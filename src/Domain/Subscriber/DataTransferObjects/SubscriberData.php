@@ -1,9 +1,9 @@
 <?php
 
-namespace App\DataTransferObjects;
+namespace Domain\Subscriber\DataTransferObjects;
 
-use App\Models\Subscriber;
-use App\Models\Tag;
+use Domain\Subscriber\Models\Subscriber;
+use Domain\Subscriber\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Spatie\LaravelData\Data;

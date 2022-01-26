@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DataTransferObjects;
+namespace Domain\Subscriber\DataTransferObjects;
 
-use App\Models\Tag;
+use Domain\Subscriber\Models\Tag;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Lazy;
