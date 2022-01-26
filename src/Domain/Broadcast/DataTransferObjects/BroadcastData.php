@@ -3,7 +3,6 @@
 namespace Domain\Broadcast\DataTransferObjects;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 
