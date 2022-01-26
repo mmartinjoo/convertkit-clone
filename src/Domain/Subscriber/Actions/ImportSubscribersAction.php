@@ -4,6 +4,7 @@ namespace Domain\Subscriber\Actions;
 
 use Domain\Shared\Actions\ReadCsvAction;
 use Domain\Subscriber\DataTransferObjects\SubscriberData;
+use Domain\Subscriber\Models\Subscriber;
 use Domain\Subscriber\Models\Tag;
 
 class ImportSubscribersAction
@@ -20,6 +21,7 @@ class ImportSubscribersAction
                 'tags' => self::getOrCreateTags($row['tags']),
             ])
             ->map(fn (array $row) => SubscriberData::from($row))
+            ->filter(fn (SubscriberData $data) => !Subscriber::whereEmail($data->email)->exists())
             ->map(fn (SubscriberData $data) => CreateSubscriberAction::execute($data))
             ->count();
     }
