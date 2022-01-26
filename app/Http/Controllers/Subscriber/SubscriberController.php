@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Subscriber;
 
+use App\Http\Controllers\Controller;
 use Domain\Subscriber\Actions\CreateSubscriberAction;
 use Domain\Subscriber\DataTransferObjects\SubscriberData;
 use Illuminate\Http\Request;
