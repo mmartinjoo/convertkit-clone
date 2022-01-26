@@ -11,6 +11,15 @@ class Broadcast extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'id',
+        'title',
+        'content',
+        'status',
+        'filters',
+        'sent_at',
+    ];
+
     protected $casts = [
         'filters' => 'json',
     ];
