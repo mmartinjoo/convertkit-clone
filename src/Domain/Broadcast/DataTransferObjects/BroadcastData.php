@@ -4,6 +4,7 @@ namespace Domain\Broadcast\DataTransferObjects;
 
 use Carbon\Carbon;
 use Domain\Broadcast\Enums\BroadcastStatus;
+use Domain\Broadcast\Models\Broadcast;
 use Illuminate\Http\Request;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
@@ -25,6 +26,14 @@ class BroadcastData extends Data
         return self::from([
             ...$request->all(),
             'status' => BroadcastStatus::DRAFT,
+        ]);
+    }
+
+    public static function fromModel(Broadcast $broadcast): self
+    {
+        return self::from([
+            ...$broadcast->toArray(),
+            'status' => $broadcast->status,
         ]);
     }
 }

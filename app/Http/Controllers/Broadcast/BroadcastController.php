@@ -8,9 +8,10 @@ use Domain\Broadcast\DataTransferObjects\BroadcastData;
 
 class BroadcastController extends Controller
 {
-    public function store(BroadcastData $data)
+    public function store(BroadcastData $data): BroadcastData
     {
-        $broadcast = CreateBroadcastAction::execute($data);
-        return $broadcast;
+        return BroadcastData::from(
+            CreateBroadcastAction::execute($data)
+        );
     }
 }

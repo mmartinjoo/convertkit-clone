@@ -2,6 +2,7 @@
 
 namespace Domain\Broadcast\Models;
 
+use Domain\Broadcast\Enums\BroadcastStatus;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,7 @@ class Broadcast extends Model
 
     protected $casts = [
         'filters' => 'json',
+        'status' => BroadcastStatus::class,
     ];
 
     public function subscribers(): BelongsToMany
