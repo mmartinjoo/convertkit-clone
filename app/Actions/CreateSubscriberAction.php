@@ -13,8 +13,6 @@ class CreateSubscriberAction
         $subscriber = Subscriber::create($data->all());
         $data->tags->toCollection()->each(fn (TagData $tag) => $subscriber->tags()->attach($tag->id));
 
-        $subscriber->load('tags');
-
-        return $subscriber;
+        return $subscriber->load('tags');
     }
 }
