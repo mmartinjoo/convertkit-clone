@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class BroadcastFilter extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'filters' => 'json',
+    ];
 }

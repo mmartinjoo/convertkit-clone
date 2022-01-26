@@ -13,7 +13,7 @@ class CreateBroadcastFiltersTable extends Migration
         Schema::create('broadcast_filters', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Broadcast::class)->constrained();
-            $table->foreignIdFor(Tag::class)->constrained();
+            $table->json('filters')->nullable(false);
             $table->timestamps();
         });
     }
