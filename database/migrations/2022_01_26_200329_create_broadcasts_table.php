@@ -13,6 +13,7 @@ class CreateBroadcastsTable extends Migration
             $table->string('title')->nullable(false);
             $table->text('content')->nullable(false);
             $table->string('status')->nullable(false);
+            $table->dateTime('sent_at')->nullable(true);
             $table->timestamps();
 
             $table->index('status');
