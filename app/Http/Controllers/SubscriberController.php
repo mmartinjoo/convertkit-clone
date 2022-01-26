@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CreateSubscriberAction;
-use App\DataTransferObjects\SubscriberData;
+use Domain\Subscriber\Actions\CreateSubscriberAction;
+use Domain\Subscriber\DataTransferObjects\SubscriberData;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class SubscriberController extends Controller
 {
