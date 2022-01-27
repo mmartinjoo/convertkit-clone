@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\Broadcast\BroadcastController;
+use App\Http\Controllers\Broadcast\CreateBroadcastController;
+use App\Http\Controllers\Broadcast\SendBroadcastController;
+use App\Http\Controllers\Subscriber\CreateSubscriberController;
 use App\Http\Controllers\Subscriber\ImportSubscribersController;
-use App\Http\Controllers\Subscriber\SubscriberController;
 use Illuminate\Support\Facades\Route;
 
-Route::apiResource('subscribers', SubscriberController::class);
+Route::post('subscribers', CreateSubscriberController::class);
 Route::post('subscribers/import', ImportSubscribersController::class);
 
-Route::apiResource('broadcasts', BroadcastController::class);
+Route::post('broadcasts', CreateBroadcastController::class);
+Route::post('sent-broadcasts/{broadcast}', SendBroadcastController::class);
