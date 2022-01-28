@@ -2,14 +2,17 @@
 
 namespace Domain\Subscriber\Filters;
 
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 
 class FormFilter extends Filter
 {
-    public function execute(Builder $subscribers): Builder
+    public function handle(Builder $subscribers, Closure $next): Builder
     {
-        return $subscribers->orWhere(fn (Builder $subscribers) =>
+        $subscribers->orWhere(fn (Builder $subscribers) =>
             $subscribers->whereIn('form_id', $this->filterData->value)
         );
+
+        return $next($subscribers);
     }
 }
