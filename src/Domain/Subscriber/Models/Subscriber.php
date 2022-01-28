@@ -3,14 +3,12 @@
 namespace Domain\Subscriber\Models;
 
 use Domain\Broadcast\Models\Broadcast;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Domain\Shared\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 
-class Subscriber extends Model
+class Subscriber extends BaseModel
 {
-    use HasFactory;
     use Notifiable;
 
     protected $fillable = [

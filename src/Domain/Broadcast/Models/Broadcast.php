@@ -3,15 +3,12 @@
 namespace Domain\Broadcast\Models;
 
 use Domain\Broadcast\Enums\BroadcastStatus;
+use Domain\Shared\Models\BaseModel;
 use Domain\Subscriber\Models\Subscriber;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Broadcast extends Model
+class Broadcast extends BaseModel
 {
-    use HasFactory;
-
     protected $fillable = [
         'id',
         'title',
