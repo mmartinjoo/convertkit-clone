@@ -2,6 +2,7 @@
 
 namespace Domain\Broadcast\Models;
 
+use Domain\Broadcast\Casts\BroadcastFiltersCast;
 use Domain\Broadcast\Enums\BroadcastStatus;
 use Domain\Shared\Models\BaseModel;
 use Domain\Subscriber\Models\Subscriber;
@@ -19,7 +20,7 @@ class Broadcast extends BaseModel
     ];
 
     protected $casts = [
-        'filters' => 'json',
+        'filters' => BroadcastFiltersCast::class,
         'status' => BroadcastStatus::class,
     ];
 
