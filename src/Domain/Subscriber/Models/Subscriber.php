@@ -4,8 +4,10 @@ namespace Domain\Subscriber\Models;
 
 use Domain\Broadcast\Models\Broadcast;
 use Domain\Shared\Models\BaseModel;
+use Domain\Subscriber\Builders\SubscriberBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Notifications\Notifiable;
 
 class Subscriber extends BaseModel
@@ -36,5 +38,10 @@ class Subscriber extends BaseModel
     public function form(): BelongsTo
     {
         return $this->belongsTo(Form::class);
+    }
+
+    public function newEloquentBuilder($query): SubscriberBuilder
+    {
+        return new SubscriberBuilder($query);
     }
 }
