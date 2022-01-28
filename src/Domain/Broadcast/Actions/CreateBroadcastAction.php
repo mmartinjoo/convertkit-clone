@@ -11,7 +11,6 @@ class CreateBroadcastAction
     public static function execute(BroadcastData $data): Broadcast
     {
         $broadcast = Broadcast::create($data->all());
-        // TODO: apply filters
         Subscriber::all()->each(fn (Subscriber $subscriber) => $broadcast->subscribers()->attach($subscriber->id));
 
         return $broadcast;
