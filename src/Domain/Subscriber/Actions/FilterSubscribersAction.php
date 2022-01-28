@@ -19,7 +19,7 @@ class FilterSubscribersAction
     public static function execute(Broadcast $broadcast): Collection
     {
         $filters = self::createFilters($broadcast);
-        $subscriberQuery = $broadcast->subscribers()->getQuery();
+        $subscriberQuery = Subscriber::query();
 
         foreach ($filters as $filter) {
             $subscriberQuery = $filter->execute($subscriberQuery);

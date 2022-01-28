@@ -8,6 +8,8 @@ class FormFilter extends Filter
 {
     public function execute(Builder $subscribers): Builder
     {
-        return $subscribers->whereIn('form_id', $this->filterData->value);
+        return $subscribers->orWhere(fn (Builder $subscribers) =>
+            $subscribers->whereIn('form_id', $this->filterData->value)
+        );
     }
 }

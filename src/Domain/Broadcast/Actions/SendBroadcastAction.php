@@ -10,11 +10,15 @@ use Illuminate\Support\Facades\Mail;
 
 class SendBroadcastAction
 {
-    public static function execute(Broadcast $broadcast): void
+    public static function execute(Broadcast $broadcast): int
     {
-        FilterSubscribersAction::execute($broadcast)
+        $subscribers = FilterSubscribersAction::execute($broadcast)
             ->each(fn (Subscriber $subscriber) =>
                 Mail::to($subscriber)->queue(new BroadcastMail($broadcast))
             );
+
+        return $subscribers
+            ->each(fn (Subscriber $subscriber) => $broadcast->subscribers()->attach($subscriber->id))
+            ->count();
     }
 }
