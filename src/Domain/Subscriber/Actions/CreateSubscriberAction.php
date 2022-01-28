@@ -10,7 +10,11 @@ class CreateSubscriberAction
 {
     public static function execute(SubscriberData $data): Subscriber
     {
-        $subscriber = Subscriber::create($data->all());
+        $subscriber = Subscriber::create([
+            ...$data->all(),
+            'form_id' => $data->form->id,
+        ]);
+
         $data->tags->toCollection()->each(fn (TagData $tag) => $subscriber->tags()->attach($tag->id));
 
         return $subscriber->load('tags');

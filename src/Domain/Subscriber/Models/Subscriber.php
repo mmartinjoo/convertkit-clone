@@ -4,6 +4,7 @@ namespace Domain\Subscriber\Models;
 
 use Domain\Broadcast\Models\Broadcast;
 use Domain\Shared\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 
@@ -15,6 +16,7 @@ class Subscriber extends BaseModel
         'email',
         'first_name',
         'last_name',
+        'form_id'
     ];
 
     protected $casts = [
@@ -29,5 +31,10 @@ class Subscriber extends BaseModel
     public function broadcasts(): BelongsToMany
     {
         return $this->belongsToMany(Broadcast::class);
+    }
+
+    public function form(): BelongsTo
+    {
+        return $this->belongsTo(Form::class);
     }
 }
