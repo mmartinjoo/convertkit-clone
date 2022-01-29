@@ -15,6 +15,7 @@ class FiltersCast implements CastsAttributes
     public function get($model, string $key, $value, array $attributes): Collection
     {
         $filtersArray = json_decode($value, true);
+        $filtersArray = $filtersArray ?: [];
         $filtersData = collect([]);
 
         foreach ($filtersArray as $filter) {
