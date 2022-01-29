@@ -3,6 +3,7 @@
 namespace Domain\Subscriber\Models;
 
 use Domain\Broadcast\Models\Broadcast;
+use Domain\Sequence\Models\SequenceMail;
 use Domain\Shared\Models\BaseModel;
 use Domain\Shared\Models\SentMail;
 use Domain\Subscriber\Builders\SubscriberBuilder;
@@ -10,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Notifications\Notifiable;
 
 class Subscriber extends BaseModel
@@ -57,5 +57,10 @@ class Subscriber extends BaseModel
     {
         return $this->hasOne(SentMail::class)
             ->latestOfMany();
+    }
+
+    public function tooEarlyFor(SequenceMail $mail): bool
+    {
+        return !$mail->enoughTimePassedSince($this->last_received_mail);
     }
 }

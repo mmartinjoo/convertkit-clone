@@ -2,6 +2,7 @@
 
 namespace Domain\Subscriber\Builders;
 
+use Domain\Sequence\Models\SequenceMail;
 use Illuminate\Database\Eloquent\Builder;
 
 class SubscriberBuilder extends Builder
@@ -16,5 +17,10 @@ class SubscriberBuilder extends Builder
         )->whereDoesntHave('tags', fn (Builder $tags) =>
             $tags->whereNotIn('id', $ids)
         );
+    }
+
+    public function alreadyReceived(SequenceMail $mail): bool
+    {
+        return $this->model->received_mails()->whereMailableId($mail->id)->exists();
     }
 }

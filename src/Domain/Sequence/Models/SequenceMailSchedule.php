@@ -24,9 +24,4 @@ class SequenceMailSchedule extends BaseModel
     {
         return $this->hasOne(SequenceMail::class);
     }
-
-    public function timePased(Carbon $since): int
-    {
-        return $this->unit->timePased($since);
-    }
 }

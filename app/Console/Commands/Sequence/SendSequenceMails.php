@@ -14,7 +14,8 @@ class SendSequenceMails extends Command
 
     public function handle(): int
     {
-        Sequence::whereStatus(SequenceStatus::STARTED)
+        Sequence::with('mails.schedule')
+            ->whereStatus(SequenceStatus::STARTED)
             ->get()
             ->each(fn (Sequence $sequence) => ProceedSequenceAction::execute($sequence));
 

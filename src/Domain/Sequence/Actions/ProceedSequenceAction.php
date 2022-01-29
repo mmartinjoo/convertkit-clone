@@ -24,16 +24,12 @@ class ProceedSequenceAction
 
     private static function subscribers(SequenceMail $mail): Collection
     {
-        if (!collect($mail->schedule->days)->contains(now()->dayOfWeek)) {
+        if (!$mail->shouldSendToday()) {
             return collect([]);
         }
 
         return FilterSubscribersAction::execute($mail)
-            ->filter(fn (Subscriber $subscirber) =>
-                $subscirber->received_mails()->where('mailable_id', '!=', $mail->id)
-            )
-            ->filter(fn (Subscriber $subscirber) =>
-                $mail->schedule->timePassed($subscirber->last_received_mail->sent_at) < $mail->schedule->delay
-            );
+            ->reject->alreadyReceived($mail)
+            ->reject->tooEarlyFor($mail);
     }
 }

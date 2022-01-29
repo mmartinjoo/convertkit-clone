@@ -66,4 +66,15 @@ class SequenceMail extends BaseModel implements HasSubscriberFilters, Sendable
     {
         return $this->content;
     }
+
+    public function shouldSendToday(): bool
+    {
+        return collect($this->schedule->days)
+            ->contains(now()->dayOfWeek);
+    }
+
+    public function enoughTimePassedSince(SentMail $mail): bool
+    {
+        return $this->schedule->unit->timePassed($mail->sent_at) >= $this->schedule->delay;
+    }
 }
