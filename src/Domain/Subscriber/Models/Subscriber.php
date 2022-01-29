@@ -4,9 +4,12 @@ namespace Domain\Subscriber\Models;
 
 use Domain\Broadcast\Models\Broadcast;
 use Domain\Shared\Models\BaseModel;
+use Domain\Shared\Models\SentMail;
 use Domain\Subscriber\Builders\SubscriberBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Notifications\Notifiable;
 
@@ -25,6 +28,11 @@ class Subscriber extends BaseModel
         'id' => 'integer',
     ];
 
+    public function newEloquentBuilder($query): SubscriberBuilder
+    {
+        return new SubscriberBuilder($query);
+    }
+
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
@@ -40,8 +48,14 @@ class Subscriber extends BaseModel
         return $this->belongsTo(Form::class);
     }
 
-    public function newEloquentBuilder($query): SubscriberBuilder
+    public function received_mails(): HasMany
     {
-        return new SubscriberBuilder($query);
+        return $this->hasMany(SentMail::class);
+    }
+
+    public function last_received_mail(): HasOne
+    {
+        return $this->hasOne(SentMail::class)
+            ->latestOfMany();
     }
 }
