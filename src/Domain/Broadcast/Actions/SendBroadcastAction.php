@@ -28,7 +28,9 @@ class SendBroadcastAction
         $broadcast->save();
 
         return $subscribers
-            ->each(fn (Subscriber $subscriber) => $broadcast->subscribers()->attach($subscriber->id))
+            ->each(fn (Subscriber $subscriber) =>
+                $broadcast->subscribers()->attach($subscriber->id)
+            )
             ->count();
     }
 }

@@ -14,7 +14,7 @@ class CreateBroadcastSubscriberTable extends Migration
             $table->id();
             $table->foreignIdFor(Broadcast::class)->constrained();
             $table->foreignIdFor(Subscriber::class)->constrained();
-            $table->timestamps();
+            $table->dateTime('sent_at')->useCurrent();
         });
     }
 
