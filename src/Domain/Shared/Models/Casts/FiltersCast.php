@@ -1,13 +1,13 @@
 <?php
 
-namespace Domain\Broadcast\Casts;
+namespace Domain\Shared\Models\Casts;
 
 use Domain\Broadcast\DataTransferObjects\BroadcastFilterData;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\DataCollection;
 
-class BroadcastFiltersCast implements CastsAttributes
+class FiltersCast implements CastsAttributes
 {
     /**
      * @return Collection<BroadcastFilterData>
