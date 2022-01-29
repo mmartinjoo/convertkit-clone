@@ -2,8 +2,8 @@
 
 namespace Domain\Subscriber\Actions;
 
-use Domain\Broadcast\DataTransferObjects\BroadcastFilterData;
 use Domain\Broadcast\Models\Broadcast;
+use Domain\Shared\DataTransferObjects\FilterData;
 use Domain\Subscriber\Exceptions\InvalidFilterException;
 use Domain\Subscriber\Filters\{Filter, FormFilter, TagFilter};
 use Domain\Subscriber\Models\Subscriber;
@@ -29,7 +29,7 @@ class FilterSubscribersAction
      */
     private static function filters(Broadcast $broadcast): array
     {
-        return $broadcast->filters->map(fn (BroadcastFilterData $filterData) =>
+        return $broadcast->filters->map(fn (FilterData $filterData) =>
             match ($filterData->type) {
                 'tag' => new TagFilter($filterData),
                 'form' => new FormFilter($filterData),

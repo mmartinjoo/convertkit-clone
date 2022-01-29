@@ -1,10 +1,10 @@
 <?php
 
-namespace Domain\Broadcast\DataTransferObjects;
+namespace Domain\Shared\DataTransferObjects;
 
 use Spatie\LaravelData\Data;
 
-class BroadcastFilterData extends Data
+class FilterData extends Data
 {
     public function __construct(
         public readonly string $type,

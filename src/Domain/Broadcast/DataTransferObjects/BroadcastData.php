@@ -5,6 +5,7 @@ namespace Domain\Broadcast\DataTransferObjects;
 use Carbon\Carbon;
 use Domain\Broadcast\Enums\BroadcastStatus;
 use Domain\Broadcast\Models\Broadcast;
+use Domain\Shared\DataTransferObjects\FilterData;
 use Illuminate\Http\Request;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
@@ -15,7 +16,7 @@ class BroadcastData extends Data
         public readonly ?int $id,
         public readonly string $title,
         public readonly string $content,
-        /** @var DataCollection<BroadcastFilterData> */
+        /** @var DataCollection<FilterData> */
         public readonly ?DataCollection $filters,
         public readonly ?BroadcastStatus $status,
         public readonly ?Carbon $sent_at,

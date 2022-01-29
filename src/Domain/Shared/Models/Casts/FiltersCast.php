@@ -2,7 +2,7 @@
 
 namespace Domain\Shared\Models\Casts;
 
-use Domain\Broadcast\DataTransferObjects\BroadcastFilterData;
+use Domain\Shared\DataTransferObjects\FilterData;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\DataCollection;
@@ -10,7 +10,7 @@ use Spatie\LaravelData\DataCollection;
 class FiltersCast implements CastsAttributes
 {
     /**
-     * @return Collection<BroadcastFilterData>
+     * @return Collection<FilterData>
      */
     public function get($model, string $key, $value, array $attributes): Collection
     {
@@ -18,7 +18,7 @@ class FiltersCast implements CastsAttributes
         $filtersData = collect([]);
 
         foreach ($filtersArray as $filter) {
-            $filtersData[] = BroadcastFilterData::from([
+            $filtersData[] = FilterData::from([
                 'type' => $filter['type'],
                 'value' => $filter['value'],
             ]);

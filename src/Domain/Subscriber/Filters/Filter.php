@@ -3,12 +3,12 @@
 namespace Domain\Subscriber\Filters;
 
 use Closure;
-use Domain\Broadcast\DataTransferObjects\BroadcastFilterData;
+use Domain\Shared\DataTransferObjects\FilterData;
 use Illuminate\Database\Eloquent\Builder;
 
 abstract class Filter
 {
-    public function __construct(protected readonly BroadcastFilterData $filterData)
+    public function __construct(protected readonly FilterData $filterData)
     {
     }
 
