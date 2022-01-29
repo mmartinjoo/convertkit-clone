@@ -5,7 +5,9 @@ namespace Domain\Sequence\Models;
 use Domain\Sequence\Enums\SequenceMailStatus;
 use Domain\Shared\Models\BaseModel;
 use Domain\Shared\Models\Casts\FiltersCast;
+use Domain\Shared\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class SequenceMail extends BaseModel
 {
@@ -36,5 +38,10 @@ class SequenceMail extends BaseModel
     public function schedule(): BelongsTo
     {
         return $this->belongsTo(SequenceMailSchedule::class, 'sequence_mail_schedule_id');
+    }
+
+    public function sent_mails(): MorphMany
+    {
+        return $this->morphMany(SentMail::class, 'mailable');
     }
 }

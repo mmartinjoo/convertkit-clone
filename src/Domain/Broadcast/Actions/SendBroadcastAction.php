@@ -27,10 +27,8 @@ class SendBroadcastAction
         $broadcast->sent_at = now();
         $broadcast->save();
 
-        return $subscribers
-            ->each(fn (Subscriber $subscriber) =>
-                $broadcast->subscribers()->attach($subscriber->id)
-            )
-            ->count();
+        return $subscribers->each(fn (Subscriber $subscriber) => $broadcast->sent_mails()->create([
+            'subscriber_id' => $subscriber->id,
+        ]))->count();
     }
 }

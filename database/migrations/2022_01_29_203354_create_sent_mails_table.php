@@ -1,18 +1,18 @@
 <?php
 
-use Domain\Broadcast\Models\Broadcast;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBroadcastSubscriberTable extends Migration
+class CreateSentMailsTable extends Migration
 {
     public function up()
     {
-        Schema::create('broadcast_subscriber', function (Blueprint $table) {
+        Schema::create('sent_mails', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Broadcast::class)->constrained();
+            $table->integer('mailable_id');
+            $table->string('mailable_type');
             $table->foreignIdFor(Subscriber::class)->constrained();
             $table->dateTime('sent_at')->useCurrent();
         });
@@ -20,6 +20,6 @@ class CreateBroadcastSubscriberTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('broadcast_subscriber');
+        Schema::dropIfExists('sent_mails');
     }
 }

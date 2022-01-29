@@ -5,8 +5,12 @@ namespace Domain\Broadcast\Models;
 use Domain\Shared\Models\Casts\FiltersCast;
 use Domain\Broadcast\Enums\BroadcastStatus;
 use Domain\Shared\Models\BaseModel;
+use Domain\Shared\Models\SentMail;
 use Domain\Subscriber\Models\Subscriber;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Broadcast extends BaseModel
 {
@@ -28,8 +32,8 @@ class Broadcast extends BaseModel
         'status' => BroadcastStatus::DRAFT,
     ];
 
-    public function subscribers(): BelongsToMany
+    public function sent_mails(): MorphMany
     {
-        return $this->belongsToMany(Subscriber::class);
+        return $this->morphMany(SentMail::class, 'mailable');
     }
 }
