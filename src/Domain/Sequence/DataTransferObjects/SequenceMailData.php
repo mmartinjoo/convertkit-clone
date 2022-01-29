@@ -20,6 +20,7 @@ class SequenceMailData extends Data
         /** @var DataCollection<FilterData> */
         public readonly ?DataCollection $filters,
         public readonly null|Lazy|SequenceData $sequence,
+        public readonly Lazy|SequenceMailScheduleData $schedule,
     ) {}
 
     public static function fromRequest(Request $request): self
@@ -36,6 +37,7 @@ class SequenceMailData extends Data
             ...$sequenceMail->toArray(),
             'status' => $sequenceMail->status,
             'sequence' => Lazy::whenLoaded('sequence', $sequenceMail, fn () => SequenceData::from($sequenceMail->sequence)),
+            'schedule' => Lazy::whenLoaded('schedule', $sequenceMail, fn () => SequenceMailScheduleData::from($sequenceMail->schedule)),
         ]);
     }
 }
