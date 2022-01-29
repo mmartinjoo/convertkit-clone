@@ -6,7 +6,6 @@ use Domain\Sequence\Enums\SequenceMailStatus;
 use Domain\Shared\Models\BaseModel;
 use Domain\Shared\Models\Casts\FiltersCast;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class SequenceMail extends BaseModel
 {
@@ -36,6 +35,6 @@ class SequenceMail extends BaseModel
 
     public function schedule(): BelongsTo
     {
-        return $this->belongsTo(SequenceMailSchedule::class);
+        return $this->belongsTo(SequenceMailSchedule::class, 'sequence_mail_schedule_id');
     }
 }
