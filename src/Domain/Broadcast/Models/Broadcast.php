@@ -4,15 +4,14 @@ namespace Domain\Broadcast\Models;
 
 use Domain\Shared\Models\Casts\FiltersCast;
 use Domain\Broadcast\Enums\BroadcastStatus;
+use Domain\Shared\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;
+use Domain\Shared\Models\Concerns\HasSubscriberFilters;
 use Domain\Shared\Models\SentMail;
-use Domain\Subscriber\Models\Subscriber;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
 
-class Broadcast extends BaseModel
+class Broadcast extends BaseModel implements HasSubscriberFilters
 {
     protected $fillable = [
         'id',
@@ -35,5 +34,13 @@ class Broadcast extends BaseModel
     public function sent_mails(): MorphMany
     {
         return $this->morphMany(SentMail::class, 'mailable');
+    }
+
+    /**
+     * @return Collection<FilterData>
+     */
+    public function filters(): Collection
+    {
+        return $this->filters;
     }
 }

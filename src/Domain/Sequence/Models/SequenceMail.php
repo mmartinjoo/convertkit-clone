@@ -3,13 +3,16 @@
 namespace Domain\Sequence\Models;
 
 use Domain\Sequence\Enums\SequenceMailStatus;
+use Domain\Shared\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;
 use Domain\Shared\Models\Casts\FiltersCast;
+use Domain\Shared\Models\Concerns\HasSubscriberFilters;
 use Domain\Shared\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
 
-class SequenceMail extends BaseModel
+class SequenceMail extends BaseModel implements HasSubscriberFilters
 {
     protected $fillable = [
         'sequence_id',
@@ -43,5 +46,13 @@ class SequenceMail extends BaseModel
     public function sent_mails(): MorphMany
     {
         return $this->morphMany(SentMail::class, 'mailable');
+    }
+
+    /**
+     * @return Collection<FilterData>
+     */
+    public function filters(): Collection
+    {
+        return $this->filters;
     }
 }
