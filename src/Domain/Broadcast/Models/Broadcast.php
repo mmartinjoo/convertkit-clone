@@ -24,6 +24,10 @@ class Broadcast extends BaseModel
         'status' => BroadcastStatus::class,
     ];
 
+    protected $attributes = [
+        'status' => BroadcastStatus::DRAFT,
+    ];
+
     public function subscribers(): BelongsToMany
     {
         return $this->belongsToMany(Subscriber::class);
