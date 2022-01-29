@@ -4,7 +4,7 @@ namespace Domain\Broadcast\Actions;
 
 use Domain\Broadcast\Enums\BroadcastStatus;
 use Domain\Broadcast\Exceptions\CannotSendBroadcast;
-use Domain\Broadcast\Mail\BroadcastMail;
+use Domain\Shared\Mails\EchoMail;
 use Domain\Broadcast\Models\Broadcast;
 use Domain\Subscriber\Actions\FilterSubscribersAction;
 use Domain\Subscriber\Models\Subscriber;
@@ -20,7 +20,7 @@ class SendBroadcastAction
 
         $subscribers = FilterSubscribersAction::execute($broadcast)
             ->each(fn (Subscriber $subscriber) =>
-                Mail::to($subscriber)->queue(new BroadcastMail($broadcast))
+                Mail::to($subscriber)->queue(new EchoMail($broadcast))
             );
 
         $broadcast->status = BroadcastStatus::SENT;

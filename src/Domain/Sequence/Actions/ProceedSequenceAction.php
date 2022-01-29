@@ -2,7 +2,7 @@
 
 namespace Domain\Sequence\Actions;
 
-use Domain\Broadcast\Mail\BroadcastMail;
+use Domain\Shared\Mails\EchoMail;
 use Domain\Sequence\Models\Sequence;
 use Domain\Sequence\Models\SequenceMail;
 use Domain\Subscriber\Actions\FilterSubscribersAction;
@@ -17,7 +17,7 @@ class ProceedSequenceAction
         $sequence->mails->each(function (SequenceMail $mail) {
             self::subscribers($mail)
                 ->each(fn (Subscriber $subscriber) =>
-                    Mail::to($subscriber)->queue(new BroadcastMail($mail))
+                    Mail::to($subscriber)->queue(new EchoMail($mail))
                 );
         });
     }
