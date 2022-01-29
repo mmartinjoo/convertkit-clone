@@ -6,11 +6,13 @@ use Domain\Sequence\Enums\SequenceMailStatus;
 use Domain\Shared\Models\BaseModel;
 use Domain\Shared\Models\Casts\FiltersCast;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class SequenceMail extends BaseModel
 {
     protected $fillable = [
         'sequence_id',
+        'sequence_mail_schedule_id',
         'title',
         'content',
         'status',
@@ -30,5 +32,10 @@ class SequenceMail extends BaseModel
     public function sequence(): BelongsTo
     {
         return $this->belongsTo(Sequence::class);
+    }
+
+    public function schedule(): BelongsTo
+    {
+        return $this->belongsTo(SequenceMailSchedule::class);
     }
 }

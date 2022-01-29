@@ -29,9 +29,9 @@ class DatabaseSeeder extends Seeder
             }
         });
 
-        Sequence::factory()
-            ->count(5)
-            ->has(SequenceMail::factory()->count(10), 'mails')
-            ->create();
+        // Sequence::factory()
+        //     ->count(5)
+        //     ->has(SequenceMail::factory()->count(10), 'mails')
+        //     ->create();
     }
 }
