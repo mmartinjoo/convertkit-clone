@@ -15,4 +15,8 @@ class Sequence extends BaseModel
     protected $casts = [
         'status' => SequenceStatus::class,
     ];
+
+    protected $attributes = [
+        'status' => SequenceStatus::DRAFT,
+    ];
 }
