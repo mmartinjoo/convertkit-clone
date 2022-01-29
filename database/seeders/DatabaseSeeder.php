@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use Domain\Sequence\Models\Sequence;
+use Domain\Sequence\Models\SequenceMail;
 use Domain\Subscriber\Models\Form;
 use Domain\Subscriber\Models\Subscriber;
 use Domain\Subscriber\Models\Tag;
@@ -26,5 +28,10 @@ class DatabaseSeeder extends Seeder
                     ->each(fn (Tag $tag) => $subscriber->tags()->attach($tag->id));
             }
         });
+
+        Sequence::factory()
+            ->count(5)
+            ->has(SequenceMail::factory()->count(10), 'mails')
+            ->create();
     }
 }

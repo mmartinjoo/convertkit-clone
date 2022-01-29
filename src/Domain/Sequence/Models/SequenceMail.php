@@ -4,6 +4,7 @@ namespace Domain\Sequence\Models;
 
 use Domain\Sequence\Enums\SequenceMailStatus;
 use Domain\Shared\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SequenceMail extends BaseModel
 {
@@ -23,4 +24,9 @@ class SequenceMail extends BaseModel
     protected $attributes = [
         'status' => SequenceMailStatus::DRAFT,
     ];
+
+    public function sequence(): BelongsTo
+    {
+        return $this->belongsTo(Sequence::class);
+    }
 }
