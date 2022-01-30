@@ -5,7 +5,6 @@ namespace Domain\Sequence\Actions;
 use Domain\Shared\Mails\EchoMail;
 use Domain\Sequence\Models\Sequence;
 use Domain\Sequence\Models\SequenceMail;
-use Domain\Sequence\Enums\SequenceMailStatus;
 use Domain\Subscriber\Actions\FilterSubscribersAction;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Support\Collection;
