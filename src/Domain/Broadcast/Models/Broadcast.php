@@ -45,6 +45,11 @@ class Broadcast extends BaseModel implements HasSubscriberFilters, Sendable
         return $this->filters;
     }
 
+    public function id(): int
+    {
+        return $this->id;
+    }
+
     public function title(): string
     {
         return $this->title;
@@ -53,5 +58,10 @@ class Broadcast extends BaseModel implements HasSubscriberFilters, Sendable
     public function content(): string
     {
         return $this->content;
+    }
+
+    public function type(): string
+    {
+        return $this::class;
     }
 }

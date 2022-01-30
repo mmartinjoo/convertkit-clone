@@ -7,7 +7,9 @@ use App\Http\Controllers\Sequence\CreateSequenceMailController;
 use App\Http\Controllers\Sequence\StartSequenceController;
 use App\Http\Controllers\Statistics\GetDailyNewSubscribersCountController;
 use App\Http\Controllers\Statistics\GetNewSubscribersCountController;
-use App\Http\Controllers\Statistics\GetSentMailsTrackingController;
+use App\Http\Controllers\Statistics\GetAllTrackingController;
+use App\Http\Controllers\Statistics\GetBroadcastTrackingController;
+use App\Http\Controllers\Statistics\GetSequenceMailTrackingController;
 use App\Http\Controllers\Subscriber\CreateSubscriberController;
 use App\Http\Controllers\Subscriber\ImportSubscribersController;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +29,6 @@ Route::post('sequences/{sequence}/mails', CreateSequenceMailController::class);
 
 Route::get('statistics/new-subscribers', GetNewSubscribersCountController::class);
 Route::get('statistics/new-subscribers/daily', GetDailyNewSubscribersCountController::class);
-Route::get('statistics/sent-mails/tracking', GetSentMailsTrackingController::class);
+Route::get('statistics/trackings', GetAllTrackingController::class);
+Route::get('statistics/trackings/broadcasts/{broadcast}', GetBroadcastTrackingController::class);
+Route::get('statistics/trackings/sequence-mails/{sequenceMail}', GetSequenceMailTrackingController::class);

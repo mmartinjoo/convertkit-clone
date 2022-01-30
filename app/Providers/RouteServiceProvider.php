@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Domain\Broadcast\Models\Broadcast;
+use Domain\Sequence\Models\SequenceMail;
+use Exception;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -47,6 +50,14 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
+
+        // Route::bind('sendable', function (int $id) {
+        //     try {
+        //         return Broadcast::findOrFail($id);
+        //     } catch (Exception) {
+        //         return SequenceMail::findOrFail($id);
+        //     }
+        // });
     }
 
     /**

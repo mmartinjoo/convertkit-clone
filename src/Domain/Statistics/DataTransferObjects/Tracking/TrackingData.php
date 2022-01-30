@@ -1,11 +1,11 @@
 <?php
 
-namespace Domain\Statistics\DataTransferObjects\SentMails;
+namespace Domain\Statistics\DataTransferObjects\Tracking;
 
 use Domain\Statistics\ValueObjects\Percent;
 use Spatie\LaravelData\Data;
 
-class SentMailsTrackingData extends Data
+class TrackingData extends Data
 {
     public function __construct(
         public readonly int $total_sent_mails,
