@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Statistics;
 
 use App\Http\Controllers\Controller;
-use Domain\Statistics\Actions\GetSubscriberStatisticsAction;
-use Domain\Statistics\DataTransferObjects\SubscriberStatisticsData;
+use Domain\Statistics\Actions\GetSubscribersCountStatisticsAction;
+use Domain\Statistics\DataTransferObjects\SubscribersCountStatisticsData;
 
 class GetSubscriberStatisticsController extends Controller
 {
-    public function __invoke(): SubscriberStatisticsData
+    public function __invoke(): SubscribersCountStatisticsData
     {
-        return GetSubscriberStatisticsAction::execute();
+        return GetSubscribersCountStatisticsAction::execute();
     }
 }
