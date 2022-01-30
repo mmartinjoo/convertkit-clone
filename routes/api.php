@@ -5,6 +5,7 @@ use App\Http\Controllers\Broadcast\SendBroadcastController;
 use App\Http\Controllers\Sequence\CreateSequenceController;
 use App\Http\Controllers\Sequence\CreateSequenceMailController;
 use App\Http\Controllers\Sequence\StartSequenceController;
+use App\Http\Controllers\Statistics\GetDailyNewSubscribersCountController;
 use App\Http\Controllers\Statistics\GetNewSubscribersCountController;
 use App\Http\Controllers\Subscriber\CreateSubscriberController;
 use App\Http\Controllers\Subscriber\ImportSubscribersController;
@@ -20,4 +21,5 @@ Route::post('sequences', CreateSequenceController::class);
 Route::post('started-sequences/{sequence}', StartSequenceController::class);
 Route::post('sequences/{sequence}/mails', CreateSequenceMailController::class);
 
-Route::get('statistics/subscribers', GetNewSubscribersCountController::class);
+Route::get('statistics/new-subscribers', GetNewSubscribersCountController::class);
+Route::get('statistics/daily-new-subscribers', GetDailyNewSubscribersCountController::class);
