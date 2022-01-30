@@ -14,11 +14,12 @@ class SendSequenceMails extends Command
 
     public function handle(): int
     {
-        Sequence::with('mails.schedule')
+        $countsBySequence = Sequence::with('mails.schedule')
             ->whereStatus(SequenceStatus::STARTED)
             ->get()
-            ->each(fn (Sequence $sequence) => ProceedSequenceAction::execute($sequence));
+            ->map(fn (Sequence $sequence) => ProceedSequenceAction::execute($sequence));
 
+        $this->info("{$countsBySequence->sum()} mails have been sent to subscribers");
         return self::SUCCESS;
     }
 }

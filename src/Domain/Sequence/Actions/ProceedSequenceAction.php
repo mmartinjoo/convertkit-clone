@@ -12,14 +12,20 @@ use Illuminate\Support\Facades\Mail;
 
 class ProceedSequenceAction
 {
-    public static function execute(Sequence $sequence): void
+    public static function execute(Sequence $sequence): int
     {
-        $sequence->mails->each(function (SequenceMail $mail) {
-            self::subscribers($mail)
+        return $sequence->mails->reduce(function (int $count, SequenceMail $mail) {
+            $sentMailsCount = self::subscribers($mail)
                 ->each(fn (Subscriber $subscriber) =>
                     Mail::to($subscriber)->queue(new EchoMail($mail))
-                );
-        });
+                )
+                ->each(fn (Subscriber $subscriber) => $mail->sent_mails()->create([
+                    'subscriber_id' => $subscriber->id,
+                ]))
+                ->count();
+
+            return $count + $sentMailsCount;
+        }, 0);
     }
 
     private static function subscribers(SequenceMail $mail): Collection
