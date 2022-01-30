@@ -56,7 +56,8 @@ class Subscriber extends BaseModel
     public function last_received_mail(): HasOne
     {
         return $this->hasOne(SentMail::class)
-            ->latestOfMany();
+            ->latestOfMany()
+            ->withDefault();
     }
 
     public function tooEarlyFor(SequenceMail $mail): bool
