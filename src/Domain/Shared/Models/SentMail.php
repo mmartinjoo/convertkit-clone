@@ -8,13 +8,16 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class SentMail extends BaseModel
 {
+    public $timestamps = false;
     protected $fillable = [
         'mailable_id',
         'mailable_type',
         'subscriber_id',
     ];
 
-    public $timestamps = false;
+    protected $casts = [
+        'sent_at' => 'datetime',
+    ];
 
     public function subscriber(): BelongsTo
     {
