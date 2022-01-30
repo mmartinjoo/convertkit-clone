@@ -4,6 +4,7 @@ namespace Domain\Statistics\Actions\SentMails;
 
 use Domain\Shared\Models\SentMail;
 use Domain\Statistics\DataTransferObjects\SentMails\SentMailsTrackingData;
+use Domain\Statistics\ValueObjects\Percent;
 
 class GetSentMailsTrackingAction
 {
@@ -18,13 +19,17 @@ class GetSentMailsTrackingAction
         );
     }
 
-    private static function averageOpenRate(int $total): float
+    private static function averageOpenRate(int $total): Percent
     {
-        return SentMail::whereOpened()->count() / $total;
+        return Percent::from(
+            SentMail::whereOpened()->count() / $total
+        );
     }
 
-    private static function averageClickRate(int $total): float
+    private static function averageClickRate(int $total): Percent
     {
-        return SentMail::whereClicked()->count() / $total;
+        return Percent::from(
+            SentMail::whereClicked()->count() / $total
+        );
     }
 }
