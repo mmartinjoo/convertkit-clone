@@ -22,4 +22,4 @@ Route::post('started-sequences/{sequence}', StartSequenceController::class);
 Route::post('sequences/{sequence}/mails', CreateSequenceMailController::class);
 
 Route::get('statistics/new-subscribers', GetNewSubscribersCountController::class);
-Route::get('statistics/daily-new-subscribers', GetDailyNewSubscribersCountController::class);
+Route::get('statistics/new-subscribers/daily', GetDailyNewSubscribersCountController::class);
