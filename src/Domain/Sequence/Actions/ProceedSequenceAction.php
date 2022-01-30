@@ -5,6 +5,7 @@ namespace Domain\Sequence\Actions;
 use Domain\Shared\Mails\EchoMail;
 use Domain\Sequence\Models\Sequence;
 use Domain\Sequence\Models\SequenceMail;
+use Domain\Sequence\Enums\SequenceMailStatus;
 use Domain\Subscriber\Actions\FilterSubscribersAction;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Support\Collection;
@@ -14,18 +15,19 @@ class ProceedSequenceAction
 {
     public static function execute(Sequence $sequence): int
     {
-        return $sequence->mails->reduce(function (int $count, SequenceMail $mail) {
-            $sentMailsCount = self::subscribers($mail)
-                ->each(fn (Subscriber $subscriber) =>
-                    Mail::to($subscriber)->queue(new EchoMail($mail))
-                )
-                ->each(fn (Subscriber $subscriber) => $mail->sent_mails()->create([
-                    'subscriber_id' => $subscriber->id,
-                ]))
-                ->count();
+        return $sequence->mails()->wherePublished()->get()
+            ->reduce(function (int $count, SequenceMail $mail) {
+                $sentMailsCount = self::subscribers($mail)
+                    ->each(fn (Subscriber $subscriber) =>
+                        Mail::to($subscriber)->queue(new EchoMail($mail))
+                    )
+                    ->each(fn (Subscriber $subscriber) => $mail->sent_mails()->create([
+                        'subscriber_id' => $subscriber->id,
+                    ]))
+                    ->count();
 
-            return $count + $sentMailsCount;
-        }, 0);
+                return $count + $sentMailsCount;
+            }, 0);
     }
 
     private static function subscribers(SequenceMail $mail): Collection

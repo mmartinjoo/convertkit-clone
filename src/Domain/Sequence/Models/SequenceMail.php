@@ -2,6 +2,7 @@
 
 namespace Domain\Sequence\Models;
 
+use Domain\Sequence\Builders\SequenceMailBuilder;
 use Domain\Sequence\Enums\SequenceMailStatus;
 use Domain\Shared\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;
@@ -47,6 +48,11 @@ class SequenceMail extends BaseModel implements HasSubscriberFilters, Sendable
     public function sent_mails(): MorphMany
     {
         return $this->morphMany(SentMail::class, 'mailable');
+    }
+
+    public function newEloquentBuilder($query): SequenceMailBuilder
+    {
+        return new SequenceMailBuilder($query);
     }
 
     /**
