@@ -3,6 +3,7 @@
 namespace Domain\Subscriber\Builders;
 
 use Domain\Sequence\Models\SequenceMail;
+use Domain\Statistics\Filters\DateFilter;
 use Illuminate\Database\Eloquent\Builder;
 
 class SubscriberBuilder extends Builder
@@ -17,6 +18,11 @@ class SubscriberBuilder extends Builder
         )->whereDoesntHave('tags', fn (Builder $tags) =>
             $tags->whereNotIn('id', $ids)
         );
+    }
+
+    public function whereSubscribedBetween(DateFilter $dateFilter): self
+    {
+        return $this->whereBetween('created_at', $dateFilter->toArray());
     }
 
     public function alreadyReceived(SequenceMail $mail): bool
