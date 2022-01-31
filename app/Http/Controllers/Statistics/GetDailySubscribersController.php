@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Statistics;
 
 use App\Http\Controllers\Controller;
-use Domain\Statistics\Actions\GetDailyNewSubscribersCountAction;
 use Domain\Statistics\DataTransferObjects\DailyNewSubscribers\DailySummaryData;
 use Domain\Statistics\ViewModels\GetDailySubscribersViewModel;
 

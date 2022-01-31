@@ -5,9 +5,6 @@ use App\Http\Controllers\Broadcast\SendBroadcastController;
 use App\Http\Controllers\Sequence\CreateSequenceController;
 use App\Http\Controllers\Sequence\CreateSequenceMailController;
 use App\Http\Controllers\Sequence\StartSequenceController;
-use App\Http\Controllers\Statistics\GetDailyNewSubscribersCountController;
-use App\Http\Controllers\Statistics\GetNewSubscribersCountController;
-use App\Http\Controllers\Statistics\GetAllTrackingController;
 use App\Http\Controllers\Statistics\GetBroadcastTrackingController;
 use App\Http\Controllers\Statistics\GetDailySubscribersController;
 use App\Http\Controllers\Statistics\GetDashboardController;
@@ -30,14 +27,6 @@ Route::post('sequences/{sequence}/mails', CreateSequenceMailController::class);
 
 // Route::patch('opened-mails/{sentMail}', OpenSentMailController::class);
 // Route::patch('clicked-mails/{sentMail}', ClickSentMailController::class);
-
-// Route::get('statistics/new-subscribers', GetNewSubscribersCountController::class);
-// Route::get('statistics/new-subscribers/daily', GetDailyNewSubscribersCountController::class);
-// Route::get('statistics/trackings', GetAllTrackingController::class);
-// Route::get('statistics/trackings/broadcasts/{broadcast}', GetBroadcastTrackingController::class);
-// Route::get('statistics/trackings/sequence-mails/{sequenceMail}', GetSequenceMailTrackingController::class);
-// Route::get('statistics/trackings/sequences/{sequence}', GetSequenceTrackingController::class);
-// Route::get('statistics/sequence-progresses/{sequence}', GetSequenceProgressController::class);
 
 Route::get('statistics/dashboard', GetDashboardController::class);
 Route::get('statistics/daily-subscribers', GetDailySubscribersController::class);
