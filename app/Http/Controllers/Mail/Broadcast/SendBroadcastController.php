@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Broadcast;
+namespace App\Http\Controllers\Mail\Broadcast;
 
 use App\Http\Controllers\Controller;
 use Domain\Mail\Actions\Broadcast\SendBroadcastAction;

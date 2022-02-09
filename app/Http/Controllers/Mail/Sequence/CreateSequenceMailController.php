@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Sequence;
+namespace App\Http\Controllers\Mail\Sequence;
 
 use App\Http\Controllers\Controller;
 use Domain\Mail\Actions\Sequence\CreateSequenceMailAction;
