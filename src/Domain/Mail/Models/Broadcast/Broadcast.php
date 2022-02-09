@@ -2,7 +2,7 @@
 
 namespace Domain\Mail\Models\Broadcast;
 
-use Domain\Shared\Models\Casts\FiltersCast;
+use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Shared\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;

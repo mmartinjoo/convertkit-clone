@@ -6,7 +6,7 @@ use Domain\Mail\Builders\Sequence\SequenceMailBuilder;
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Shared\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;
-use Domain\Shared\Models\Casts\FiltersCast;
+use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
