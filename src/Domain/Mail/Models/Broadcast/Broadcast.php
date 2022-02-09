@@ -16,7 +16,7 @@ class Broadcast extends BaseModel implements HasSubscriberFilters, Sendable
 {
     protected $fillable = [
         'id',
-        'title',
+        'subject',
         'content',
         'status',
         'filters',
@@ -50,9 +50,9 @@ class Broadcast extends BaseModel implements HasSubscriberFilters, Sendable
         return $this->id;
     }
 
-    public function title(): string
+    public function subject(): string
     {
-        return $this->title;
+        return $this->subject;
     }
 
     public function content(): string

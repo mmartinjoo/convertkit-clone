@@ -19,7 +19,7 @@ class SequenceMail extends BaseModel implements HasSubscriberFilters, Sendable
     protected $fillable = [
         'sequence_id',
         'sequence_mail_schedule_id',
-        'title',
+        'subject',
         'content',
         'status',
         'filters',
@@ -68,9 +68,9 @@ class SequenceMail extends BaseModel implements HasSubscriberFilters, Sendable
         return $this->id;
     }
 
-    public function title(): string
+    public function subject(): string
     {
-        return $this->title;
+        return $this->subject;
     }
 
     public function content(): string

@@ -14,7 +14,7 @@ class BroadcastData extends Data
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly string $title,
+        public readonly string $subject,
         public readonly string $content,
         /** @var DataCollection<FilterData> */
         public readonly ?DataCollection $filters,

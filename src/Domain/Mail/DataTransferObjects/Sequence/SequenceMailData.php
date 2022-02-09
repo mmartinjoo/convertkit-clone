@@ -14,7 +14,7 @@ class SequenceMailData extends Data
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly string $title,
+        public readonly string $subject,
         public readonly string $content,
         public readonly ?SequenceMailStatus $status,
         /** @var DataCollection<FilterData> */

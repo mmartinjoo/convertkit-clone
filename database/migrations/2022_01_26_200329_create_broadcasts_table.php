@@ -11,7 +11,7 @@ class CreateBroadcastsTable extends Migration
     {
         Schema::create('broadcasts', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable(false);
+            $table->string('subject')->nullable(false);
             $table->text('content')->nullable(false);
             $table->json('filters')->nullable(true);
             $table->string('status')->default(BroadcastStatus::DRAFT->value);

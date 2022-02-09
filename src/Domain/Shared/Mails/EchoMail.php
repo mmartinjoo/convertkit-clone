@@ -19,7 +19,7 @@ class EchoMail extends Mailable implements ShouldQueue
     public function build()
     {
         return $this
-            ->subject($this->mail->title())
+            ->subject($this->mail->subject())
             ->view('emails.echo');
     }
 }
