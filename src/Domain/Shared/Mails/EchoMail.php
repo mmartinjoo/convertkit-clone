@@ -2,7 +2,7 @@
 
 namespace Domain\Shared\Mails;
 
-use Domain\Shared\Models\Concerns\Sendable;
+use Domain\Mail\Contracts\Sendable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;

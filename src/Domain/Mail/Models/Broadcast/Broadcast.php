@@ -7,7 +7,7 @@ use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Shared\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;
 use Domain\Shared\Models\Concerns\HasSubscriberFilters;
-use Domain\Shared\Models\Concerns\Sendable;
+use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;

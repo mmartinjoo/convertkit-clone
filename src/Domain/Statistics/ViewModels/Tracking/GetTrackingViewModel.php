@@ -2,7 +2,7 @@
 
 namespace Domain\Statistics\ViewModels\Tracking;
 
-use Domain\Shared\Models\Concerns\Sendable;
+use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;

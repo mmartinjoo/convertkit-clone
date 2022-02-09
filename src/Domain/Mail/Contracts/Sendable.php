@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Shared\Models\Concerns;
+namespace Domain\Mail\Contracts;
 
 interface Sendable
 {
