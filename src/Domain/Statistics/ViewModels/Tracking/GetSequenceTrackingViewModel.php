@@ -3,7 +3,7 @@
 namespace Domain\Statistics\ViewModels\Tracking;
 
 use Domain\Mail\Models\Sequence\Sequence;
-use Domain\Shared\Models\SentMail;
+use Domain\Mail\Models\SentMail;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
 use Domain\Statistics\ValueObjects\Percent;

@@ -2,7 +2,7 @@
 
 namespace Domain\Statistics\ViewModels;
 
-use Domain\Shared\Models\SentMail;
+use Domain\Mail\Models\SentMail;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Statistics\DataTransferObjects\NewSubscribersCountData;
 use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;

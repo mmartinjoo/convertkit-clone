@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Domain\Mail\Models\Broadcast\Broadcast;
-use Domain\Shared\Models\SentMail;
+use Domain\Mail\Models\SentMail;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

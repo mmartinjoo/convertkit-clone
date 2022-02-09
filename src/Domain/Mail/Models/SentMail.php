@@ -1,16 +1,17 @@
 <?php
 
-namespace Domain\Shared\Models;
+namespace Domain\Mail\Models;
 
 use Domain\Shared\Builders\SentMailBuilder;
+use Domain\Shared\Models\BaseModel;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Query\Builder;
 
 class SentMail extends BaseModel
 {
     public $timestamps = false;
+
     protected $fillable = [
         'mailable_id',
         'mailable_type',

@@ -5,7 +5,7 @@ namespace Domain\Subscriber\Models;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\Models\BaseModel;
-use Domain\Shared\Models\SentMail;
+use Domain\Mail\Models\SentMail;
 use Domain\Subscriber\Builders\SubscriberBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

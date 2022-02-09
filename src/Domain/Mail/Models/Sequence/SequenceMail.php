@@ -9,7 +9,7 @@ use Domain\Shared\Models\BaseModel;
 use Domain\Shared\Models\Casts\FiltersCast;
 use Domain\Shared\Models\Concerns\HasSubscriberFilters;
 use Domain\Shared\Models\Concerns\Sendable;
-use Domain\Shared\Models\SentMail;
+use Domain\Mail\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
