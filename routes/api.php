@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Mail\Broadcast\CreateBroadcastController;
 use App\Http\Controllers\Mail\Broadcast\SendBroadcastController;
+use App\Http\Controllers\Mail\SentMail\ClickSentMailController;
+use App\Http\Controllers\Mail\SentMail\OpenSentMailController;
 use App\Http\Controllers\Mail\Sequence\CreateSequenceController;
 use App\Http\Controllers\Mail\Sequence\CreateSequenceMailController;
 use App\Http\Controllers\Mail\Sequence\StartSequenceController;
@@ -19,14 +21,14 @@ Route::post('subscribers', CreateSubscriberController::class);
 Route::post('subscribers/import', ImportSubscribersController::class);
 
 Route::post('broadcasts', CreateBroadcastController::class);
-Route::post('sent-broadcasts/{broadcast}', SendBroadcastController::class);
+Route::post('broadcasts/{broadcast}/send', SendBroadcastController::class);
 
 Route::post('sequences', CreateSequenceController::class);
-Route::post('started-sequences/{sequence}', StartSequenceController::class);
+Route::post('sequences/{sequence}/start', StartSequenceController::class);
 Route::post('sequences/{sequence}/mails', CreateSequenceMailController::class);
 
-// Route::patch('sent-mails/opened', OpenSentMailController::class);
-// Route::patch('sent-mails/clicked', ClickSentMailController::class);
+ Route::patch('sent-mails/{sentMail}/open', OpenSentMailController::class);
+ Route::patch('sent-mails/{sentMail}/click', ClickSentMailController::class);
 
 Route::get('statistics/dashboard', GetDashboardController::class);
 Route::get('statistics/daily-subscribers', GetDailySubscribersController::class);
