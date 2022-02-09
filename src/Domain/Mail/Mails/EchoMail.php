@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Shared\Mails;
+namespace Domain\Mail\Mails;
 
 use Domain\Mail\Contracts\Sendable;
 use Illuminate\Bus\Queueable;

@@ -4,7 +4,7 @@ namespace Domain\Mail\Actions\Broadcast;
 
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Mail\Exceptions\Broadcast\CannotSendBroadcast;
-use Domain\Shared\Mails\EchoMail;
+use Domain\Mail\Mails\EchoMail;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Subscriber\Actions\FilterSubscribersAction;
 use Domain\Subscriber\Models\Subscriber;
