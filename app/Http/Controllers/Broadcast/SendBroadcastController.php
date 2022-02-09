@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Broadcast;
 
 use App\Http\Controllers\Controller;
-use Domain\Broadcast\Actions\SendBroadcastAction;
-use Domain\Broadcast\Exceptions\CannotSendBroadcast;
-use Domain\Broadcast\Models\Broadcast;
+use Domain\Mail\Actions\Broadcast\SendBroadcastAction;
+use Domain\Mail\Exceptions\Broadcast\CannotSendBroadcast;
+use Domain\Mail\Models\Broadcast\Broadcast;
 use Illuminate\Http\Response;
 
 class SendBroadcastController extends Controller

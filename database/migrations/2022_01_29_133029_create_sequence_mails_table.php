@@ -1,8 +1,8 @@
 <?php
 
-use Domain\Sequence\Models\Sequence;
-use Domain\Sequence\Enums\SequenceMailStatus;
-use Domain\Sequence\Models\SequenceMailSchedule;
+use Domain\Mail\Models\Sequence\Sequence;
+use Domain\Mail\Enums\Sequence\SequenceMailStatus;
+use Domain\Mail\Models\Sequence\SequenceMailSchedule;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

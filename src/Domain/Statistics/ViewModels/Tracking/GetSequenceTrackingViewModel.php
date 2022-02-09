@@ -2,7 +2,7 @@
 
 namespace Domain\Statistics\ViewModels\Tracking;
 
-use Domain\Sequence\Models\Sequence;
+use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Shared\Models\SentMail;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;

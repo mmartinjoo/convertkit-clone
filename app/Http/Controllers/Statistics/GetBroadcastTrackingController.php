@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Statistics;
 
 use App\Http\Controllers\Controller;
-use Domain\Broadcast\Models\Broadcast;
+use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
 use Domain\Statistics\ViewModels\Tracking\GetTrackingViewModel;
 

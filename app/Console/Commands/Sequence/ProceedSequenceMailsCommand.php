@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\Sequence;
 
-use Domain\Sequence\Actions\ProceedSequenceAction;
-use Domain\Sequence\Models\Sequence;
-use Domain\Sequence\Enums\SequenceStatus;
+use Domain\Mail\Actions\Sequence\ProceedSequenceAction;
+use Domain\Mail\Models\Sequence\Sequence;
+use Domain\Mail\Enums\Sequence\SequenceStatus;
 use Illuminate\Console\Command;
 
 class ProceedSequenceMailsCommand extends Command

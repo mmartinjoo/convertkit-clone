@@ -2,7 +2,7 @@
 
 namespace Domain\Subscriber\Builders;
 
-use Domain\Sequence\Models\SequenceMail;
+use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Statistics\Filters\DateFilter;
 use Illuminate\Database\Eloquent\Builder;
 

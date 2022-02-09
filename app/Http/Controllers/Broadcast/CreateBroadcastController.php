@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Broadcast;
 
 use App\Http\Controllers\Controller;
-use Domain\Broadcast\Actions\CreateBroadcastAction;
-use Domain\Broadcast\DataTransferObjects\BroadcastData;
+use Domain\Mail\Actions\Broadcast\CreateBroadcastAction;
+use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 
 class CreateBroadcastController extends Controller
 {

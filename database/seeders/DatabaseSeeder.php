@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Domain\Sequence\Models\Sequence;
-use Domain\Sequence\Models\SequenceMail;
+use Domain\Mail\Models\Sequence\Sequence;
+use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Subscriber\Models\Form;
 use Domain\Subscriber\Models\Subscriber;
 use Domain\Subscriber\Models\Tag;

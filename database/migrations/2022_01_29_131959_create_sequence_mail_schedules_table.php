@@ -1,6 +1,6 @@
 <?php
 
-use Domain\Sequence\Models\SequenceMail;
+use Domain\Mail\Models\Sequence\SequenceMail;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

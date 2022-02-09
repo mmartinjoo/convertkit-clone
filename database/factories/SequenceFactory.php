@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Domain\Sequence\Enums\SequenceStatus;
-use Domain\Sequence\Models\Sequence;
+use Domain\Mail\Enums\Sequence\SequenceStatus;
+use Domain\Mail\Models\Sequence\Sequence;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SequenceFactory extends Factory

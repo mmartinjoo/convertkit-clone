@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use Domain\Sequence\Enums\SequenceMailStatus;
-use Domain\Sequence\Models\Sequence;
-use Domain\Sequence\Models\SequenceMail;
-use Domain\Sequence\Models\SequenceMailSchedule;
+use Domain\Mail\Enums\Sequence\SequenceMailStatus;
+use Domain\Mail\Models\Sequence\Sequence;
+use Domain\Mail\Models\Sequence\SequenceMail;
+use Domain\Mail\Models\Sequence\SequenceMailSchedule;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SequenceMailFactory extends Factory

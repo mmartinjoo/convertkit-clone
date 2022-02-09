@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Sequence;
 
 use App\Http\Controllers\Controller;
-use Domain\Sequence\Actions\StartSequenceAction;
-use Domain\Sequence\Models\Sequence;
+use Domain\Mail\Actions\Sequence\StartSequenceAction;
+use Domain\Mail\Models\Sequence\Sequence;
 use Illuminate\Http\Response;
 
 class StartSequenceController extends Controller

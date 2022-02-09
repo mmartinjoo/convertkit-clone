@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Sequence;
 
 use App\Http\Controllers\Controller;
-use Domain\Sequence\Actions\CreateSequenceMailAction;
-use Domain\Sequence\DataTransferObjects\SequenceMailData;
-use Domain\Sequence\Models\Sequence;
+use Domain\Mail\Actions\Sequence\CreateSequenceMailAction;
+use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
+use Domain\Mail\Models\Sequence\Sequence;
 
 class CreateSequenceMailController extends Controller
 {

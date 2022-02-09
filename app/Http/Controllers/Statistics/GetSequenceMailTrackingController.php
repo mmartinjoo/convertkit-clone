@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Statistics;
 
 use App\Http\Controllers\Controller;
-use Domain\Sequence\Models\SequenceMail;
+use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
 use Domain\Statistics\ViewModels\Tracking\GetTrackingViewModel;
 

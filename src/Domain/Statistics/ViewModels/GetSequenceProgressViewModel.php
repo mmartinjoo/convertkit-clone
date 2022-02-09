@@ -2,7 +2,7 @@
 
 namespace Domain\Statistics\ViewModels;
 
-use Domain\Sequence\Models\Sequence;
+use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Statistics\DataTransferObjects\SequenceProgress\SequenceProgressData;
 use Illuminate\Support\Collection;

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Domain\Sequence\Enums\SequenceStatus;
+use Domain\Mail\Enums\Sequence\SequenceStatus;
 
 class CreateSequencesTable extends Migration
 {
