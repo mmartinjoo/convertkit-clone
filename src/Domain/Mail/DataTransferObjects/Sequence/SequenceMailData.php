@@ -4,7 +4,7 @@ namespace Domain\Mail\DataTransferObjects\Sequence;
 
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\Models\Sequence\SequenceMail;
-use Domain\Shared\DataTransferObjects\FilterData;
+use Domain\Mail\DataTransferObjects\FilterData;
 use Illuminate\Http\Request;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;

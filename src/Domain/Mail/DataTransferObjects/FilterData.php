@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Shared\DataTransferObjects;
+namespace Domain\Mail\DataTransferObjects;
 
 use Spatie\LaravelData\Data;
 

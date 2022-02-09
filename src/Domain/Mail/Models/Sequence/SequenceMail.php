@@ -4,7 +4,7 @@ namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Builders\Sequence\SequenceMailBuilder;
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
-use Domain\Shared\DataTransferObjects\FilterData;
+use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Contracts\Sendable;

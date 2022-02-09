@@ -5,7 +5,7 @@ namespace Domain\Mail\DataTransferObjects\Broadcast;
 use Carbon\Carbon;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Mail\Models\Broadcast\Broadcast;
-use Domain\Shared\DataTransferObjects\FilterData;
+use Domain\Mail\DataTransferObjects\FilterData;
 use Illuminate\Http\Request;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;

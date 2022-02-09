@@ -4,7 +4,7 @@ namespace Domain\Mail\Models\Broadcast;
 
 use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
-use Domain\Shared\DataTransferObjects\FilterData;
+use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;

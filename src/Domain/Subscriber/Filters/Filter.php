@@ -3,7 +3,7 @@
 namespace Domain\Subscriber\Filters;
 
 use Closure;
-use Domain\Shared\DataTransferObjects\FilterData;
+use Domain\Mail\DataTransferObjects\FilterData;
 use Illuminate\Database\Eloquent\Builder;
 
 abstract class Filter

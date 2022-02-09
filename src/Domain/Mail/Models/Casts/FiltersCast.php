@@ -2,7 +2,7 @@
 
 namespace Domain\Mail\Models\Casts;
 
-use Domain\Shared\DataTransferObjects\FilterData;
+use Domain\Mail\DataTransferObjects\FilterData;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\DataCollection;

@@ -3,7 +3,7 @@
 namespace Domain\Subscriber\Actions;
 
 use Domain\Mail\Contracts\Sendable;
-use Domain\Shared\DataTransferObjects\FilterData;
+use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Subscriber\Exceptions\InvalidFilterException;
 use Domain\Subscriber\Filters\{Filter, FormFilter, TagFilter};
 use Domain\Subscriber\Models\Subscriber;
