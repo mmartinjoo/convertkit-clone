@@ -7,14 +7,13 @@ use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Shared\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;
 use Domain\Shared\Models\Casts\FiltersCast;
-use Domain\Shared\Models\Concerns\HasSubscriberFilters;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 
-class SequenceMail extends BaseModel implements HasSubscriberFilters, Sendable
+class SequenceMail extends BaseModel implements Sendable
 {
     protected $fillable = [
         'sequence_id',

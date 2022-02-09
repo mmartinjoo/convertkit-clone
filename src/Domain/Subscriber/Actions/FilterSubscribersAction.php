@@ -2,8 +2,8 @@
 
 namespace Domain\Subscriber\Actions;
 
+use Domain\Mail\Contracts\Sendable;
 use Domain\Shared\DataTransferObjects\FilterData;
-use Domain\Shared\Models\Concerns\HasSubscriberFilters;
 use Domain\Subscriber\Exceptions\InvalidFilterException;
 use Domain\Subscriber\Filters\{Filter, FormFilter, TagFilter};
 use Domain\Subscriber\Models\Subscriber;
@@ -15,7 +15,7 @@ class FilterSubscribersAction
     /**
      * @return Collection<Subscriber>
      */
-    public static function execute(HasSubscriberFilters $mail): Collection
+    public static function execute(Sendable $mail): Collection
     {
         return app(Pipeline::class)
             ->send(Subscriber::query())
@@ -27,7 +27,7 @@ class FilterSubscribersAction
     /**
      * @return array<Filter>
      */
-    private static function filters(HasSubscriberFilters $mail): array
+    private static function filters(Sendable $mail): array
     {
         return $mail->filters()->map(fn (FilterData $filterData) =>
             match ($filterData->type) {

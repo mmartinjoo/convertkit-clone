@@ -6,13 +6,12 @@ use Domain\Shared\Models\Casts\FiltersCast;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Shared\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;
-use Domain\Shared\Models\Concerns\HasSubscriberFilters;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 
-class Broadcast extends BaseModel implements HasSubscriberFilters, Sendable
+class Broadcast extends BaseModel implements Sendable
 {
     protected $fillable = [
         'id',
