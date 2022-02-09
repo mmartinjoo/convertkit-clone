@@ -11,7 +11,7 @@ class PublishSequenceController extends Controller
 {
     public function __invoke(Sequence $sequence): Response
     {
-        $sequence->status = SequenceStatus::PUBLISHED;
+        $sequence->status = SequenceStatus::Published;
         $sequence->save();
 
         return response()->noContent();

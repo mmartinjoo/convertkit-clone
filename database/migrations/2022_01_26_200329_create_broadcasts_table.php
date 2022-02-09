@@ -14,7 +14,7 @@ class CreateBroadcastsTable extends Migration
             $table->string('subject')->nullable(false);
             $table->text('content')->nullable(false);
             $table->json('filters')->nullable(true);
-            $table->string('status')->default(BroadcastStatus::DRAFT->value);
+            $table->string('status')->default(BroadcastStatus::Draft->value);
             $table->dateTime('sent_at')->nullable(true);
             $table->timestamps();
             $table->index('status');

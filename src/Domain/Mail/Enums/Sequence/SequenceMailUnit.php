@@ -6,8 +6,8 @@ use Carbon\Carbon;
 
 enum SequenceMailUnit: string
 {
-    case DAY = 'day';
-    case HOUR = 'hour';
+    case Day = 'day';
+    case Hour = 'hour';
 
     public function timePassed(?Carbon $since): int
     {
@@ -16,8 +16,8 @@ enum SequenceMailUnit: string
         }
 
         return match ($this) {
-            self::DAY => now()->diffInDays($since),
-            self::HOUR => now()->diffInHours($since),
+            self::Day => now()->diffInDays($since),
+            self::Hour => now()->diffInHours($since),
         };
     }
 }

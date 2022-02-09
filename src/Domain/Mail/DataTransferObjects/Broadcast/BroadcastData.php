@@ -26,7 +26,7 @@ class BroadcastData extends Data
     {
         return self::from([
             ...$request->all(),
-            'status' => BroadcastStatus::DRAFT,
+            'status' => BroadcastStatus::Draft,
         ]);
     }
 

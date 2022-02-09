@@ -12,7 +12,7 @@ class CreateSequencesTable extends Migration
         Schema::create('sequences', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('status')->default(SequenceStatus::DRAFT->value);
+            $table->string('status')->default(SequenceStatus::Draft->value);
             $table->timestamps();
         });
     }

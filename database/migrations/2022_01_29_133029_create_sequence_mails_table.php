@@ -17,7 +17,7 @@ class CreateSequenceMailsTable extends Migration
             $table->foreignIdFor(SequenceMailSchedule::class)->constrained();
             $table->string('subject');
             $table->text('content');
-            $table->string('status')->default(SequenceMailStatus::DRAFT->value);
+            $table->string('status')->default(SequenceMailStatus::Draft->value);
             $table->json('filters')->nullable(true);
             $table->timestamps();
             $table->index('status');

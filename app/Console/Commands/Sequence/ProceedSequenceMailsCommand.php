@@ -15,7 +15,7 @@ class ProceedSequenceMailsCommand extends Command
     public function handle(): int
     {
         $countsBySequence = Sequence::with('mails.schedule')
-            ->whereStatus(SequenceStatus::PUBLISHED)
+            ->whereStatus(SequenceStatus::Published)
             ->get()
             ->map(fn (Sequence $sequence) => ProceedSequenceAction::execute($sequence));
 

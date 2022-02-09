@@ -31,7 +31,7 @@ class SequenceMail extends BaseModel implements Sendable
     ];
 
     protected $attributes = [
-        'status' => SequenceMailStatus::DRAFT,
+        'status' => SequenceMailStatus::Draft,
     ];
 
     public function sequence(): BelongsTo

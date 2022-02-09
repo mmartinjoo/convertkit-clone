@@ -19,7 +19,7 @@ class SequenceData extends Data
     {
         return self::from([
             ...$request->all(),
-            'status' => SequenceStatus::DRAFT,
+            'status' => SequenceStatus::Draft,
         ]);
     }
 

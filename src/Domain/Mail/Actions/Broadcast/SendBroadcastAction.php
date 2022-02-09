@@ -14,7 +14,7 @@ class SendBroadcastAction
 {
     public static function execute(Broadcast $broadcast): int
     {
-        if ($broadcast->status === BroadcastStatus::SENT) {
+        if ($broadcast->status === BroadcastStatus::Sent) {
             throw new CannotSendBroadcast("Broadcast already sent at {$broadcast->sent_at}");
         }
 
@@ -23,7 +23,7 @@ class SendBroadcastAction
                 Mail::to($subscriber)->queue(new EchoMail($broadcast))
             );
 
-        $broadcast->status = BroadcastStatus::SENT;
+        $broadcast->status = BroadcastStatus::Sent;
         $broadcast->sent_at = now();
         $broadcast->save();
 

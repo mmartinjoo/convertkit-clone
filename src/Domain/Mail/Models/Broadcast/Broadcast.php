@@ -28,7 +28,7 @@ class Broadcast extends BaseModel implements Sendable
     ];
 
     protected $attributes = [
-        'status' => BroadcastStatus::DRAFT,
+        'status' => BroadcastStatus::Draft,
     ];
 
     public function sent_mails(): MorphMany

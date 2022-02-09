@@ -27,7 +27,7 @@ class SequenceMailData extends Data
     {
         return self::from([
             ...$request->all(),
-            'status' => SequenceMailStatus::DRAFT,
+            'status' => SequenceMailStatus::Draft,
         ]);
     }
 

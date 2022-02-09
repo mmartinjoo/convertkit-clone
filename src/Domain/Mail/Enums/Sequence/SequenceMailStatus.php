@@ -4,6 +4,6 @@ namespace Domain\Mail\Enums\Sequence;
 
 enum SequenceMailStatus: string
 {
-    case DRAFT = 'draft';
-    case PUBLISHED = 'published';
+    case Draft = 'draft';
+    case Published = 'published';
 }

@@ -18,7 +18,7 @@ class Sequence extends BaseModel
     ];
 
     protected $attributes = [
-        'status' => SequenceStatus::DRAFT,
+        'status' => SequenceStatus::Draft,
     ];
 
     public function mails(): HasMany

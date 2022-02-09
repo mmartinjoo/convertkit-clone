@@ -9,6 +9,6 @@ class SequenceMailBuilder extends Builder
 {
     public function wherePublished(): self
     {
-        return $this->whereStatus(SequenceMailStatus::PUBLISHED);
+        return $this->whereStatus(SequenceMailStatus::Published);
     }
 }
