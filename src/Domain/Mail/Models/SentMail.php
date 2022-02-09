@@ -2,7 +2,7 @@
 
 namespace Domain\Mail\Models;
 
-use Domain\Shared\Builders\SentMailBuilder;
+use Domain\Mail\Builders\SentMail\SentMailBuilder;
 use Domain\Shared\Models\BaseModel;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

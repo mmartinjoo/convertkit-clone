@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Shared\Builders;
+namespace Domain\Mail\Builders\SentMail;
 
 use Illuminate\Database\Eloquent\Builder;
 
