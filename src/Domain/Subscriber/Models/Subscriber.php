@@ -46,10 +46,7 @@ class Subscriber extends BaseModel
     public function form(): BelongsTo
     {
         return $this->belongsTo(Form::class)
-            ->withDefault(fn () => new Form([
-                'title' => '-',
-                'content' => '',
-            ]));
+            ->withDefault();
     }
 
     public function received_mails(): HasMany
