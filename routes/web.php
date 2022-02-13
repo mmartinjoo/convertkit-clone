@@ -29,6 +29,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', GetDashboardController::class)->name('dashboard');
     Route::get('subscribers/create', [SubscriberController::class, 'create'])->name('subscribers.create');
+    Route::post('subscribers', [SubscriberController::class, 'store'])->name('subscribers.store');
 });
 
 require __DIR__.'/auth.php';

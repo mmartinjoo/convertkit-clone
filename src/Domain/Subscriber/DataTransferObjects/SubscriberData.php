@@ -27,7 +27,7 @@ class SubscriberData extends Data
     {
         return self::from([
             ...$request->all(),
-            'tags' => TagData::collection(Tag::whereIn('id', $request->collect('tags'))->get()),
+            'tags' => TagData::collection(Tag::whereIn('id', $request->collect('tag_ids'))->get()),
             'form' => FormData::from(Form::find($request->form_id)),
         ]);
     }

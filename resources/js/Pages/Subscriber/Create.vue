@@ -26,7 +26,7 @@ export default {
     },
     methods: {
         submit() {
-            this.$inertia.post('/users', this.form)
+            this.$inertia.post('/subscribers', this.form)
         },
     },
 }
