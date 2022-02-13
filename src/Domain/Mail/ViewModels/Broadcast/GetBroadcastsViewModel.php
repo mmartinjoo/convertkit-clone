@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Mail\ViewModels;
+namespace Domain\Mail\ViewModels\Broadcast;
 
 use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
