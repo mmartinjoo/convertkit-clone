@@ -1,6 +1,19 @@
-<script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+<script>
+import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head } from '@inertiajs/inertia-vue3';
+
+export default {
+    components: {
+        BreezeAuthenticatedLayout,
+        Head,
+    },
+    props: {
+        model: {
+            type: Object,
+            required: true,
+        },
+    },
+}
 </script>
 
 <template>
@@ -13,14 +26,27 @@ import { Head } from '@inertiajs/inertia-vue3';
             </h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        You're logged in!
-                    </div>
+        <div class="py-12 max-w-7xl mx-auto">
+            <h2 class="pl-20 mb-2">New Subscribers</h2>
+            <div class="sm:px-6 lg:px-8 grid grid-cols-4 gap-2">
+                <div class="p-6 w-52 max-w-sm mx-auto bg-white shadow-md">
+                    <p class="text-gray-500">Today</p>
+                    <div class="text-xl font-medium text-black">{{ model.new_subscribers_count.today }}</div>
+                </div>
+                <div class="p-6 w-52 max-w-sm mx-auto bg-white shadow-md">
+                    <p class="text-gray-500">This Week</p>
+                    <div class="text-xl font-medium text-black">{{ model.new_subscribers_count.this_week }}</div>
+                </div>
+                <div class="p-6 w-52 max-w-sm mx-auto bg-white shadow-md">
+                    <p class="text-gray-500">This Month</p>
+                    <div class="text-xl font-medium text-black">{{ model.new_subscribers_count.this_month }}</div>
+                </div>
+                <div class="p-6 w-52 max-w-sm mx-auto bg-white shadow-md">
+                    <p class="text-gray-500">Total</p>
+                    <div class="text-xl font-medium text-black">{{ model.new_subscribers_count.total }}</div>
                 </div>
             </div>
         </div>
+
     </BreezeAuthenticatedLayout>
 </template>

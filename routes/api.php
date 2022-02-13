@@ -30,7 +30,6 @@ Route::post('sequences/{sequence}/mails', CreateSequenceMailController::class);
  Route::patch('sent-mails/{sentMail}/open', OpenSentMailController::class);
  Route::patch('sent-mails/{sentMail}/click', ClickSentMailController::class);
 
-Route::get('statistics/dashboard', GetDashboardController::class);
 Route::get('statistics/daily-subscribers', GetDailySubscribersController::class);
 Route::get('statistics/sequence-progresses/{sequence}', GetSequenceProgressController::class);
 Route::get('statistics/trackings/broadcasts/{broadcast}', GetBroadcastTrackingController::class);
