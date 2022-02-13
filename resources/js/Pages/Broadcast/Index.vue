@@ -14,6 +14,17 @@ export default {
             required: true,
         },
     },
+    methods: {
+        getPerformance(broadcast) {
+            const performance = this.model.performances[broadcast.id];
+
+            return `
+                ${performance.total_sent_mails} Recipients •
+                ${performance.average_open_rate.formatted} Open rate •
+                ${performance.average_click_rate.formatted} Click rate
+            `;
+        }
+    }
 }
 </script>
 
@@ -53,7 +64,9 @@ export default {
                         <div class="text-sm text-gray-900">{{ broadcast.status }}</div>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="text-sm text-gray-900">Performance here</div>
+                        <div class="text-sm text-gray-900">
+                            {{ getPerformance(broadcast) }}
+                        </div>
                     </td>
                 </tr>
                 </tbody>

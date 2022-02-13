@@ -2,9 +2,11 @@
 
 namespace Domain\Mail\ViewModels;
 
+use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Shared\ViewModels\ViewModel;
+use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
 use Illuminate\Support\Collection;
 
 class GetBroadcastsViewModel extends ViewModel
@@ -15,5 +17,16 @@ class GetBroadcastsViewModel extends ViewModel
     public function broadcasts(): Collection
     {
         return Broadcast::all()->map(fn (Broadcast $broadcast) => BroadcastData::from($broadcast));
+    }
+
+    /**
+     * @return Collection<int, TrackingData>
+     */
+    public function performances(): Collection
+    {
+        return Broadcast::all()
+            ->mapWithKeys(fn (Broadcast $broadcast) => [
+                $broadcast->id => GetPerformanceAction::execute($broadcast)
+            ]);
     }
 }
