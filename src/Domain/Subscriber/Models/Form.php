@@ -6,4 +6,5 @@ use Domain\Shared\Models\BaseModel;
 
 class Form extends BaseModel
 {
+    protected $fillable = ['title', 'content'];
 }

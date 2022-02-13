@@ -1,11 +1,12 @@
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/inertia-vue3';
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
         Head,
+        Link,
     },
     props: {
         model: {
@@ -91,6 +92,9 @@ export default {
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                     Save
                 </button>
+                <Link href="/subscribers" class="text-indigo-600 ml-4">
+                    Cancel
+                </Link>
             </form>
         </div>
     </BreezeAuthenticatedLayout>
