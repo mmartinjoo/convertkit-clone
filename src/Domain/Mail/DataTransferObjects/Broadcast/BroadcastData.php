@@ -24,6 +24,23 @@ class BroadcastData extends Data
 
     public static function fromRequest(Request $request): self
     {
+        return self::from([
+            ...$request->all(),
+            'status' => BroadcastStatus::Draft,
+            'filters' => FilterData::collection(self::getFilters($request)),
+        ]);
+    }
+
+    public static function fromModel(Broadcast $broadcast): self
+    {
+        return self::from([
+            ...$broadcast->toArray(),
+            'status' => $broadcast->status,
+        ]);
+    }
+
+    private static function getFilters(Request $request): array
+    {
         $filters = [];
         $formIds = $request->input('filters.form_ids');
         $tagIds = $request->input('filters.tag_ids');
@@ -42,18 +59,6 @@ class BroadcastData extends Data
             ];
         }
 
-        return self::from([
-            ...$request->all(),
-            'status' => BroadcastStatus::Draft,
-            'filters' => FilterData::collection($filters),
-        ]);
-    }
-
-    public static function fromModel(Broadcast $broadcast): self
-    {
-        return self::from([
-            ...$broadcast->toArray(),
-            'status' => $broadcast->status,
-        ]);
+        return $filters;
     }
 }
