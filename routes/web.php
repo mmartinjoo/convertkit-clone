@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Statistics\GetDashboardController;
+use App\Http\Controllers\Subscriber\SubscriberController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,6 +28,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', GetDashboardController::class)->name('dashboard');
+    Route::get('subscribers/create', [SubscriberController::class, 'create'])->name('subscribers.create');
 });
 
 require __DIR__.'/auth.php';
