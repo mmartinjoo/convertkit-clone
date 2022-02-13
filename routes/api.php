@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('subscribers', CreateSubscriberController::class);
 Route::post('subscribers/import', ImportSubscribersController::class);
 
-Route::post('broadcasts', CreateBroadcastController::class);
+//Route::post('broadcasts', CreateBroadcastController::class);
 Route::post('broadcasts/{broadcast}/send', SendBroadcastController::class);
 
 Route::post('sequences', CreateSequenceController::class);

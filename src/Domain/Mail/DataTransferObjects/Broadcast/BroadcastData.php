@@ -24,9 +24,28 @@ class BroadcastData extends Data
 
     public static function fromRequest(Request $request): self
     {
+        $filters = [];
+        $formIds = $request->input('filters.form_ids');
+        $tagIds = $request->input('filters.tag_ids');
+
+        if ($formIds) {
+            $filters[] = [
+                'type' => 'form',
+                'value' => $formIds,
+            ];
+        }
+
+        if ($tagIds) {
+            $filters[] = [
+                'type' => 'tag',
+                'value' => $tagIds,
+            ];
+        }
+
         return self::from([
             ...$request->all(),
             'status' => BroadcastStatus::Draft,
+            'filters' => FilterData::collection($filters),
         ]);
     }
 
