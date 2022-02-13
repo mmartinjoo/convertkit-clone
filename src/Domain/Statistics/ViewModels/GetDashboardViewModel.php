@@ -8,7 +8,9 @@ use Domain\Statistics\DataTransferObjects\NewSubscribersCountData;
 use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
 use Domain\Statistics\Filters\DateFilter;
 use Domain\Statistics\ValueObjects\Percent;
+use Domain\Subscriber\DataTransferObjects\SubscriberData;
 use Domain\Subscriber\Models\Subscriber;
+use Illuminate\Support\Collection;
 
 class GetDashboardViewModel extends ViewModel
 {
@@ -31,6 +33,14 @@ class GetDashboardViewModel extends ViewModel
             average_open_rate: $this->averageOpenRate($total),
             average_click_rate: $this->averageClickRate($total),
         );
+    }
+
+    /**
+     * @return Collection<SubscriberData>
+     */
+    public function recentSubscribers(): Collection
+    {
+        return Subscriber::with('form')->latest()->take(10)->get();
     }
 
     private function averageOpenRate(int $total): Percent

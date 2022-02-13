@@ -47,7 +47,7 @@ export default {
                 </div>
             </div>
 
-            <h2 class="pl-20 mb-2 mt-4">All Time Performance</h2>
+            <h2 class="pl-20 mb-2 mt-4">All-Time Performance</h2>
             <div class="sm:px-6 lg:px-8 grid grid-cols-4 gap-2">
                 <div class="p-6 w-52 max-w-sm mx-auto bg-white shadow-md">
                     <p class="text-gray-500">Average Open Rate</p>
@@ -62,6 +62,30 @@ export default {
                     <div class="text-xl font-medium text-black">{{ model.tracking.total_sent_mails }}</div>
                 </div>
             </div>
+
+            <h2 class="pl-20 mb-2 mt-4">Most Recent Subscribers</h2>
+            <table class="min-w-full divide-y divide-gray-200 mx-16">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        E-mail
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Form
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
+                <tr v-for="subscriber in model.recent_subscribers" :key="subscriber.email" class="hover:bg-gray-100">
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">{{ subscriber.email }}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">{{ subscriber.form.title }}</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 
     </BreezeAuthenticatedLayout>

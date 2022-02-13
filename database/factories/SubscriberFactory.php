@@ -23,9 +23,9 @@ class SubscriberFactory extends Factory
     public function definition()
     {
         return [
-            'email' => $this->faker->safeEmail,
-            'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
+            'email' => $this->faker->safeEmail(),
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
             'form_id' => Form::factory(),
         ];
     }
