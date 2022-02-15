@@ -27,6 +27,9 @@ export default {
                 ${performance.average_open_rate.formatted} Open rate •
                 ${performance.average_click_rate.formatted} Click rate
             `;
+        },
+        open(broadcast) {
+            this.$inertia.get(`broadcasts/${broadcast.id}`);
         }
     }
 }
@@ -60,7 +63,7 @@ export default {
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
-                <tr v-for="broadcast in model.broadcasts" :key="broadcast.email" class="hover:bg-gray-100">
+                <tr v-for="broadcast in model.broadcasts" :key="broadcast.email" class="hover:bg-gray-100 hover:cursor-pointer" @click="open(broadcast)">
                     <td class="px-6 py-4">
                         <div class="text-sm text-gray-900">{{ broadcast.subject }}</div>
                     </td>

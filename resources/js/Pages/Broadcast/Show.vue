@@ -52,6 +52,9 @@ export default {
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ model.broadcast.subject }}
+                <span class="inline-flex items-center justify-center px-2 py-1 mr-2 mb-4 text-xs font-bold leading-none text-white bg-blue-400 rounded-full">
+                    {{ model.broadcast.status }}
+                </span>
             </h2>
         </template>
         <div class="py-12 max-w-7xl mx-auto">
