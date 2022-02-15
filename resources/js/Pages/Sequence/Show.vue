@@ -47,14 +47,15 @@ export default {
             <div v-if="model.sequence.status === 'sent'" class="text-sm text-gray-900">
                 {{ getPerformance() }}
             </div>
-        </template>
-        <div class="py-12 max-w-7xl mx-auto">
             <button @click="remove()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-3 mt-6" type="button">
                 Delete
             </button>
             <button v-if="model.sequence.status === 'draft'" @click="publish()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                 Publish
             </button>
+        </template>
+        <div class="py-12 max-w-7xl mx-auto">
+
         </div>
     </BreezeAuthenticatedLayout>
 </template>

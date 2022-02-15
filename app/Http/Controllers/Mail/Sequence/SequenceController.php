@@ -44,4 +44,12 @@ class SequenceController extends Controller
             'model' => new ShowSequenceViewModel($sequence),
         ]);
     }
+
+    public function destroy(Sequence $sequence): RedirectResponse
+    {
+        $sequence->mails->each->delete();
+        $sequence->delete();
+
+        return Redirect::route('sequences.index');
+    }
 }
