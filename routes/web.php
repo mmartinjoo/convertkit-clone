@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Mail\Broadcast\BroadcastController;
+use App\Http\Controllers\Mail\Broadcast\SendBroadcastController;
 use App\Http\Controllers\Statistics\GetDashboardController;
 use App\Http\Controllers\Subscriber\SubscriberController;
 use Illuminate\Foundation\Application;
@@ -34,6 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('subscribers', [SubscriberController::class, 'index'])->name('subscribers.index');
 
     Route::resource('broadcasts', BroadcastController::class);
+    Route::patch('broadcasts/{broadcast}/send', SendBroadcastController::class);
 });
 
 require __DIR__.'/auth.php';

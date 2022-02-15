@@ -37,6 +37,9 @@ export default {
         },
         remove() {
             this.$inertia.delete(`/broadcasts/${this.model.broadcast.id}`);
+        },
+        send() {
+            this.$inertia.patch(`/broadcasts/${this.model.broadcast.id}/send`);
         }
     },
 }
@@ -70,7 +73,7 @@ export default {
             <button v-if="model.broadcast.status === 'draft'" @click="remove()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-3 mt-6" type="button">
                 Delete
             </button>
-            <button v-if="model.broadcast.status === 'draft'" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+            <button v-if="model.broadcast.status === 'draft'" @click="send()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                 Send
             </button>
         </div>
