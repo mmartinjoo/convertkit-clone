@@ -2,9 +2,11 @@
 
 namespace Domain\Mail\ViewModels\Broadcast;
 
+use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Shared\ViewModels\ViewModel;
+use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
 use Domain\Subscriber\DataTransferObjects\FormData;
 use Domain\Subscriber\DataTransferObjects\TagData;
 use Domain\Subscriber\Models\Form;
@@ -20,6 +22,14 @@ class ShowBroadcastViewModel extends ViewModel
     public function broadcast(): BroadcastData
     {
         return BroadcastData::from($this->broadcast);
+    }
+
+    /**
+     * @return TrackingData
+     */
+    public function performance(): TrackingData
+    {
+        return GetPerformanceAction::execute($this->broadcast);
     }
 
     /**
