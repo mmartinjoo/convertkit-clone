@@ -14,6 +14,11 @@ export default {
             required: true,
         },
     },
+    data() {
+        return {
+            selectedMail: null,
+        };
+    },
     methods: {
         remove() {
             this.$inertia.delete(`/sequences/${this.model.sequence.id}`);
@@ -31,6 +36,9 @@ export default {
                     days: [0,1,2,3,4,5,6],
                 }
             });
+        },
+        submit() {
+
         },
         getPerformance() {
             return `
@@ -69,7 +77,30 @@ export default {
             </button>
         </template>
         <div class="py-12 max-w-7xl mx-auto">
+            <form v-if="selectedMail" class="w-full max-w-lg mx-auto" @submit.prevent="submit">
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="subject">
+                            Subject
+                        </label>
+                        <input v-model="selectedMail.subject" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="subject" type="text">
+                    </div>
+                </div>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="content">
+                            Content
+                        </label>
+                        <textarea rows="10" v-model="selectedMail.content" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="content" type="text"></textarea>
+                    </div>
+                </div>
+            </form>
 
+            <div class="sm:px-6 lg:px-8 grid grid-cols-1 gap-2">
+                <div v-for="mail in model.sequence.mails" :key="mail.id" @click="selectedMail = mail" class="p-6 w-52 max-w-sm mx-auto bg-white shadow-md hover:cursor-pointer hover:bg-gray-50">
+                    <p class="text-gray-500">{{ mail.subject }}</p>
+                </div>
+            </div>
         </div>
     </BreezeAuthenticatedLayout>
 </template>
