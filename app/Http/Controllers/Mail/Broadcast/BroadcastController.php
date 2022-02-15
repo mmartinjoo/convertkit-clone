@@ -44,4 +44,11 @@ class BroadcastController extends Controller
             'model' => new ShowBroadcastViewModel($broadcast),
         ]);
     }
+
+    public function destroy(Broadcast $broadcast): RedirectResponse
+    {
+        $broadcast->delete();
+
+        return Redirect::route('broadcasts.index');
+    }
 }
