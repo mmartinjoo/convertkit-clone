@@ -19,14 +19,14 @@ class BroadcastController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Broadcast/Index', [
+        return Inertia::render('Broadcast/List', [
             'model' => new GetBroadcastsViewModel(),
         ]);
     }
 
     public function create(): Response
     {
-        return Inertia::render('Broadcast/Create', [
+        return Inertia::render('Broadcast/Form', [
             'model' => new CreateBroadcastViewModel(),
         ]);
     }
