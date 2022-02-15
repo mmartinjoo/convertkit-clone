@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Mail\Broadcast;
 use App\Http\Controllers\Controller;
 use Domain\Mail\Actions\Broadcast\CreateBroadcastAction;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
+use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Mail\ViewModels\Broadcast\CreateBroadcastViewModel;
 use Domain\Mail\ViewModels\Broadcast\GetBroadcastsViewModel;
+use Domain\Mail\ViewModels\Broadcast\ShowBroadcastViewModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -34,5 +36,12 @@ class BroadcastController extends Controller
         CreateBroadcastAction::execute(BroadcastData::fromRequest($request));
 
         return Redirect::route('broadcasts.index');
+    }
+
+    public function show(Broadcast $broadcast): Response
+    {
+        return Inertia::render('Broadcast/Show', [
+            'model' => new ShowBroadcastViewModel($broadcast),
+        ]);
     }
 }
