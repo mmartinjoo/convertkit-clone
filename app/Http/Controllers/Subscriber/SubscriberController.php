@@ -16,14 +16,14 @@ class SubscriberController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Subscriber/Index', [
+        return Inertia::render('Subscriber/List', [
             'model' => new GetSubscribersViewModel(),
         ]);
     }
 
     public function create(): Response
     {
-        return Inertia::render('Subscriber/Create', [
+        return Inertia::render('Subscriber/Form', [
             'model' => new CreateSubscriberViewModel(),
         ]);
     }

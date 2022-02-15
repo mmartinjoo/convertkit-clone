@@ -14,6 +14,9 @@ class GetSubscribersViewModel extends ViewModel
      */
     public function subscribers(): Collection
     {
-        return Subscriber::with(['form', 'tags'])->get()->map(fn (Subscriber $subscriber) => SubscriberData::from($subscriber));
+        return Subscriber::with(['form', 'tags'])
+            ->latest()
+            ->get()
+            ->map(fn (Subscriber $subscriber) => SubscriberData::from($subscriber));
     }
 }
