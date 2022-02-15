@@ -21,6 +21,17 @@ export default {
         publish() {
             this.$inertia.patch(`/sequences/${this.model.sequence.id}/publish`);
         },
+        addMail() {
+            this.$inertia.post(`/sequences/${this.model.sequence.id}/mails`, {
+                subject: 'My Awesome E-mail',
+                content: 'My Awesome Content',
+                schedule: {
+                    delay: 1,
+                    unit: 'day',
+                    days: [0,1,2,3,4,5,6],
+                }
+            });
+        },
         getPerformance() {
             return `
                 ${this.model.performance.total_sent_mails} Recipients •
@@ -52,6 +63,9 @@ export default {
             </button>
             <button v-if="model.sequence.status === 'draft'" @click="publish()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                 Publish
+            </button>
+            <button @click="addMail()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                Add E-Mail
             </button>
         </template>
         <div class="py-12 max-w-7xl mx-auto">

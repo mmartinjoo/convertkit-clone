@@ -4,6 +4,7 @@ use App\Http\Controllers\Mail\Broadcast\BroadcastController;
 use App\Http\Controllers\Mail\Broadcast\SendBroadcastController;
 use App\Http\Controllers\Mail\Sequence\PublishSequenceController;
 use App\Http\Controllers\Mail\Sequence\SequenceController;
+use App\Http\Controllers\Mail\Sequence\SequenceMailController;
 use App\Http\Controllers\Statistics\GetDashboardController;
 use App\Http\Controllers\Subscriber\SubscriberController;
 use Illuminate\Foundation\Application;
@@ -41,6 +42,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('sequences', SequenceController::class);
     Route::patch('sequences/{sequence}/publish', PublishSequenceController::class);
+
+    Route::resource('sequences/{sequence}/mails', SequenceMailController::class);
 });
 
 require __DIR__.'/auth.php';
