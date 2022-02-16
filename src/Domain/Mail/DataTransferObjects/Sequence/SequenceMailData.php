@@ -28,9 +28,10 @@ class SequenceMailData extends Data
 
     public static function fromRequest(Request $request): self
     {
+        // When creating a new one, the status can be null
         return self::from([
             ...$request->all(),
-            'status' => SequenceMailStatus::Draft,
+            'status' => $request->status ?: SequenceMailStatus::Draft,
         ]);
     }
 
@@ -38,7 +39,6 @@ class SequenceMailData extends Data
     {
         return self::from([
             ...$sequenceMail->toArray(),
-            'status' => $sequenceMail->status,
             'sequence' => Lazy::whenLoaded('sequence', $sequenceMail, fn () => SequenceData::from($sequenceMail->sequence)),
             'schedule' => Lazy::whenLoaded('schedule', $sequenceMail, fn () => SequenceMailScheduleData::from($sequenceMail->schedule)),
         ]);
