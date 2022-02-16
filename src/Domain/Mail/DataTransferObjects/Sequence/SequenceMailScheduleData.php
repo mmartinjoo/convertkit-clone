@@ -13,8 +13,7 @@ class SequenceMailScheduleData extends Data
         public readonly ?int $id,
         public readonly int $delay,
         public readonly SequenceMailUnit $unit,
-        /** @var array<int, int> */
-        public readonly array $days,
+        public readonly SequenceMailScheduleDaysData $days,
     ) {}
 
     public static function fromArray(array $data): self
@@ -23,7 +22,7 @@ class SequenceMailScheduleData extends Data
             Arr::get($data, 'id'),
             $data['delay'],
             SequenceMailUnit::from($data['unit']),
-            $data['days'],
+            SequenceMailScheduleDaysData::from($data['days']),
         );
     }
 

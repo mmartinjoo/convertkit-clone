@@ -12,6 +12,7 @@ use Domain\Mail\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class SequenceMail extends BaseModel implements Sendable
 {
@@ -84,8 +85,8 @@ class SequenceMail extends BaseModel implements Sendable
 
     public function shouldSendToday(): bool
     {
-        return collect($this->schedule->days)
-            ->contains(now()->dayOfWeek);
+        $dayName = Str::lower(now()->dayName);
+        return $this->schedule->days->{$dayName};
     }
 
     public function enoughTimePassedSince(SentMail $mail): bool
