@@ -27,7 +27,7 @@ class BroadcastData extends Data
         return self::from([
             ...$request->all(),
             'status' => BroadcastStatus::Draft,
-            'filters' => FilterData::collection(self::getFilters($request)),
+            'filters' => FilterData::collectionFromRequest($request),
         ]);
     }
 
@@ -37,28 +37,5 @@ class BroadcastData extends Data
             ...$broadcast->toArray(),
             'status' => $broadcast->status,
         ]);
-    }
-
-    private static function getFilters(Request $request): array
-    {
-        $filters = [];
-        $formIds = $request->input('filters.form_ids');
-        $tagIds = $request->input('filters.tag_ids');
-
-        if ($formIds) {
-            $filters[] = [
-                'type' => 'form',
-                'value' => $formIds,
-            ];
-        }
-
-        if ($tagIds) {
-            $filters[] = [
-                'type' => 'tag',
-                'value' => $tagIds,
-            ];
-        }
-
-        return $filters;
     }
 }
