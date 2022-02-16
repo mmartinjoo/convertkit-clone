@@ -22,6 +22,15 @@ export default {
     created() {
         this.selectedMail = this.model.sequence.mails[0];
     },
+    watch: {
+        selectedMail: {
+            deep: true,
+            handler: _.debounce(async function (mail) {
+                await axios.patch(`/sequences/${this.model.sequence.id}/mails/${mail.id}`, mail);
+            }, 1000)
+        }
+    },
+    // TODO: axios
     methods: {
         remove() {
             this.$inertia.delete(`/sequences/${this.model.sequence.id}`);
@@ -39,9 +48,6 @@ export default {
                     days: [0,1,2,3,4,5,6],
                 }
             });
-        },
-        submit() {
-
         },
         getPerformance() {
             return `
@@ -80,7 +86,7 @@ export default {
             </button>
         </template>
         <div class="py-12 max-w-7xl mx-auto grid grid-cols-2">
-            <form v-if="selectedMail" class="w-full max-w-lg mx-auto" @submit.prevent="submit">
+            <form v-if="selectedMail" class="w-full max-w-lg mx-auto">
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="subject">
