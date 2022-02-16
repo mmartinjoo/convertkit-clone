@@ -30,7 +30,6 @@ export default {
             }, 1000)
         }
     },
-    // TODO: axios
     methods: {
         remove() {
             this.$inertia.delete(`/sequences/${this.model.sequence.id}`);
@@ -38,16 +37,19 @@ export default {
         publish() {
             this.$inertia.patch(`/sequences/${this.model.sequence.id}/publish`);
         },
-        addMail() {
-            this.$inertia.post(`/sequences/${this.model.sequence.id}/mails`, {
+        async addMail() {
+            const { data } = await axios.post(`/sequences/${this.model.sequence.id}/mails`, {
                 subject: 'My Awesome E-mail',
                 content: 'My Awesome Content',
                 schedule: {
                     delay: 1,
                     unit: 'day',
-                    days: [0,1,2,3,4,5,6],
+                    days: {monday: true, tuesday: true, wednesday: true, thursday: true, friday: true, saturday: true, sunday: true},
                 }
             });
+
+            this.model.sequence.mails.push(data);
+            this.selectedMail = data;
         },
         getPerformance() {
             return `

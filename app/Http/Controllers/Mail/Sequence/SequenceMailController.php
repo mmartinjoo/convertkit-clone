@@ -6,21 +6,19 @@ use App\Http\Controllers\Controller;
 use Domain\Mail\Actions\Sequence\UpsertSequenceMailAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
 use Domain\Mail\Models\Sequence\Sequence;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Redirect;
 
 class SequenceMailController extends Controller
 {
-    public function store(Request $request, Sequence $sequence): RedirectResponse
+    public function store(Request $request, Sequence $sequence): SequenceMailData
     {
-        UpsertSequenceMailAction::execute(
+        $mail = UpsertSequenceMailAction::execute(
             SequenceMailData::fromRequest($request),
             $sequence
         );
 
-        return Redirect::route('sequences.show', $sequence);
+        return SequenceMailData::from($mail);
     }
 
     public function update(Request $request, Sequence $sequence): Response

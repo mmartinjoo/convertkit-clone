@@ -6,6 +6,8 @@ use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Mail\DataTransferObjects\FilterData;
 use Illuminate\Http\Request;
+use Spatie\LaravelData\Attributes\WithCast;
+use Spatie\LaravelData\Casts\EnumCast;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Lazy;
@@ -16,6 +18,7 @@ class SequenceMailData extends Data
         public readonly ?int $id,
         public readonly string $subject,
         public readonly string $content,
+        #[WithCast(EnumCast::class)]
         public readonly ?SequenceMailStatus $status,
         /** @var DataCollection<FilterData> */
         public readonly ?DataCollection $filters,
