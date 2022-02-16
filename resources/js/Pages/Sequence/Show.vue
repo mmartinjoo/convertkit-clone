@@ -97,6 +97,30 @@ export default {
                         <textarea rows="10" v-model="selectedMail.content" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="content" type="text"></textarea>
                     </div>
                 </div>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="delay">
+                            Schedule
+                        </label>
+                        <div class="mb-3">
+                            <input v-model="selectedMail.schedule.delay" class="appearance-none w-20 text-center bg-gray-200 text-gray-700 border rounded py-3 px-4 mr-3 leading-tight focus:outline-none focus:bg-white inline-flex" id="delay" type="number" min="1">
+                            <select v-model="selectedMail.schedule.unit" name="unit" id="unit" class="rounded bg-gray-200 focus:outline-none focus:bg-white">
+                                <option value="day">Day</option>
+                                <option value="hour">Hour</option>
+                            </select>
+                            <p class="inline-flex ml-2">After the last e-mail</p>
+                        </div>
+                        <div>
+                            <input v-model="selectedMail.schedule.days.monday" type="checkbox" class="mr-1"><span class="mr-3">Mon</span>
+                            <input v-model="selectedMail.schedule.days.tuesday" type="checkbox" class="mr-1"><span class="mr-3">Tue</span>
+                            <input v-model="selectedMail.schedule.days.wednesday" type="checkbox" class="mr-1"><span class="mr-3">Wed</span>
+                            <input v-model="selectedMail.schedule.days.thursday" type="checkbox" class="mr-1"><span class="mr-3">Thur</span>
+                            <input v-model="selectedMail.schedule.days.friday" type="checkbox" class="mr-1"><span class="mr-3">Fri</span>
+                            <input v-model="selectedMail.schedule.days.saturday" type="checkbox" class="mr-1"><span class="mr-3">Sat</span>
+                            <input v-model="selectedMail.schedule.days.sunday" type="checkbox" class="mr-1"><span class="mr-3">Sun</span>
+                        </div>
+                    </div>
+                </div>
             </form>
 
             <div class="sm:px-6 lg:px-8">
