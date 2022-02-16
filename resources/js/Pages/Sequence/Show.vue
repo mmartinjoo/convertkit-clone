@@ -26,6 +26,10 @@ export default {
         selectedMail: {
             deep: true,
             handler: _.debounce(async function (mail) {
+                if (!mail) {
+                    return;
+                }
+
                 await axios.patch(`/sequences/${this.model.sequence.id}/mails/${mail.id}`, mail);
             }, 1000)
         }
@@ -50,6 +54,16 @@ export default {
 
             this.model.sequence.mails.push(data);
             this.selectedMail = data;
+        },
+        async removeMail() {
+            await axios.delete(`/sequences/${this.model.sequence.id}/mails/${this.selectedMail.id}`);
+            this.model.sequence.mails = this.model.sequence.mails.filter(m => m.id !== this.selectedMail.id);
+
+            if (this.model.sequence.mails.length) {
+                this.selectedMail = this.model.sequence.mails[0];
+            } else {
+                this.selectedMail = null;
+            }
         },
         getPerformance() {
             return `
@@ -78,7 +92,7 @@ export default {
                 {{ getPerformance() }}
             </div>
             <button @click="remove()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-3 mt-6" type="button">
-                Delete
+                Remove Sequence
             </button>
             <button v-if="model.sequence.status === 'draft'" @click="publish()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
                 Publish
@@ -94,8 +108,11 @@ export default {
                         <button v-if="selectedMail.status === 'draft'" @click="this.selectedMail.status = 'published'" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
                             Publish
                         </button>
-                        <button v-if="selectedMail.status === 'published'" @click="this.selectedMail.status = 'draft'" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
+                        <button v-if="selectedMail.status === 'published'" @click="this.selectedMail.status = 'draft'" class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
                             Unpublish
+                        </button>
+                        <button @click="removeMail()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
+                            Remove Mail
                         </button>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Domain\Mail\Actions\Sequence\UpsertSequenceMailAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
 use Domain\Mail\Models\Sequence\Sequence;
+use Domain\Mail\Models\Sequence\SequenceMail;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -27,6 +28,13 @@ class SequenceMailController extends Controller
             SequenceMailData::fromRequest($request),
             $sequence
         );
+
+        return response()->noContent();
+    }
+
+    public function destroy(Sequence $sequence, SequenceMail $mail): Response
+    {
+        $mail->delete();
 
         return response()->noContent();
     }
