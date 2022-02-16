@@ -4,9 +4,10 @@ namespace Domain\Mail\DataTransferObjects\Broadcast;
 
 use Carbon\Carbon;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
-use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Mail\DataTransferObjects\FilterData;
 use Illuminate\Http\Request;
+use Spatie\LaravelData\Attributes\WithCast;
+use Spatie\LaravelData\Casts\EnumCast;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 
@@ -18,6 +19,7 @@ class BroadcastData extends Data
         public readonly string $content,
         /** @var DataCollection<FilterData> */
         public readonly ?DataCollection $filters,
+        #[WithCast(EnumCast::class)]
         public readonly ?BroadcastStatus $status,
         public readonly ?Carbon $sent_at,
     ) {}
@@ -26,16 +28,8 @@ class BroadcastData extends Data
     {
         return self::from([
             ...$request->all(),
-            'status' => BroadcastStatus::Draft,
+            'status' => $request->status ?: BroadcastStatus::Draft,
             'filters' => FilterData::collectionFromRequest($request),
-        ]);
-    }
-
-    public static function fromModel(Broadcast $broadcast): self
-    {
-        return self::from([
-            ...$broadcast->toArray(),
-            'status' => $broadcast->status,
         ]);
     }
 }

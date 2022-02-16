@@ -15,4 +15,9 @@ class SequenceMailScheduleDaysData extends Data
         public readonly bool $saturday,
         public readonly bool $sunday,
     ) {}
+
+    public static function empty($extra = []): array
+    {
+        return (new self(true, true, true, true, true, true, true))->toArray();
+    }
 }

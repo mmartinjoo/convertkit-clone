@@ -4,6 +4,7 @@ namespace Domain\Mail\Actions\Sequence;
 
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
+use Domain\Mail\DataTransferObjects\Sequence\SequenceMailScheduleDaysData;
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\Models\Sequence\Sequence;
 
@@ -20,7 +21,7 @@ class CreateSequenceAction
             'schedule' => [
                 'delay' => 1,
                 'unit' => 'day',
-                'days' => [0,1,2,3,4,5,6],
+                'days' => SequenceMailScheduleDaysData::empty(),
             ]
         ]);
 

@@ -17,7 +17,7 @@ class SequenceData extends Data
         public readonly ?int $id,
         public readonly string $title,
         #[WithCast(EnumCast::class)]
-        public readonly ?SequenceStatus $status,
+        public readonly SequenceStatus $status,
         /** @var DataCollection<SequenceMailData> */
         public readonly null|Lazy|DataCollection $mails,
     ) {}
@@ -34,7 +34,6 @@ class SequenceData extends Data
     {
         return self::from([
             ...$sequence->toArray(),
-            'status' => $sequence->status,
             'mails' => Lazy::whenLoaded('mails', $sequence, fn () => SequenceMailData::collection($sequence->mails)),
         ]);
     }

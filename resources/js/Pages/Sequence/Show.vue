@@ -48,7 +48,7 @@ export default {
                 schedule: {
                     delay: 1,
                     unit: 'day',
-                    days: {monday: true, tuesday: true, wednesday: true, thursday: true, friday: true, saturday: true, sunday: true},
+                    days: { monday: true, tuesday: true, wednesday: true, thursday: true, friday: true, saturday: true, sunday: true },
                 }
             });
 
