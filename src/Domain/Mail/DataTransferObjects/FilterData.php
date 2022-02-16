@@ -9,8 +9,8 @@ use Spatie\LaravelData\DataCollection;
 class FilterData extends Data
 {
     public function __construct(
-        public readonly string $type,
-        public readonly array $value,
+        public readonly array $form_ids,
+        public readonly array $tag_ids,
     ) {}
 
     /**

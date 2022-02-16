@@ -10,23 +10,13 @@ use function collect;
 
 class FiltersCast implements CastsAttributes
 {
-    /**
-     * @return Collection<FilterData>
-     */
-    public function get($model, string $key, $value, array $attributes): Collection
+    public function get($model, string $key, $value, array $attributes): FilterData
     {
-        $filtersArray = json_decode($value, true);
-        $filtersArray = $filtersArray ?: [];
-        $filtersData = collect([]);
+        $filterArray = json_decode($value, true);
 
-        foreach ($filtersArray as $filter) {
-            $filtersData[] = FilterData::from([
-                'type' => $filter['type'],
-                'value' => $filter['value'],
-            ]);
-        }
-
-        return $filtersData;
+        return $filterArray
+            ? FilterData::from($filterArray)
+            : FilterData::from(FilterData::empty());
     }
 
     /**
