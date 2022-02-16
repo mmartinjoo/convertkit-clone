@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\EnumCast;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\DataCollection;
 
 class BroadcastData extends Data
 {
@@ -17,10 +16,10 @@ class BroadcastData extends Data
         public readonly ?int $id,
         public readonly string $subject,
         public readonly string $content,
-        /** @var DataCollection<FilterData> */
-        public readonly ?DataCollection $filters,
+        /** @var FilterData */
+        public readonly FilterData $filters,
         #[WithCast(EnumCast::class)]
-        public readonly ?BroadcastStatus $status,
+        public readonly BroadcastStatus $status,
         public readonly ?Carbon $sent_at,
     ) {}
 
@@ -29,7 +28,6 @@ class BroadcastData extends Data
         return self::from([
             ...$request->all(),
             'status' => $request->status ?: BroadcastStatus::Draft,
-            'filters' => FilterData::collectionFromRequest($request),
         ]);
     }
 }

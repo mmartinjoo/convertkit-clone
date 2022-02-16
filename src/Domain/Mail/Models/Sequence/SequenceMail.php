@@ -11,7 +11,6 @@ use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class SequenceMail extends BaseModel implements Sendable
@@ -55,10 +54,7 @@ class SequenceMail extends BaseModel implements Sendable
         return new SequenceMailBuilder($query);
     }
 
-    /**
-     * @return Collection<FilterData>
-     */
-    public function filters(): Collection
+    public function filters(): FilterData
     {
         return $this->filters;
     }

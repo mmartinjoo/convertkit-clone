@@ -9,7 +9,6 @@ use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Collection;
 
 class Broadcast extends BaseModel implements Sendable
 {
@@ -36,10 +35,7 @@ class Broadcast extends BaseModel implements Sendable
         return $this->morphMany(SentMail::class, 'mailable');
     }
 
-    /**
-     * @return Collection<FilterData>
-     */
-    public function filters(): Collection
+    public function filters(): FilterData
     {
         return $this->filters;
     }

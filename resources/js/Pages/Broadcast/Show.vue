@@ -15,20 +15,6 @@ export default {
         },
     },
     methods: {
-        filters() {
-            const formIds = this.model.broadcast.filters
-                .filter(filter => filter.type === 'form')
-                .flatMap(filter => filter.value);
-
-            const tagIds = this.model.broadcast.filters
-                .filter(filter => filter.type === 'tag')
-                .flatMap(filter => filter.value);
-
-            return {
-                formIds,
-                tagIds,
-            };
-        },
         tagTitle(id) {
             return this.model.tags.find(tag => tag.id === id).title;
         },
@@ -71,15 +57,15 @@ export default {
         <div class="py-12 max-w-7xl mx-auto">
             <div v-html="model.broadcast.content" class="mb-6"></div>
 
-            <div v-if="filters().formIds.length">
+            <div v-if="model.broadcast.filters.form_ids.length">
                 Form filters:
-                <span v-for="formId in filters().formIds" class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-gray-400 rounded-full">
+                <span v-for="formId in model.broadcast.filters.form_ids" class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-gray-400 rounded-full">
                     {{ formTitle(formId) }}
                 </span>
             </div>
-            <div v-if="filters().tagIds.length">
+            <div v-if="model.broadcast.filters.tag_ids.length">
                 Tag filters:
-                <span v-for="tagId in filters().tagIds" class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-blue-400 rounded-full">
+                <span v-for="tagId in model.broadcast.filters.tag_ids" class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-blue-400 rounded-full">
                     {{ formTitle(tagId) }}
                 </span>
             </div>
