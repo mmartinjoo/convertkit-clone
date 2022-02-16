@@ -90,6 +90,16 @@ export default {
         <div class="py-12 max-w-7xl mx-auto grid grid-cols-2">
             <form v-if="selectedMail" class="w-full max-w-lg mx-auto">
                 <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <button v-if="selectedMail.status === 'draft'" @click="this.selectedMail.status = 'published'" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
+                            Publish
+                        </button>
+                        <button v-if="selectedMail.status === 'published'" @click="this.selectedMail.status = 'draft'" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
+                            Unpublish
+                        </button>
+                    </div>
+                </div>
+                <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="subject">
                             Subject
