@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\EnumCast;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Lazy;
 
 class SequenceMailData extends Data
@@ -19,9 +18,8 @@ class SequenceMailData extends Data
         public readonly string $subject,
         public readonly string $content,
         #[WithCast(EnumCast::class)]
-        public readonly ?SequenceMailStatus $status,
-        /** @var DataCollection<FilterData> */
-        public readonly ?DataCollection $filters,
+        public readonly SequenceMailStatus $status,
+        public readonly FilterData $filters,
         public readonly null|Lazy|SequenceData $sequence,
         public readonly Lazy|SequenceMailScheduleData $schedule,
     ) {}
@@ -32,6 +30,7 @@ class SequenceMailData extends Data
         return self::from([
             ...$request->all(),
             'status' => $request->status ?: SequenceMailStatus::Draft,
+            'filters' => $request->filters ?: FilterData::empty(),
         ]);
     }
 

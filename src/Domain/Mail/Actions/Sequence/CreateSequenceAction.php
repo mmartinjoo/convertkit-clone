@@ -2,6 +2,7 @@
 
 namespace Domain\Mail\Actions\Sequence;
 
+use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailScheduleDaysData;

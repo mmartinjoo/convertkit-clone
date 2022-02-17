@@ -16,7 +16,6 @@ class BroadcastData extends Data
         public readonly ?int $id,
         public readonly string $subject,
         public readonly string $content,
-        /** @var FilterData */
         public readonly FilterData $filters,
         #[WithCast(EnumCast::class)]
         public readonly BroadcastStatus $status,
