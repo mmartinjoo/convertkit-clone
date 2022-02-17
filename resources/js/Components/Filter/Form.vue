@@ -3,12 +3,20 @@ export default {
     name: 'FiltersForm',
     props: {
         tags: {
-            type: Object,
+            type: Array,
             required: true,
         },
         forms: {
-            type: Object,
+            type: Array,
             required: true,
+        },
+        initialSelectedTagIds: {
+            type: Array,
+            required: false,
+        },
+        initialSelectedFormIds: {
+            type: Array,
+            required: false,
         },
     },
     data() {
@@ -16,6 +24,18 @@ export default {
             selectedTagIds: [],
             selectedFormIds: [],
         };
+    },
+    watch: {
+        initialSelectedTagIds: function (value) {
+            this.selectedTagIds = value;
+        },
+        initialSelectedFormIds: function (value) {
+            this.selectedFormIds = value;
+        },
+    },
+    created() {
+        this.selectedTagIds = this.initialSelectedTagIds;
+        this.selectedFormIds = this.initialSelectedFormIds;
     },
     methods: {
         filtersChanged() {

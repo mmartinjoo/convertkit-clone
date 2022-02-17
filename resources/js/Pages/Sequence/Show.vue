@@ -1,9 +1,11 @@
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import FiltersForm from "@/Components/Filter/Form";
 
 export default {
     components: {
+        FiltersForm,
         BreezeAuthenticatedLayout,
         Head,
         Link,
@@ -64,6 +66,10 @@ export default {
             } else {
                 this.selectedMail = null;
             }
+        },
+        updateFilters(filters) {
+            this.selectedMail.filters.form_ids = filters.formIds;
+            this.selectedMail.filters.tag_ids = filters.tagIds;
         },
         getPerformance() {
             return `
@@ -154,6 +160,17 @@ export default {
                             <input v-model="selectedMail.schedule.days.saturday" type="checkbox" class="mr-1"><span class="mr-3">Sat</span>
                             <input v-model="selectedMail.schedule.days.sunday" type="checkbox" class="mr-1"><span class="mr-3">Sun</span>
                         </div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <FiltersForm
+                            :tags="model.tags"
+                            :forms="model.forms"
+                            :initial-selected-form-ids="this.selectedMail.filters.form_ids"
+                            :initial-selected-tag-ids="this.selectedMail.filters.tag_ids"
+                            @filtersChanged="updateFilters($event)"
+                        />
                     </div>
                 </div>
             </form>
