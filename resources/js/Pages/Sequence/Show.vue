@@ -2,9 +2,11 @@
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import FiltersForm from "@/Components/Filter/Form";
+import SequenceMailList from "@/Pages/Sequence/SequenceMail/List";
 
 export default {
     components: {
+        SequenceMailList,
         FiltersForm,
         BreezeAuthenticatedLayout,
         Head,
@@ -175,11 +177,7 @@ export default {
                 </div>
             </form>
 
-            <div class="sm:px-6 lg:px-8">
-                <div v-for="mail in model.sequence.mails" :key="mail.id" @click="selectedMail = mail" class="p-6 w-52 max-w-sm mx-auto bg-white shadow-md hover:cursor-pointer hover:bg-gray-50 mb-4">
-                    <p class="text-gray-500">{{ mail.subject }}</p>
-                </div>
-            </div>
+            <SequenceMailList :mails="model.sequence.mails" @selected="selectedMail = $event" />
         </div>
     </BreezeAuthenticatedLayout>
 </template>
