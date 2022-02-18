@@ -90,8 +90,13 @@ export default {
                     {{ model.sequence.status }}
                 </span>
             </h2>
-            <div v-if="model.sequence.status === 'sent'" class="text-sm text-gray-900">
-                {{ getPerformance() }}
+            <div>
+                <div v-if="model.sequence.status === 'published'" class="text-sm text-gray-900 inline-flex">
+                    {{ getPerformance() }}
+                </div>
+                <Link v-if="model.sequence.status === 'published'" :href="`/sequences/${model.sequence.id}/reports`" class="ml-4 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                    See Reports
+                </Link>
             </div>
             <button v-if="model.sequence.status === 'draft'" @click="publish()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
                 Publish
