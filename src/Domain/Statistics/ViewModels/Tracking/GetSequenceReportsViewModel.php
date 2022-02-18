@@ -2,7 +2,6 @@
 
 namespace Domain\Statistics\ViewModels\Tracking;
 
-use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Models\SentMail;
 use Domain\Mail\Models\Sequence\Sequence;
@@ -51,7 +50,7 @@ class GetSequenceReportsViewModel extends ViewModel
     public function mailPerformances(): Collection
     {
         return $this->sequence->mails->mapWithKeys(fn (SequenceMail $mail) =>
-            [$mail->id => GetPerformanceAction::execute($mail)]
+            [$mail->id => $mail->getPerformance()],
         );
     }
 

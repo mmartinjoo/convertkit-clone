@@ -1,18 +1,26 @@
 <?php
 
-namespace Domain\Mail\Actions;
+namespace Domain\Mail\Models\Concerns;
 
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
 use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
 use Domain\Statistics\ValueObjects\Percent;
 use Illuminate\Database\Eloquent\Builder;
+use RuntimeException;
 
-class GetPerformanceAction
+trait HasPerformance
 {
-    public static function execute(Sendable $sendable): TrackingData
+    public static function bootHasPerformance()
     {
-        $total = self::sentMail($sendable)->count();
+        if (! (new self() instanceof Sendable)) {
+            throw new RuntimeException('HasPerformance can only be used in Sendable instances');
+        }
+    }
+
+    public function getPerformance(): TrackingData
+    {
+        $total = $this->sentMail()->count();
 
         if ($total === 0) {
             return new TrackingData(
@@ -24,33 +32,33 @@ class GetPerformanceAction
 
         return new TrackingData(
             total_sent_mails: $total,
-            average_open_rate: self::averageOpenRate($total, $sendable),
-            average_click_rate: self::averageClickRate($total, $sendable),
+            average_open_rate: $this->averageOpenRate($total),
+            average_click_rate: $this->averageClickRate($total),
         );
     }
 
-    private static function averageOpenRate(int $total, Sendable $sendable): Percent
+    protected function averageOpenRate(int $total): Percent
     {
         return Percent::from(
-            self::sentMail($sendable)
+            $this->sentMail()
                 ->whereOpened()
                 ->count() / $total
         );
     }
 
-    private static function averageClickRate(int $total, Sendable $sendable): Percent
+    protected function averageClickRate(int $total): Percent
     {
         return Percent::from(
-            self::sentMail($sendable)
+            $this->sentMail()
                 ->whereClicked()
                 ->count() / $total
         );
     }
 
-    private static function sentMail(Sendable $sendable): Builder
+    protected function sentMail(): Builder
     {
         return SentMail::query()
-            ->where('mailable_id', $sendable->id())
-            ->where('mailable_type', $sendable->type());
+            ->where('mailable_id', $this->id())
+            ->where('mailable_type', $this->type());
     }
 }
