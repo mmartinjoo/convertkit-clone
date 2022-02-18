@@ -3,6 +3,7 @@
 namespace Domain\Mail\Models\Concerns;
 
 use Domain\Mail\Models\SentMail;
+use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
 use Domain\Statistics\ValueObjects\Percent;
 
@@ -10,7 +11,11 @@ trait HasPerformance
 {
     public function getPerformance(): TrackingData
     {
-        $total = SentMail::getCountOf($this);
+        if ($this instanceof Sequence) {
+            $total = $this->getSubscriberCount();
+        } else {
+            $total = SentMail::getCountOf($this);
+        }
 
         if ($total === 0) {
             return new TrackingData(

@@ -23,9 +23,6 @@ class ShowSequenceViewModel extends ViewModel
         return SequenceData::from($this->sequence->load('mails.schedule'));
     }
 
-    /**
-     * @return TrackingData
-     */
     public function performance(): TrackingData
     {
         return $this->sequence->getPerformance();

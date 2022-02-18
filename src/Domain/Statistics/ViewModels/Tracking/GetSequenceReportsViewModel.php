@@ -38,7 +38,7 @@ class GetSequenceReportsViewModel extends ViewModel
         }
 
         return new TrackingData(
-            total_sent_mails: $total,
+            total_sent_mails: $this->sequence->getSubscriberCount(),
             average_open_rate: $this->averageOpenRate($total),
             average_click_rate: $this->averageClickRate($total),
         );
