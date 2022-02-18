@@ -3,14 +3,11 @@
 namespace Domain\Statistics\ViewModels\Tracking;
 
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
-use Domain\Mail\Models\SentMail;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Statistics\DataTransferObjects\SequenceProgress\SequenceProgressData;
 use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
-use Domain\Statistics\ValueObjects\Percent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -27,21 +24,7 @@ class GetSequenceReportsViewModel extends ViewModel
 
     public function totalPerformance(): TrackingData
     {
-        $total = $this->sentMails($this->sequence)->count();
-
-        if ($total === 0) {
-            return new TrackingData(
-                total_sent_mails: 0,
-                average_open_rate: Percent::from(0),
-                average_click_rate: Percent::from(0),
-            );
-        }
-
-        return new TrackingData(
-            total_sent_mails: $this->sequence->getSubscriberCount(),
-            average_open_rate: $this->averageOpenRate($total),
-            average_click_rate: $this->averageClickRate($total),
-        );
+        return $this->sequence->getPerformance();
     }
 
     /*
@@ -80,30 +63,5 @@ class GetSequenceReportsViewModel extends ViewModel
 
                 return $sentMailStat;
             });
-    }
-
-    private function averageOpenRate(int $total): Percent
-    {
-        return Percent::from(
-            $this->sentMails()
-                ->whereOpened()
-                ->count() / $total
-        );
-    }
-
-    private function averageClickRate(int $total): Percent
-    {
-        return Percent::from(
-            $this->sentMails()
-                ->whereClicked()
-                ->count() / $total
-        );
-    }
-
-    private function sentMails(): Builder
-    {
-        return SentMail::query()
-            ->whereIn('mailable_id', $this->sequence->mails()->pluck('id'))
-            ->whereMailableType(SequenceMail::class);
     }
 }
