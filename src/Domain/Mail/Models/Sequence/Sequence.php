@@ -3,11 +3,14 @@
 namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Enums\Sequence\SequenceStatus;
+use Domain\Mail\Models\Concerns\HasPerformance;
 use Domain\Shared\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Sequence extends BaseModel
 {
+    use HasPerformance;
+
     protected $fillable = [
         'title',
         'status',
