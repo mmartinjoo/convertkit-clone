@@ -19,6 +19,7 @@ class CreateSequenceAction
             'subject' => 'My Awesome E-mail',
             'content' => 'My Awesome Content',
             'status' => SequenceMailStatus::Draft,
+            'filters' => FilterData::empty(),
             'schedule' => [
                 'delay' => 1,
                 'unit' => 'day',
@@ -27,6 +28,7 @@ class CreateSequenceAction
         ]);
 
         UpsertSequenceMailAction::execute($mailData, $sequence);
+
         return $sequence;
     }
 }

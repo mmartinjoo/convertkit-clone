@@ -30,6 +30,10 @@ export default {
         },
         open(sequence) {
             this.$inertia.get(`sequences/${sequence.id}`);
+        },
+        async remove(sequence) {
+            await axios.delete(`sequences/${sequence.id}`);
+            this.model.sequences = this.model.sequences.filter(s => s.id !== sequence.id);
         }
     }
 }
@@ -63,11 +67,13 @@ export default {
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Performance
                     </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    </th>
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
-                <tr v-for="sequence in model.sequences" :key="sequence.id" class="hover:bg-gray-100 hover:cursor-pointer" @click="open(sequence)">
-                    <td class="px-6 py-4">
+                <tr v-for="sequence in model.sequences" :key="sequence.id" class="hover:bg-gray-100">
+                    <td class="px-6 py-4 hover:cursor-pointer" @click="open(sequence)">
                         <div class="text-sm text-gray-900">{{ sequence.title }}</div>
                     </td>
                     <td class="px-6 py-4">
@@ -80,6 +86,11 @@ export default {
                         <div class="text-sm text-gray-900">
                             {{ getPerformance(sequence) }}
                         </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <button @click.prevent="remove(sequence)" class="bg-transparent hover:bg-red-500 text-ree-700 hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">
+                            Remove
+                        </button>
                     </td>
                 </tr>
                 </tbody>
