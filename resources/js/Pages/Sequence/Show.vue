@@ -101,9 +101,6 @@ export default {
             <button v-if="model.sequence.status === 'draft'" @click="publish()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
                 Publish
             </button>
-            <button @click="addMail()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                Add E-Mail
-            </button>
         </template>
         <div class="py-12 max-w-7xl mx-auto grid grid-cols-2">
             <SequenceMailForm
@@ -115,7 +112,7 @@ export default {
                 @removed="removeMail()"
             />
 
-            <SequenceMailList :mails="model.sequence.mails" @selected="selectedMail = $event" />
+            <SequenceMailList :mails="model.sequence.mails" @selected="selectedMail = $event" @mailAdded="addMail()" />
         </div>
     </BreezeAuthenticatedLayout>
 </template>
