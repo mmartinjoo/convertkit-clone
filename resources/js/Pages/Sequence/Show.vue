@@ -39,8 +39,9 @@ export default {
         }
     },
     methods: {
-        publish() {
-            this.$inertia.patch(`/sequences/${this.model.sequence.id}/publish`);
+        async publish() {
+            const { data } = await axios.patch(`/sequences/${this.model.sequence.id}/publish`);
+            this.model.sequence.status = data.status;
         },
         async addMail() {
             const { data } = await axios.post(`/sequences/${this.model.sequence.id}/mails`, {
