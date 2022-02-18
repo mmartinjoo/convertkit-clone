@@ -39,9 +39,6 @@ export default {
         }
     },
     methods: {
-        remove() {
-            this.$inertia.delete(`/sequences/${this.model.sequence.id}`);
-        },
         publish() {
             this.$inertia.patch(`/sequences/${this.model.sequence.id}/publish`);
         },

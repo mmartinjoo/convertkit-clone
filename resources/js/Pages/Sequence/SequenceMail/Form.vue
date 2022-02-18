@@ -39,19 +39,6 @@ export default {
 <template>
     <form v-if="mail" class="w-full max-w-lg mx-auto">
         <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full px-3">
-                <button v-if="mail.status === 'draft'" @click="this.mail.status = 'published'" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
-                    Publish
-                </button>
-                <button v-if="mail.status === 'published'" @click="this.mail.status = 'draft'" class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
-                    Unpublish
-                </button>
-                <button @click="$emit('removed', mail)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
-                    Remove Mail
-                </button>
-            </div>
-        </div>
-        <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full px-3 mb-6 md:mb-0">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="subject">
                     Subject
@@ -100,6 +87,19 @@ export default {
                     :initial-selected-tag-ids="mail.filters.tag_ids"
                     @filtersChanged="updateFilters($event)"
                 />
+            </div>
+        </div>
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full px-3">
+                <button v-if="mail.status === 'draft'" @click="this.mail.status = 'published'" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
+                    Publish
+                </button>
+                <button v-if="mail.status === 'published'" @click="this.mail.status = 'draft'" class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
+                    Unpublish
+                </button>
+                <button @click="$emit('removed', mail)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
+                    Remove
+                </button>
             </div>
         </div>
     </form>
