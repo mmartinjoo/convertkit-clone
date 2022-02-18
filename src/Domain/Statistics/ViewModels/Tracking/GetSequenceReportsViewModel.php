@@ -70,7 +70,7 @@ class GetSequenceReportsViewModel extends ViewModel
         return DB::table('sent_mails')
             ->select(DB::raw('subscriber_id, count(*) count'))
             ->whereIn('mailable_id', $this->sequence->mails()->pluck('id'))
-            ->whereMailableType("Domain\\Sequence\\Models\\SequenceMail")
+            ->whereMailableType(SequenceMail::class)
             ->groupBy('subscriber_id')
             ->get()
             ->map(function (object $sentMailStat) {
@@ -104,6 +104,6 @@ class GetSequenceReportsViewModel extends ViewModel
     {
         return SentMail::query()
             ->whereIn('mailable_id', $this->sequence->mails()->pluck('id'))
-            ->whereMailableType("Domain\\Sequence\\Models\\SequenceMail");
+            ->whereMailableType(SequenceMail::class);
     }
 }

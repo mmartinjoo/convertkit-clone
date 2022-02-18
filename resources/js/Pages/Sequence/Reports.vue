@@ -37,6 +37,20 @@ export default {
             {{ getPerformance() }}
         </template>
         <div class="py-12 max-w-7xl mx-auto">
+            <div class="sm:px-6 lg:px-8 grid grid-cols-3 gap-2 mb-10">
+                <div class="p-6 w-52 max-w-sm mx-auto bg-white shadow-md">
+                    <p class="text-gray-500">Recipients</p>
+                    <div class="text-xl font-medium text-black">{{ model.progress.total }}</div>
+                </div>
+                <div class="p-6 w-52 max-w-sm mx-auto bg-white shadow-md">
+                    <p class="text-gray-500">In Progress</p>
+                    <div class="text-xl font-medium text-black">{{ model.progress.in_progress }}</div>
+                </div>
+                <div class="p-6 w-52 max-w-sm mx-auto bg-white shadow-md">
+                    <p class="text-gray-500">Completed</p>
+                    <div class="text-xl font-medium text-black">{{ model.progress.completed }}</div>
+                </div>
+            </div>
             <table class="min-w-full divide-y divide-gray-200 mx-16">
                 <thead class="bg-gray-50">
                 <tr>
