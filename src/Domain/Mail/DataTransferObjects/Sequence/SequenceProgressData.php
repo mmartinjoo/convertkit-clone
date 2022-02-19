@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Statistics\DataTransferObjects;
+namespace Domain\Mail\DataTransferObjects\Sequence;
 
 use Spatie\LaravelData\Data;
 

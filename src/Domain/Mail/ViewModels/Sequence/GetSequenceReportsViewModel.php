@@ -1,13 +1,13 @@
 <?php
 
-namespace Domain\Statistics\ViewModels;
+namespace Domain\Mail\ViewModels\Sequence;
 
 use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\ViewModels\ViewModel;
-use Domain\Statistics\DataTransferObjects\SequenceProgressData;
+use Domain\Mail\DataTransferObjects\Sequence\SequenceProgressData;
 use Domain\Statistics\DataTransferObjects\PerformanceData;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
