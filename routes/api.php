@@ -3,7 +3,6 @@
 use App\Http\Controllers\Mail\Broadcast\SendBroadcastController;
 use App\Http\Controllers\Mail\SentMail\ClickSentMailController;
 use App\Http\Controllers\Mail\SentMail\OpenSentMailController;
-use App\Http\Controllers\Statistics\GetDailySubscribersController;
 use App\Http\Controllers\Subscriber\ImportSubscribersController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +19,7 @@ Route::post('broadcasts/{broadcast}/send', SendBroadcastController::class);
 Route::patch('sent-mails/{sentMail}/open', OpenSentMailController::class);
 Route::patch('sent-mails/{sentMail}/click', ClickSentMailController::class);
 
-Route::get('statistics/daily-subscribers', GetDailySubscribersController::class);
+//Route::get('statistics/daily-subscribers', GetDailySubscribersController::class);
 //Route::get('statistics/sequence-progresses/{sequence}', GetSequenceProgressController::class);
 //Route::get('statistics/trackings/broadcasts/{broadcast}', GetBroadcastTrackingController::class);
 //Route::get('statistics/trackings/sequence-mails/{sequenceMail}', GetSequenceMailTrackingController::class);

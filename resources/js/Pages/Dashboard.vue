@@ -86,6 +86,30 @@ export default {
                 </tr>
                 </tbody>
             </table>
+
+            <h2 class="pl-20 mb-2 mt-4">Daily Subscribers</h2>
+            <table class="min-w-full divide-y divide-gray-200 mx-16">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Date
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Count
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
+                <tr v-for="daily in model.daily_subscribers" :key="daily.day" class="hover:bg-gray-100">
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">{{ daily.day }}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">{{ daily.count }}</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 
     </BreezeAuthenticatedLayout>
