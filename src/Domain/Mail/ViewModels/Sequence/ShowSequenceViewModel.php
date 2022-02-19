@@ -2,6 +2,7 @@
 
 namespace Domain\Mail\ViewModels\Sequence;
 
+use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Shared\ViewModels\ViewModel;
@@ -25,7 +26,7 @@ class ShowSequenceViewModel extends ViewModel
 
     public function performance(): TrackingData
     {
-        return $this->sequence->getPerformance();
+        return GetPerformanceAction::execute($this->sequence);
     }
 
     /**

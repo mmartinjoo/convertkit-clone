@@ -2,6 +2,7 @@
 
 namespace Domain\Mail\ViewModels\Broadcast;
 
+use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Shared\ViewModels\ViewModel;
@@ -28,7 +29,7 @@ class ShowBroadcastViewModel extends ViewModel
      */
     public function performance(): TrackingData
     {
-        return $this->broadcast->getPerformance();
+        return GetPerformanceAction::execute($this->broadcast);
     }
 
     /**

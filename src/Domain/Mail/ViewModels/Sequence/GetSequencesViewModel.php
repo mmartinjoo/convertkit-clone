@@ -2,6 +2,7 @@
 
 namespace Domain\Mail\ViewModels\Sequence;
 
+use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Shared\ViewModels\ViewModel;
@@ -29,7 +30,7 @@ class GetSequencesViewModel extends ViewModel
     {
         return Sequence::all()
             ->mapWithKeys(fn (Sequence $sequence) => [
-                $sequence->id => $sequence->getPerformance(),
+                $sequence->id => GetPerformanceAction::execute($sequence),
             ]);
     }
 }
