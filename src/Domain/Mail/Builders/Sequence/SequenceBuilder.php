@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SequenceBuilder extends Builder
 {
-    public function getSubscriberCount()
+    public function getSubscriberCount(): int
     {
         return SentMail::whereSequence($this->model)
             ->distinct('subscriber_id')

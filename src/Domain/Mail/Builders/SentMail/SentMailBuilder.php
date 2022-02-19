@@ -34,13 +34,9 @@ class SentMailBuilder extends Builder
             ->where('mailable_type', SequenceMail::class);
     }
 
-    public function getCountOf(Sendable|Sequence $model): int
+    public function getCountOf(Sendable $model): int
     {
-        $query = $model instanceof Sequence
-            ? $this->whereSequence($model)
-            : $this->whereSendable($model);
-
-        return $query->count();
+        return $this->whereSendable($model)->count();
     }
 
     public function getAverageOpenRate(Sendable|Sequence $model, int $total): Percent
