@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Statistics\DataTransferObjects\SequenceProgress;
+namespace Domain\Statistics\DataTransferObjects;
 
 use Spatie\LaravelData\Data;
 
