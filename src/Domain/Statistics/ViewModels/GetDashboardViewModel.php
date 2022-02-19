@@ -4,7 +4,7 @@ namespace Domain\Statistics\ViewModels;
 
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\ViewModels\ViewModel;
-use Domain\Statistics\DataTransferObjects\DailyNewSubscribers\DailyData;
+use Domain\Statistics\DataTransferObjects\DailySubscribersData;
 use Domain\Statistics\DataTransferObjects\NewSubscribersCountData;
 use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
 use Domain\Statistics\Filters\DateFilter;
@@ -27,7 +27,7 @@ class GetDashboardViewModel extends ViewModel
     }
 
     /**
-     * @return Collection<DailyData>
+     * @return Collection<DailySubscribersData>
      */
     public function dailySubscribers(): Collection
     {
@@ -36,7 +36,7 @@ class GetDashboardViewModel extends ViewModel
             ->groupBy('day')
             ->orderByDesc('day')
             ->get()
-            ->map(fn (object $data) => DailyData::from((array) $data));
+            ->map(fn (object $data) => DailySubscribersData::from((array) $data));
     }
 
     public function tracking(): TrackingData

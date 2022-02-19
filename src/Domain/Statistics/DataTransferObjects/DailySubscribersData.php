@@ -1,10 +1,10 @@
 <?php
 
-namespace Domain\Statistics\DataTransferObjects\DailyNewSubscribers;
+namespace Domain\Statistics\DataTransferObjects;
 
 use Spatie\LaravelData\Data;
 
-class DailyData extends Data
+class DailySubscribersData extends Data
 {
     public function __construct(
         public readonly string $day,
