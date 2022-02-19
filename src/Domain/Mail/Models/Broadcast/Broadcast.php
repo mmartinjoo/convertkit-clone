@@ -5,7 +5,6 @@ namespace Domain\Mail\Models\Broadcast;
 use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Mail\DataTransferObjects\FilterData;
-use Domain\Mail\Models\Concerns\HasPerformance;
 use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
@@ -13,8 +12,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Broadcast extends BaseModel implements Sendable
 {
-    use HasPerformance;
-
     protected $fillable = [
         'id',
         'subject',

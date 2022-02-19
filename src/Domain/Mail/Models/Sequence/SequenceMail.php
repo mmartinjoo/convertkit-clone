@@ -5,7 +5,6 @@ namespace Domain\Mail\Models\Sequence;
 use Domain\Mail\Builders\Sequence\SequenceMailBuilder;
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\DataTransferObjects\FilterData;
-use Domain\Mail\Models\Concerns\HasPerformance;
 use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Contracts\Sendable;
@@ -16,8 +15,6 @@ use Illuminate\Support\Str;
 
 class SequenceMail extends BaseModel implements Sendable
 {
-    use HasPerformance;
-
     protected $fillable = [
         'sequence_id',
         'sequence_mail_schedule_id',
