@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Mail\Sequence;
 
 use App\Http\Controllers\Controller;
 use Domain\Mail\Models\Sequence\Sequence;
-use Domain\Statistics\ViewModels\Tracking\GetSequenceReportsViewModel;
+use Domain\Statistics\ViewModels\GetSequenceReportsViewModel;
 use Inertia\Inertia;
 use Inertia\Response;
 

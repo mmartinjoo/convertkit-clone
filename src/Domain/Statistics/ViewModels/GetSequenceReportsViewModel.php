@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Statistics\ViewModels\Tracking;
+namespace Domain\Statistics\ViewModels;
 
 use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
