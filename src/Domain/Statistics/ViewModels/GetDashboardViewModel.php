@@ -6,7 +6,7 @@ use Domain\Mail\Models\SentMail;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Statistics\DataTransferObjects\DailySubscribersData;
 use Domain\Statistics\DataTransferObjects\NewSubscribersCountData;
-use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
+use Domain\Statistics\DataTransferObjects\PerformanceData;
 use Domain\Statistics\Filters\DateFilter;
 use Domain\Statistics\ValueObjects\Percent;
 use Domain\Subscriber\DataTransferObjects\SubscriberData;
@@ -39,11 +39,11 @@ class GetDashboardViewModel extends ViewModel
             ->map(fn (object $data) => DailySubscribersData::from((array) $data));
     }
 
-    public function tracking(): TrackingData
+    public function tracking(): PerformanceData
     {
         $total = SentMail::count();
 
-        return new TrackingData(
+        return new PerformanceData(
             total_sent_mails: $total,
             average_open_rate: $this->averageOpenRate($total),
             average_click_rate: $this->averageClickRate($total),

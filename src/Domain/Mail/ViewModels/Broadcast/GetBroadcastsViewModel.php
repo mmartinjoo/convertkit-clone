@@ -6,7 +6,7 @@ use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Shared\ViewModels\ViewModel;
-use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
+use Domain\Statistics\DataTransferObjects\PerformanceData;
 use Illuminate\Support\Collection;
 
 class GetBroadcastsViewModel extends ViewModel
@@ -20,7 +20,7 @@ class GetBroadcastsViewModel extends ViewModel
     }
 
     /**
-     * @return Collection<int, TrackingData>
+     * @return Collection<int, PerformanceData>
      */
     public function performances(): Collection
     {

@@ -8,7 +8,7 @@ use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Statistics\DataTransferObjects\SequenceProgress\SequenceProgressData;
-use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
+use Domain\Statistics\DataTransferObjects\PerformanceData;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +23,7 @@ class GetSequenceReportsViewModel extends ViewModel
         return SequenceData::from($this->sequence);
     }
 
-    public function totalPerformance(): TrackingData
+    public function totalPerformance(): PerformanceData
     {
         return GetPerformanceAction::execute($this->sequence);
     }

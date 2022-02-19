@@ -6,7 +6,7 @@ use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Shared\ViewModels\ViewModel;
-use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
+use Domain\Statistics\DataTransferObjects\PerformanceData;
 use Domain\Subscriber\DataTransferObjects\FormData;
 use Domain\Subscriber\DataTransferObjects\TagData;
 use Domain\Subscriber\Models\Form;
@@ -25,9 +25,9 @@ class ShowBroadcastViewModel extends ViewModel
     }
 
     /**
-     * @return TrackingData
+     * @return PerformanceData
      */
-    public function performance(): TrackingData
+    public function performance(): PerformanceData
     {
         return GetPerformanceAction::execute($this->broadcast);
     }

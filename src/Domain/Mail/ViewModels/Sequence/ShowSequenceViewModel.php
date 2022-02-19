@@ -6,7 +6,7 @@ use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Shared\ViewModels\ViewModel;
-use Domain\Statistics\DataTransferObjects\Tracking\TrackingData;
+use Domain\Statistics\DataTransferObjects\PerformanceData;
 use Domain\Subscriber\DataTransferObjects\FormData;
 use Domain\Subscriber\DataTransferObjects\TagData;
 use Domain\Subscriber\Models\Form;
@@ -24,7 +24,7 @@ class ShowSequenceViewModel extends ViewModel
         return SequenceData::from($this->sequence->load('mails.schedule'));
     }
 
-    public function performance(): TrackingData
+    public function performance(): PerformanceData
     {
         return GetPerformanceAction::execute($this->sequence);
     }
