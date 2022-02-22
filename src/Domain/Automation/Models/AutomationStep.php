@@ -2,6 +2,7 @@
 
 namespace Domain\Automation\Models;
 
+use Domain\Automation\Enums\AutomationStepType;
 use Domain\Shared\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -16,6 +17,7 @@ class AutomationStep extends BaseModel
 
     protected $casts = [
         'value' => 'array',
+        'type' => AutomationStepType::class,
     ];
 
     public function automation(): BelongsTo
