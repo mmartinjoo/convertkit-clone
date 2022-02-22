@@ -8,6 +8,7 @@ use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailScheduleDaysData;
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\Models\Sequence\Sequence;
+use Domain\Subscriber\Models\Subscriber;
 
 class CreateSequenceAction
 {
@@ -28,6 +29,8 @@ class CreateSequenceAction
         ]);
 
         UpsertSequenceMailAction::execute($mailData, $sequence);
+
+        $sequence->subscribers()->sync(Subscriber::select('id')->pluck('id'));
 
         return $sequence;
     }

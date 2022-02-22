@@ -48,6 +48,7 @@ class SequenceController extends Controller
 
     public function destroy(Sequence $sequence): Response
     {
+        $sequence->subscribers()->sync([]);
         $sequence->mails->each->delete();
         $sequence->delete();
 
