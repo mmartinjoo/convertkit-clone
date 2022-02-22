@@ -14,7 +14,9 @@ class ProceedSequenceAction
 {
     public static function execute(Sequence $sequence): int
     {
-        return $sequence->mails()->wherePublished()->get()
+        return $sequence->mails()
+            ->wherePublished()
+            ->get()
             ->reduce(function (int $count, SequenceMail $mail) {
                 $sentMailsCount = self::subscribers($mail)
                     ->each(fn (Subscriber $subscriber) =>

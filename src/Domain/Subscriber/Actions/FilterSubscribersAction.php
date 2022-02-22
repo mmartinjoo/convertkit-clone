@@ -3,6 +3,7 @@
 namespace Domain\Subscriber\Actions;
 
 use Domain\Mail\Contracts\Sendable;
+use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Subscriber\Exceptions\InvalidFilterException;
 use Domain\Subscriber\Filters\{Filter, FormFilter, TagFilter};
 use Domain\Subscriber\Models\Subscriber;
@@ -16,8 +17,13 @@ class FilterSubscribersAction
      */
     public static function execute(Sendable $mail): Collection
     {
+        $subscribers = Subscriber::query();
+        if ($mail instanceof SequenceMail) {
+            $subscribers = $mail->sequence->subscribers();
+        }
+
         return app(Pipeline::class)
-            ->send(Subscriber::query())
+            ->send($subscribers)
             ->through(self::filters($mail))
             ->thenReturn()
             ->get();
