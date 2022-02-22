@@ -7,7 +7,7 @@ use Domain\Automation\Enums\AutomationStepType;
 use Domain\Automation\Models\Automation;
 use Domain\Subscriber\Models\Subscriber;
 
-class RunAutomationsActions
+class RunAutomationsAction
 {
     public static function execute(Subscriber $subscriber)
     {
