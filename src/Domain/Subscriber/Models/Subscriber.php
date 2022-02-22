@@ -3,6 +3,7 @@
 namespace Domain\Subscriber\Models;
 
 use Domain\Mail\Models\Broadcast\Broadcast;
+use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Models\SentMail;
@@ -59,6 +60,11 @@ class Subscriber extends BaseModel
         return $this->hasOne(SentMail::class)
             ->latestOfMany()
             ->withDefault();
+    }
+
+    public function sequences(): BelongsToMany
+    {
+        return $this->belongsToMany(Sequence::class)->withPivot('subscribed_at');
     }
 
     public function tooEarlyFor(SequenceMail $mail): bool

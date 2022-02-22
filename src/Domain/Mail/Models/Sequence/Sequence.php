@@ -6,6 +6,8 @@ use Domain\Mail\Builders\Sequence\SequenceBuilder;
 use Domain\Mail\Enums\Sequence\SequenceStatus;
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\Models\BaseModel;
+use Domain\Subscriber\Models\Subscriber;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
@@ -24,6 +26,11 @@ class Sequence extends BaseModel
         'status' => SequenceStatus::Draft,
     ];
 
+    public function newEloquentBuilder($query): SequenceBuilder
+    {
+        return new SequenceBuilder($query);
+    }
+
     public function mails(): HasMany
     {
         return $this->hasMany(SequenceMail::class);
@@ -34,8 +41,8 @@ class Sequence extends BaseModel
         return $this->hasManyThrough(SentMail::class, SequenceMail::class, 'id', 'mailable_id');
     }
 
-    public function newEloquentBuilder($query): SequenceBuilder
+    public function subscribers(): BelongsToMany
     {
-        return new SequenceBuilder($query);
+        return $this->belongsToMany(Subscriber::class)->withPivot('subscribed_at');
     }
 }
