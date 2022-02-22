@@ -57,8 +57,8 @@ export default {
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3 mb-6 md:mb-0">
-                        <AutomationStepEventForm type="event" :events="model.events" :actions="model.actions" :tags="model.tags" :forms="model.forms" :sequences="model.sequences"></AutomationStepEventForm>
-                        <AutomationStepActionForm type="action" :events="model.events" :actions="model.actions" :tags="model.tags" :forms="model.forms" :sequences="model.sequences"></AutomationStepActionForm>
+                        <AutomationStepEventForm :events="model.events" :forms="model.forms"></AutomationStepEventForm>
+                        <AutomationStepActionForm :actions="model.actions" :tags="model.tags" :sequences="model.sequences"></AutomationStepActionForm>
                     </div>
                 </div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
