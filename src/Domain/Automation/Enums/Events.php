@@ -4,5 +4,5 @@ namespace Domain\Automation\Enums;
 
 enum Events: string
 {
-    case SubscribedToForm = 'subscribedToForm';
+    case SubscribedToForm = 'Domain\Automation\Events\SubscribedToFormEvent';
 }
