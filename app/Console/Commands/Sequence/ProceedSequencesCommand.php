@@ -7,7 +7,7 @@ use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Enums\Sequence\SequenceStatus;
 use Illuminate\Console\Command;
 
-class ProceedSequenceMailsCommand extends Command
+class ProceedSequencesCommand extends Command
 {
     protected $signature = 'sequence:proceed';
     protected $description = 'Send the next mail in sequences';
