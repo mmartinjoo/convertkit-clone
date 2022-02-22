@@ -2,11 +2,13 @@
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import FiltersForm from "@/Components/Filter/Form";
-import AutomationStepForm from "@/Pages/Automation/Step/Form";
+import AutomationStepActionForm from "@/Pages/Automation/Step/Action/Form";
+import AutomationStepEventForm from "@/Pages/Automation/Step/Event/Form";
 
 export default {
     components: {
-        AutomationStepForm,
+        AutomationStepActionForm,
+        AutomationStepEventForm,
         FiltersForm,
         BreezeAuthenticatedLayout,
         Head,
@@ -55,8 +57,8 @@ export default {
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3 mb-6 md:mb-0">
-                        <AutomationStepForm type="event" :events="model.events" :actions="model.actions" :tags="model.tags" :forms="model.forms" :sequences="model.sequences"></AutomationStepForm>
-                        <AutomationStepForm type="action" :events="model.events" :actions="model.actions" :tags="model.tags" :forms="model.forms" :sequences="model.sequences"></AutomationStepForm>
+                        <AutomationStepEventForm type="event" :events="model.events" :actions="model.actions" :tags="model.tags" :forms="model.forms" :sequences="model.sequences"></AutomationStepEventForm>
+                        <AutomationStepActionForm type="action" :events="model.events" :actions="model.actions" :tags="model.tags" :forms="model.forms" :sequences="model.sequences"></AutomationStepActionForm>
                     </div>
                 </div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
