@@ -55,7 +55,6 @@ export default {
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3 mb-6 md:mb-0">
-                        <h2>Event</h2>
                         <AutomationStepForm type="event" :events="model.events" :actions="model.actions" :tags="model.tags" :forms="model.forms" :sequences="model.sequences"></AutomationStepForm>
                         <AutomationStepForm type="action" :events="model.events" :actions="model.actions" :tags="model.tags" :forms="model.forms" :sequences="model.sequences"></AutomationStepForm>
                     </div>
