@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Automation\AutomationController;
+use App\Http\Controllers\Automation\GetAutomationEventsController;
 use App\Http\Controllers\Mail\Broadcast\BroadcastController;
 use App\Http\Controllers\Mail\Broadcast\SendBroadcastController;
 use App\Http\Controllers\Mail\Sequence\PublishSequenceController;

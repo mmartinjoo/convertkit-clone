@@ -34,6 +34,7 @@ class SequenceData extends Data
     {
         return self::from([
             ...$sequence->toArray(),
+            'status' => $sequence->status,
             'mails' => Lazy::whenLoaded('mails', $sequence, fn () => SequenceMailData::collection($sequence->mails)),
         ]);
     }
