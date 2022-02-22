@@ -24,7 +24,10 @@ export default {
         return {
             form: {
                 name: null,
-                steps: null,
+                steps: {
+                    event: {},
+                    actions: [{}],
+                },
             },
         };
     },
@@ -57,8 +60,12 @@ export default {
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3 mb-6 md:mb-0">
-                        <AutomationStepEventForm :events="model.events" :forms="model.forms"></AutomationStepEventForm>
-                        <AutomationStepActionForm :actions="model.actions" :tags="model.tags" :sequences="model.sequences"></AutomationStepActionForm>
+                        <AutomationStepEventForm @changed="this.form.steps.event = $event" :events="model.events" :forms="model.forms"></AutomationStepEventForm>
+                        <AutomationStepActionForm v-for="(action, idx) in this.form.steps.actions" @changed="this.form.steps.actions[idx] = $event" :actions="model.actions" :tags="model.tags" :sequences="model.sequences"></AutomationStepActionForm>
+
+                        <button @click.prevent="this.form.steps.actions.push({})" class="bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-4" type="button">
+                            Add Action
+                        </button>
                     </div>
                 </div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">

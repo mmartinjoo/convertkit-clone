@@ -17,18 +17,20 @@ export default {
     },
     data() {
         return {
-            name: '',
-            value: '',
+            action: {
+                name: '',
+                value: '',
+            },
         };
     },
     watch: {
-        name() {
-            this.value = '';
-        }
+        'action.value': function () {
+            this.$emit('changed', this.action);
+        },
     },
     computed: {
         values() {
-            if (this.name.toLowerCase().includes('sequence')) {
+            if (this.action.name.toLowerCase().includes('sequence')) {
                 return this.sequences;
             }
 
@@ -42,11 +44,11 @@ export default {
     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-4" for="name">
         Then
     </label>
-    <select name="name" id="name" v-model="name">
+    <select name="name" id="name" v-model="action.name">
         <option value="" disabled selected>Select an action</option>
         <option v-for="(name, key) in actions" :key="key" :value="key">{{ name }}</option>
     </select>
-    <select v-if="name" name="value" id="value" v-model="value" class="ml-2">
+    <select v-if="action.name" name="value" id="value" v-model="action.value" class="ml-2">
         <option value="" disabled selected>Select a value</option>
         <option v-for="item in values" :key="item.id" :value="item.id">{{ item.title }}</option>
     </select>

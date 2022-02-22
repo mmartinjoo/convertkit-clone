@@ -13,14 +13,16 @@ export default {
     },
     data() {
         return {
-            name: '',
-            value: '',
+            event: {
+                name: '',
+                value: '',
+            }
         };
     },
     watch: {
-        name() {
-            this.value = '';
-        }
+        'event.value': function () {
+            this.$emit('changed', this.event);
+        },
     },
 }
 </script>
@@ -29,11 +31,11 @@ export default {
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-4" for="name">
             When a Subscriber
         </label>
-        <select name="name" id="name" v-model="name">
+        <select name="name" id="name" v-model="event.name">
             <option value="" disabled selected>Select an event</option>
             <option v-for="(name, key) in events" :key="key" :value="key">{{ name }}</option>
         </select>
-        <select v-if="name" name="value" id="value" v-model="value" class="ml-2">
+        <select v-if="event.name" name="value" id="value" v-model="event.value" class="ml-2">
             <option value="" disabled selected>Select a value</option>
             <option v-for="item in forms" :key="item.id" :value="item.id">{{ item.title }}</option>
         </select>
