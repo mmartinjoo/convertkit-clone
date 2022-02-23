@@ -24,7 +24,7 @@ export default {
             this.$inertia.patch(`/broadcasts/${this.model.broadcast.id}/send`);
         },
         getSelectedTags() {
-            return this.model.tags.filter(tag => this.model.broadcast.filters.form_ids.includes(tag.id));
+            return this.model.tags.filter(tag => this.model.broadcast.filters.tag_ids.includes(tag.id));
         },
         getSelectedForms() {
             return this.model.forms.filter(form => this.model.broadcast.filters.form_ids.includes(form.id));
