@@ -8,6 +8,7 @@ use Domain\Automation\DataTransferObjects\Incoming\AutomationIncomingData;
 use Domain\Automation\ViewModels\CreateAutomationViewModel;
 use Domain\Automation\ViewModels\GetAutomationsViewModel;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Redirect;
@@ -28,9 +29,9 @@ class AutomationController extends Controller
         ]);
     }
 
-    public function store(AutomationIncomingData $data): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
-        CreateAutomationAction::execute($data);
+        CreateAutomationAction::execute(AutomationIncomingData::fromRequest($request));
 
         return Redirect::route('automations.index');
     }

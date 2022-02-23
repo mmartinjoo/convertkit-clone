@@ -19,11 +19,11 @@ class CreateAutomationAction
 
             $automation->steps()->create([
                 'type' => AutomationStepType::Event,
-                'name' => $data->steps->event->name,
-                'value' => ['id' => $data->steps->event->value],
+                'name' => $data->event->name,
+                'value' => ['id' => $data->event->value],
             ]);
 
-            $data->steps->actions->toCollection()->each(fn (AutomationStepIncomingData $stepData) =>
+            $data->actions->toCollection()->each(fn (AutomationStepIncomingData $stepData) =>
                 $automation->steps()->create([
                     'type' => AutomationStepType::Action,
                     'name' => $stepData->name,
