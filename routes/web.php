@@ -9,6 +9,7 @@ use App\Http\Controllers\Mail\Sequence\SequenceController;
 use App\Http\Controllers\Mail\Sequence\SequenceMailController;
 use App\Http\Controllers\Mail\Sequence\GetSequenceReportController;
 use App\Http\Controllers\Statistics\GetDashboardController;
+use App\Http\Controllers\Subscriber\ImportSubscribersController;
 use App\Http\Controllers\Subscriber\SubscriberController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('subscribers/create', [SubscriberController::class, 'create'])->name('subscribers.create');
     Route::post('subscribers', [SubscriberController::class, 'store'])->name('subscribers.store');
     Route::get('subscribers', [SubscriberController::class, 'index'])->name('subscribers.index');
+    Route::post('subscribers/import', ImportSubscribersController::class);
 
     Route::resource('broadcasts', BroadcastController::class);
     Route::patch('broadcasts/{broadcast}/send', SendBroadcastController::class);

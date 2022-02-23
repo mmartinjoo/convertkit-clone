@@ -13,7 +13,7 @@ class CreateSubscriberAction
     {
         $subscriber = Subscriber::create([
             ...$data->all(),
-            'form_id' => $data->form->id,
+            'form_id' => $data->form?->id,
         ]);
 
         $data->tags->toCollection()->each(fn (TagData $tag) => $subscriber->tags()->attach($tag->id));
