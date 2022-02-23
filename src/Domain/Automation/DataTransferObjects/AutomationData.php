@@ -5,6 +5,7 @@ namespace Domain\Automation\DataTransferObjects;
 use Domain\Automation\Enums\AutomationStepType;
 use Domain\Automation\Models\Automation;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Validator;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 
@@ -33,8 +34,27 @@ class AutomationData extends Data
         return self::from([
             'id' => $automation->id,
             'name' => $automation->name,
-            'event' => $automation->steps()->whereType(AutomationStepType::Event)->first(),
-            'actions' => $automation->steps()->whereType(AutomationStepType::Action)->get()->all(),
+            'event' => $automation->steps->where('type', AutomationStepType::Event)->first(),
+            'actions' => $automation->steps->where('type', AutomationStepType::Action)->values()->all(),
         ]);
+    }
+
+    public static function withValidator(Validator $validator): void
+    {
+        $validator->setRules(self::rules());
+    }
+
+    public static function rules(): array
+    {
+        return [
+            'name' => ['required'],
+            'steps' => ['required', 'array'],
+            'steps.event' => ['required', 'array'],
+            'steps.event.name' => ['required', 'string'],
+            'steps.event.value' => ['required', 'numeric'],
+            'steps.actions' => ['required', 'array', 'min:1'],
+            'steps.actions.*.name' =>  ['required', 'string'],
+            'steps.actions.*.value' =>  ['required', 'numeric'],
+        ];
     }
 }

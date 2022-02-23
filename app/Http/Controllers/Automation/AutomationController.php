@@ -30,9 +30,9 @@ class AutomationController extends Controller
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(AutomationData $data): RedirectResponse
     {
-        UpsertAutomationAction::execute(AutomationData::fromRequest($request));
+        UpsertAutomationAction::execute($data);
 
         return Redirect::route('automations.index');
     }
@@ -44,9 +44,9 @@ class AutomationController extends Controller
         ]);
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(AutomationData $data): RedirectResponse
     {
-        UpsertAutomationAction::execute(AutomationData::fromRequest($request));
+        UpsertAutomationAction::execute($data);
 
         return Redirect::route('automations.index');
     }
