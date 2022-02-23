@@ -11,13 +11,19 @@ class RunAutomationsAction
 {
     public static function execute(Subscriber $subscriber)
     {
-        $automations = Automation::with('steps')->get();
+        $automations = Automation::with('steps')
+            ->whereHas('steps', function ($steps) use ($subscriber) {
+                $steps
+                    ->whereType(AutomationStepType::Event)
+                    ->where('value->id', $subscriber->form_id);
+            })
+            ->get();
+
         foreach ($automations as $automation) {
             $steps = $automation->steps()->whereType(AutomationStepType::Action)->get();
 
             foreach ($steps as $step) {
-                $actionClass = collect(Actions::cases())->firstWhere('name', $step->name)->value;
-                $action = app($actionClass);
+                $action = Actions::from($step->name)->createAction();
                 $action($subscriber, $step);
             }
         }

@@ -9,6 +9,6 @@ class AddToSequenceAction
 {
     public function __invoke(Subscriber $subscriber, AutomationStep $step): void
     {
-        $subscriber->sequences()->attach($step->value['sequence_id']);
+        $subscriber->sequences()->attach($step->value['id']);
     }
 }

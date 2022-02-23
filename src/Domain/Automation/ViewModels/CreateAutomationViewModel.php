@@ -37,7 +37,7 @@ class CreateAutomationViewModel extends ViewModel
     public function events(): Collection
     {
         return collect(Events::cases())
-            ->pluck('name')
+            ->pluck('value')
             ->mapWithKeys(fn (string $name) =>
                 [$name => Str::of($name)->snake()->title()->replace('_', ' ')]
             );
@@ -49,7 +49,7 @@ class CreateAutomationViewModel extends ViewModel
     public function actions(): Collection
     {
         return collect(Actions::cases())
-            ->pluck('name')
+            ->pluck('value')
             ->mapWithKeys(fn (string $name) =>
                 [$name => Str::of($name)->snake()->title()->replace('_', ' ')]
             );

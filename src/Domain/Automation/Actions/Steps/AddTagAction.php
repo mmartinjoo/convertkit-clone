@@ -9,6 +9,6 @@ class AddTagAction
 {
     public function __invoke(Subscriber $subscriber, AutomationStep $step): void
     {
-        $subscriber->tags()->attach($step->value['tag_id']);
+        $subscriber->tags()->attach($step->value['id']);
     }
 }
