@@ -2,7 +2,7 @@
 export default {
     name: 'AutomationStepActionForm',
     props: {
-        action: {
+        initAction: {
             type: Object,
             required: true,
         },
@@ -23,6 +23,14 @@ export default {
             required: false,
             default: 'Then',
         }
+    },
+    data() {
+        return {
+            action: {},
+        }
+    },
+    created() {
+        this.action = this.initAction;
     },
     watch: {
         action: {

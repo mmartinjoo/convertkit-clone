@@ -2,8 +2,11 @@
 
 namespace Domain\Automation\ViewModels;
 
+use Domain\Automation\DataTransferObjects\AutomationData;
+use Domain\Automation\DataTransferObjects\Incoming\AutomationIncomingData;
 use Domain\Automation\Enums\Actions;
 use Domain\Automation\Enums\Events;
+use Domain\Automation\Models\Automation;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Shared\ViewModels\ViewModel;
@@ -16,6 +19,19 @@ use Illuminate\Support\Str;
 
 class CreateAutomationViewModel extends ViewModel
 {
+    public function __construct(private readonly ?Automation $automation = null)
+    {
+    }
+
+    public function automation(): ?AutomationIncomingData
+    {
+        if (!$this->automation) {
+            return null;
+        }
+
+        return AutomationIncomingData::from($this->automation->load('steps'));
+    }
+
     /**
      * @return Collection<string, string>
      */

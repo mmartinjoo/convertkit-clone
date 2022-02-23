@@ -2,6 +2,10 @@
 export default {
     name: 'AutomationStepEventForm',
     props: {
+        initEvent: {
+            type: Object,
+            required: false,
+        },
         events: {
             type: Object,
             required: true,
@@ -18,6 +22,9 @@ export default {
                 value: '',
             }
         };
+    },
+    created() {
+        this.event = this.initEvent;
     },
     watch: {
         'event.value': function () {

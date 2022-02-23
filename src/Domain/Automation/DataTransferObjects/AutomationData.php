@@ -10,6 +10,7 @@ use Spatie\LaravelData\Lazy;
 class AutomationData extends Data
 {
     public function __construct(
+        public readonly ?int $id,
         public readonly string $name,
         /** @var DataCollection<AutomationStepData> */
         public readonly Lazy|DataCollection $steps,

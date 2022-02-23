@@ -1,7 +1,6 @@
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
-import FiltersForm from "@/Components/Filter/Form";
 import AutomationStepActionForm from "@/Pages/Automation/Step/Action/Form";
 import AutomationStepEventForm from "@/Pages/Automation/Step/Event/Form";
 
@@ -9,7 +8,6 @@ export default {
     components: {
         AutomationStepActionForm,
         AutomationStepEventForm,
-        FiltersForm,
         BreezeAuthenticatedLayout,
         Head,
         Link,
@@ -23,6 +21,7 @@ export default {
     data() {
         return {
             form: {
+                id: null,
                 name: null,
                 steps: {
                     event: {},
@@ -31,9 +30,27 @@ export default {
             },
         };
     },
+    created() {
+        if (!this.model.automation) {
+            return;
+        }
+
+        this.form = {
+            id: this.model.automation.id,
+            name: this.model.automation.name,
+            steps: {
+                event: this.model.automation.event,
+                actions: this.model.automation.actions,
+            }
+        };
+    },
     methods: {
         submit() {
-            this.$inertia.post('/automations', this.form)
+            if (this.model.automation) {
+                this.$inertia.put(`/automations/${this.model.automation.id}`, this.form)
+            } else {
+                this.$inertia.post('/automations', this.form)
+            }
         },
     },
 }
@@ -60,10 +77,16 @@ export default {
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3 mb-6 md:mb-0">
-                        <AutomationStepEventForm @changed="form.steps.event = $event" :events="model.events" :forms="model.forms"></AutomationStepEventForm>
+                        <AutomationStepEventForm
+                            :initEvent="form.steps.event"
+                            :events="model.events"
+                            :forms="model.forms"
+                            @changed="form.steps.event = $event"
+                        ></AutomationStepEventForm>
+
                         <AutomationStepActionForm
                             v-for="(action, idx) in form.steps.actions"
-                            :action="action"
+                            :initAction="action"
                             :actions="model.actions"
                             :tags="model.tags"
                             :sequences="model.sequences"

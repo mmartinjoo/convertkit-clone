@@ -15,8 +15,8 @@ export default {
         },
     },
     methods: {
-        open(automation) {
-            this.$inertia.get(`automations/${automation.id}`);
+        edit(automation) {
+            this.$inertia.get(`automations/${automation.id}/edit`);
         }
     }
 }
@@ -47,7 +47,7 @@ export default {
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
-                <tr v-for="automation in model.automations" :key="automation.id" class="hover:bg-gray-100 hover:cursor-pointer" @click="open(automation)">
+                <tr v-for="automation in model.automations" :key="automation.id" class="hover:bg-gray-100 hover:cursor-pointer" @click="edit(automation)">
                     <td class="px-6 py-4">
                         <div class="text-sm text-gray-900">{{ automation.name }}</div>
                     </td>
