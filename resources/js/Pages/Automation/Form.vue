@@ -49,7 +49,7 @@ export default {
             </h2>
         </template>
         <div class="py-12 max-w-7xl mx-auto">
-            <form class="w-full max-w-lg mx-auto" @submit.prevent="submit">
+            <form class="w-full mx-auto" @submit.prevent="submit">
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
@@ -60,8 +60,17 @@ export default {
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3 mb-6 md:mb-0">
-                        <AutomationStepEventForm @changed="this.form.steps.event = $event" :events="model.events" :forms="model.forms"></AutomationStepEventForm>
-                        <AutomationStepActionForm v-for="(action, idx) in this.form.steps.actions" @changed="this.form.steps.actions[idx] = $event" :actions="model.actions" :tags="model.tags" :sequences="model.sequences"></AutomationStepActionForm>
+                        <AutomationStepEventForm @changed="form.steps.event = $event" :events="model.events" :forms="model.forms"></AutomationStepEventForm>
+                        <AutomationStepActionForm
+                            v-for="(action, idx) in form.steps.actions"
+                            :action="action"
+                            :actions="model.actions"
+                            :tags="model.tags"
+                            :sequences="model.sequences"
+                            :label="idx === 0 ? 'Then' : 'And'"
+                            @changed="form.steps.actions[idx] = $event"
+                            @removed="form.steps.actions = form.steps.actions.filter(a => a !== action)"
+                        ></AutomationStepActionForm>
 
                         <button @click.prevent="this.form.steps.actions.push({})" class="bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-4" type="button">
                             Add Action
