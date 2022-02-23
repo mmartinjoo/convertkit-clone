@@ -20,6 +20,8 @@ class UpsertAutomationAction
                 $data->toArray(),
             );
 
+            $automation->steps->each->delete();
+
             $automation->steps()->updateOrCreate(
                 [
                     'id' => $data->event->id,
