@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Automation;
 
 use App\Http\Controllers\Controller;
+use Domain\Automation\Actions\CreateAutomationAction;
+use Domain\Automation\DataTransferObjects\Incoming\AutomationIncomingData;
 use Domain\Automation\ViewModels\CreateAutomationViewModel;
 use Domain\Automation\ViewModels\GetAutomationsViewModel;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use Redirect;
 
 class AutomationController extends Controller
 {
@@ -22,5 +26,12 @@ class AutomationController extends Controller
         return Inertia::render('Automation/Form', [
             'model' => new CreateAutomationViewModel(),
         ]);
+    }
+
+    public function store(AutomationIncomingData $data): RedirectResponse
+    {
+        CreateAutomationAction::execute($data);
+
+        return Redirect::route('automations.index');
     }
 }
