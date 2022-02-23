@@ -3,7 +3,6 @@
 namespace Domain\Automation\ViewModels;
 
 use Domain\Automation\DataTransferObjects\AutomationData;
-use Domain\Automation\DataTransferObjects\Incoming\AutomationIncomingData;
 use Domain\Automation\Enums\Actions;
 use Domain\Automation\Enums\Events;
 use Domain\Automation\Models\Automation;
@@ -23,13 +22,13 @@ class CreateAutomationViewModel extends ViewModel
     {
     }
 
-    public function automation(): ?AutomationIncomingData
+    public function automation(): ?AutomationData
     {
         if (!$this->automation) {
             return null;
         }
 
-        return AutomationIncomingData::from($this->automation->load('steps'));
+        return AutomationData::from($this->automation->load('steps'));
     }
 
     /**

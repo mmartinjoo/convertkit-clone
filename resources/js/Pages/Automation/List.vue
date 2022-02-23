@@ -42,7 +42,7 @@ export default {
                         Name
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Steps
+                        Actions
                     </th>
                 </tr>
                 </thead>
@@ -52,7 +52,7 @@ export default {
                         <div class="text-sm text-gray-900">{{ automation.name }}</div>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="text-sm text-gray-900">{{ automation.steps.length }}</div>
+                        <div class="text-sm text-gray-900">{{ automation.actions.length }}</div>
                     </td>
                 </tr>
                 </tbody>

@@ -2,15 +2,15 @@
 
 namespace Domain\Automation\Actions;
 
-use Domain\Automation\DataTransferObjects\Incoming\AutomationIncomingData;
-use Domain\Automation\DataTransferObjects\Incoming\AutomationStepIncomingData;
+use Domain\Automation\DataTransferObjects\AutomationData;
+use Domain\Automation\DataTransferObjects\AutomationStepData;
 use Domain\Automation\Enums\AutomationStepType;
 use Domain\Automation\Models\Automation;
 use Illuminate\Support\Facades\DB;
 
 class UpsertAutomationAction
 {
-    public static function execute(AutomationIncomingData $data): Automation
+    public static function execute(AutomationData $data): Automation
     {
         return DB::transaction(function () use ($data) {
             $automation = Automation::updateOrcreate(
@@ -33,7 +33,7 @@ class UpsertAutomationAction
                 ]
             );
 
-            $data->actions->toCollection()->each(fn (AutomationStepIncomingData $stepData) =>
+            $data->actions->toCollection()->each(fn (AutomationStepData $stepData) =>
                 $automation->steps()->updateOrcreate(
                     [
                         'id' => $stepData->id,
