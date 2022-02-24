@@ -14,7 +14,7 @@ class GetPerformanceAction
     public static function execute(Broadcast|SequenceMail|Sequence $model): PerformanceData
     {
         if ($model instanceof Sequence) {
-            $total = $model->getSubscriberCount();
+            $total = $model->subscribers()->count();
         } else {
             $total = SentMail::getCountOf($model);
         }

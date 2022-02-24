@@ -2,7 +2,6 @@
 
 namespace Domain\Mail\Models\Sequence;
 
-use Domain\Mail\Builders\Sequence\SequenceBuilder;
 use Domain\Mail\Enums\Sequence\SequenceStatus;
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\Models\BaseModel;
@@ -25,11 +24,6 @@ class Sequence extends BaseModel
     protected $attributes = [
         'status' => SequenceStatus::Draft,
     ];
-
-    public function newEloquentBuilder($query): SequenceBuilder
-    {
-        return new SequenceBuilder($query);
-    }
 
     public function mails(): HasMany
     {
