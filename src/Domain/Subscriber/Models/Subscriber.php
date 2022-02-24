@@ -67,6 +67,11 @@ class Subscriber extends BaseModel
         return $this->belongsToMany(Sequence::class)->withPivot('subscribed_at');
     }
 
+    public function sent_mails(): HasMany
+    {
+        return $this->hasMany(SentMail::class);
+    }
+
     public function tooEarlyFor(SequenceMail $mail): bool
     {
         return !$mail->enoughTimePassedSince($this->last_received_mail);
