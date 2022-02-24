@@ -19,7 +19,7 @@ class FilterSubscribersAction
     {
         $subscribers = Subscriber::query();
         if ($mail instanceof SequenceMail) {
-            $subscribers = $mail->sequence->subscribers();
+            $subscribers = Subscriber::whereIn('id', $mail->sequence->subscribers()->select('subscribers.id')->pluck('id'));
         }
 
         return app(Pipeline::class)
