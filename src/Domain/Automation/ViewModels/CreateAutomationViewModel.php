@@ -29,7 +29,7 @@ class CreateAutomationViewModel extends ViewModel
             return null;
         }
 
-        return AutomationData::from($this->automation->load('steps'));
+        return $this->automation->load('steps')->getData();
     }
 
     /**

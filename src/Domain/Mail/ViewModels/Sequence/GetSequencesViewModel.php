@@ -20,7 +20,7 @@ class GetSequencesViewModel extends ViewModel
             ->with('mails')
             ->latest()
             ->get()
-            ->map(fn (Sequence $sequence) => SequenceData::from($sequence));
+            ->map->getData();
     }
 
     /**

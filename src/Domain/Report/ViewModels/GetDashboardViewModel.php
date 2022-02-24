@@ -59,7 +59,7 @@ class GetDashboardViewModel extends ViewModel
             ->latest()
             ->take(10)
             ->get()
-            ->map(fn (Subscriber $subscriber) => SubscriberData::from($subscriber));
+            ->map->getData();
     }
 
     private function averageOpenRate(int $total): Percent

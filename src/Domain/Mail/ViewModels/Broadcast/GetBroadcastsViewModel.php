@@ -16,7 +16,7 @@ class GetBroadcastsViewModel extends ViewModel
      */
     public function broadcasts(): Collection
     {
-        return Broadcast::latest()->get()->map(fn (Broadcast $broadcast) => BroadcastData::from($broadcast));
+        return Broadcast::latest()->get()->map->getData();
     }
 
     /**

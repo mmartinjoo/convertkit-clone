@@ -19,7 +19,7 @@ class GetSequenceReportsViewModel extends ViewModel
 
     public function sequence(): SequenceData
     {
-        return SequenceData::from($this->sequence);
+        return $this->sequence->getData();
     }
 
     public function totalPerformance(): PerformanceData

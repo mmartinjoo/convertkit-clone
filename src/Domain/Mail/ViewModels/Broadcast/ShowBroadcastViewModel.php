@@ -21,7 +21,7 @@ class ShowBroadcastViewModel extends ViewModel
 
     public function broadcast(): BroadcastData
     {
-        return BroadcastData::from($this->broadcast);
+        return $this->broadcast->getData();
     }
 
     /**

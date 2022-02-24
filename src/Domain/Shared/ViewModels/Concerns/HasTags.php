@@ -13,6 +13,6 @@ trait HasTags
      */
     public function tags(): Collection
     {
-        return Tag::all()->map(fn (Tag $tag) => TagData::from($tag));
+        return Tag::all()->map->getData();
     }
 }

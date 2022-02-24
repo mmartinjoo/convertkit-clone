@@ -8,15 +8,18 @@ use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Models\SentMail;
 use Domain\Subscriber\Builders\SubscriberBuilder;
+use Domain\Subscriber\DataTransferObjects\SubscriberData;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
+use Spatie\LaravelData\WithData;
 
 class Subscriber extends BaseModel
 {
     use Notifiable;
+    use WithData;
 
     protected $fillable = [
         'email',
@@ -28,6 +31,8 @@ class Subscriber extends BaseModel
     protected $casts = [
         'id' => 'integer',
     ];
+
+    protected $dataClass = SubscriberData::class;
 
     public function newEloquentBuilder($query): SubscriberBuilder
     {

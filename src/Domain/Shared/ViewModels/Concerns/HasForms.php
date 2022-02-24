@@ -13,6 +13,6 @@ trait HasForms
      */
     public function forms(): Collection
     {
-        return Form::all()->map(fn (Form $tag) => FormData::from($tag));
+        return Form::all()->map->getData();
     }
 }

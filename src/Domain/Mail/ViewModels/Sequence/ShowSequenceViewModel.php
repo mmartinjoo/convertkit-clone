@@ -21,7 +21,7 @@ class ShowSequenceViewModel extends ViewModel
 
     public function sequence(): SequenceData
     {
-        return SequenceData::from($this->sequence->load('mails.schedule'));
+        return $this->sequence->load('mails.schedule')->getData();
     }
 
     public function performance(): PerformanceData

@@ -14,6 +14,6 @@ class GetAutomationsViewModel extends ViewModel
      */
     public function automations(): Collection
     {
-        return Automation::with('steps')->get()->map(fn (Automation $automation) => AutomationData::from($automation));
+        return Automation::with('steps')->get()->map->getData();
     }
 }

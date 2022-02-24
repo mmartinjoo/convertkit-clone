@@ -2,6 +2,7 @@
 
 namespace Domain\Mail\Models\Broadcast;
 
+use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Mail\DataTransferObjects\FilterData;
@@ -9,9 +10,12 @@ use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Spatie\LaravelData\WithData;
 
 class Broadcast extends BaseModel implements Sendable
 {
+    use WithData;
+
     protected $fillable = [
         'id',
         'subject',
@@ -29,6 +33,8 @@ class Broadcast extends BaseModel implements Sendable
     protected $attributes = [
         'status' => BroadcastStatus::Draft,
     ];
+
+    protected $dataClass = BroadcastData::class;
 
     public function sent_mails(): MorphMany
     {
