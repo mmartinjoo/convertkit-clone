@@ -23,7 +23,7 @@ export default {
             const performance = this.model.performances[sequence.id];
 
             return `
-                ${performance.total_sent_mails} Recipients •
+                ${performance.total} Recipients •
                 ${performance.average_open_rate.formatted} Open rate •
                 ${performance.average_click_rate.formatted} Click rate
             `;

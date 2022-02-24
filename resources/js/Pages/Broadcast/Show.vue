@@ -31,7 +31,7 @@ export default {
         },
         getPerformance() {
             return `
-                ${this.model.performance.total_sent_mails} Recipients •
+                ${this.model.performance.total} Recipients •
                 ${this.model.performance.average_open_rate.formatted} Open rate •
                 ${this.model.performance.average_click_rate.formatted} Click rate
             `;

@@ -17,7 +17,7 @@ export default {
     methods: {
         getPerformance() {
             return `
-                ${this.model.total_performance.total_sent_mails} Recipients •
+                ${this.model.total_performance.total} Recipients •
                 ${this.model.total_performance.average_open_rate.formatted} Open rate •
                 ${this.model.total_performance.average_click_rate.formatted} Click rate
             `;
@@ -74,7 +74,7 @@ export default {
                         <div class="text-sm text-gray-900">{{ mail.subject }}</div>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="text-sm text-gray-900">{{ model.mail_performances[mail.id].total_sent_mails }}</div>
+                        <div class="text-sm text-gray-900">{{ model.mail_performances[mail.id].total }}</div>
                     </td>
                     <td class="px-6 py-4">
                         <div class="text-sm text-gray-900">{{ model.mail_performances[mail.id].average_open_rate.formatted }}</div>

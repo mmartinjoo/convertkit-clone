@@ -59,7 +59,7 @@ export default {
                 </div>
                 <div class="p-6 w-52 max-w-sm mx-auto bg-white shadow-md">
                     <p class="text-gray-500">Total e-mails sent</p>
-                    <div class="text-xl font-medium text-black">{{ model.tracking.total_sent_mails }}</div>
+                    <div class="text-xl font-medium text-black">{{ model.tracking.total }}</div>
                 </div>
             </div>
 
