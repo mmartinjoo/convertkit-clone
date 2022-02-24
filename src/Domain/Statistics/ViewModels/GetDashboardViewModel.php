@@ -65,14 +65,14 @@ class GetDashboardViewModel extends ViewModel
     private function averageOpenRate(int $total): Percent
     {
         return Percent::from(
-            SentMail::whereOpened()->count() / $total
+            SentMail::whereOpened()->count(), $total
         );
     }
 
     private function averageClickRate(int $total): Percent
     {
         return Percent::from(
-            SentMail::whereClicked()->count() / $total
+            SentMail::whereClicked()->count(), $total
         );
     }
 }

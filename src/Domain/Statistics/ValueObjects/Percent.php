@@ -13,8 +13,12 @@ class Percent
         $this->formatted = number_format($this->value * 100, 1) . '%';
     }
 
-    public static function from(float $value): self
+    public static function from(float $numerator, float $denominator)
     {
-        return new self($value);
+        if ($denominator === 0.0) {
+            return new self(0);
+        }
+
+        return new self($numerator / $denominator);
     }
 }

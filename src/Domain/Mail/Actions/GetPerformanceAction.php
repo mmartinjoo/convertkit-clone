@@ -19,14 +19,6 @@ class GetPerformanceAction
             $total = SentMail::getCountOf($model);
         }
 
-        if ($total === 0) {
-            return new PerformanceData(
-                total: 0,
-                average_open_rate: Percent::from(0),
-                average_click_rate: Percent::from(0),
-            );
-        }
-
         return new PerformanceData(
             total: $total,
             average_open_rate: SentMail::getAverageOpenRate($model, $total),
