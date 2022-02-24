@@ -14,7 +14,7 @@ use Domain\Shared\ViewModels\ViewModel;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class CreateAutomationViewModel extends ViewModel
+class UpsertAutomationViewModel extends ViewModel
 {
     use HasTags;
     use HasForms;

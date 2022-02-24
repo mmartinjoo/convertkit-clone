@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Domain\Automation\Actions\UpsertAutomationAction;
 use Domain\Automation\DataTransferObjects\AutomationData;
 use Domain\Automation\Models\Automation;
-use Domain\Automation\ViewModels\CreateAutomationViewModel;
+use Domain\Automation\ViewModels\UpsertAutomationViewModel;
 use Domain\Automation\ViewModels\GetAutomationsViewModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,7 +26,7 @@ class AutomationController extends Controller
     public function create(): Response
     {
         return Inertia::render('Automation/Form', [
-            'model' => new CreateAutomationViewModel(),
+            'model' => new UpsertAutomationViewModel(),
         ]);
     }
 
@@ -40,7 +40,7 @@ class AutomationController extends Controller
     public function edit(Automation $automation): Response
     {
         return Inertia::render('Automation/Form', [
-            'model' => new CreateAutomationViewModel($automation),
+            'model' => new UpsertAutomationViewModel($automation),
         ]);
     }
 
