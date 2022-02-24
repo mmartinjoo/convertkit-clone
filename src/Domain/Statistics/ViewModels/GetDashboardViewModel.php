@@ -39,7 +39,7 @@ class GetDashboardViewModel extends ViewModel
             ->map(fn (object $data) => DailySubscribersData::from((array) $data));
     }
 
-    public function tracking(): PerformanceData
+    public function performance(): PerformanceData
     {
         $total = SentMail::count();
 
