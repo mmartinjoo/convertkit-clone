@@ -6,7 +6,7 @@ use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Shared\ViewModels\ViewModel;
-use Domain\Statistics\DataTransferObjects\PerformanceData;
+use Domain\Report\DataTransferObjects\PerformanceData;
 use Illuminate\Support\Collection;
 
 class GetSequencesViewModel extends ViewModel

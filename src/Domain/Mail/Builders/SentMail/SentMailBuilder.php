@@ -5,7 +5,7 @@ namespace Domain\Mail\Builders\SentMail;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
-use Domain\Statistics\ValueObjects\Percent;
+use Domain\Report\ValueObjects\Percent;
 use Illuminate\Database\Eloquent\Builder;
 
 class SentMailBuilder extends Builder

@@ -9,7 +9,7 @@ use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceProgressData;
-use Domain\Statistics\DataTransferObjects\PerformanceData;
+use Domain\Report\DataTransferObjects\PerformanceData;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 

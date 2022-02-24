@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Statistics;
 
 use App\Http\Controllers\Controller;
-use Domain\Statistics\ViewModels\GetDashboardViewModel;
+use Domain\Report\ViewModels\GetDashboardViewModel;
 use Inertia\Inertia;
 use Inertia\Response;
 

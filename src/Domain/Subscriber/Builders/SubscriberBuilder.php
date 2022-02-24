@@ -3,7 +3,7 @@
 namespace Domain\Subscriber\Builders;
 
 use Domain\Mail\Models\Sequence\SequenceMail;
-use Domain\Statistics\Filters\DateFilter;
+use Domain\Report\Filters\DateFilter;
 use Illuminate\Database\Eloquent\Builder;
 
 class SubscriberBuilder extends Builder

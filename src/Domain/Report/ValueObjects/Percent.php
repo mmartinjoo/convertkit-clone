@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Statistics\ValueObjects;
+namespace Domain\Report\ValueObjects;
 
 class Percent
 {

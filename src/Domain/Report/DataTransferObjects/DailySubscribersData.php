@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Statistics\DataTransferObjects;
+namespace Domain\Report\DataTransferObjects;
 
 use Spatie\LaravelData\Data;
 
