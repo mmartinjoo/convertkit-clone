@@ -11,8 +11,8 @@ class CreateSentMailsTable extends Migration
     {
         Schema::create('sent_mails', function (Blueprint $table) {
             $table->id();
-            $table->integer('mailable_id');
-            $table->string('mailable_type');
+            $table->integer('sendable_id');
+            $table->string('sendable_type');
             $table->foreignIdFor(Subscriber::class)->constrained();
             $table->dateTime('sent_at')->useCurrent();
         });

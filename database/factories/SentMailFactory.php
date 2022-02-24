@@ -14,8 +14,8 @@ class SentMailFactory extends Factory
     public function definition()
     {
         return [
-            'mailable_id' => Broadcast::factory(),
-            'mailable_type' => Broadcast::class,
+            'sendable_id' => Broadcast::factory(),
+            'sendable_type' => Broadcast::class,
             'subscriber_id' => Subscriber::factory(),
             'sent_at' => now(),
         ];

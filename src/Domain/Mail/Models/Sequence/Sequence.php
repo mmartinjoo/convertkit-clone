@@ -38,7 +38,7 @@ class Sequence extends BaseModel
 
     public function sent_mails(): HasManyThrough
     {
-        return $this->hasManyThrough(SentMail::class, SequenceMail::class, 'id', 'mailable_id');
+        return $this->hasManyThrough(SentMail::class, SequenceMail::class, 'id', 'sendable_id');
     }
 
     public function subscribers(): BelongsToMany

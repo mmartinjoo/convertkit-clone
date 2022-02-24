@@ -32,7 +32,7 @@ class Broadcast extends BaseModel implements Sendable
 
     public function sent_mails(): MorphMany
     {
-        return $this->morphMany(SentMail::class, 'mailable');
+        return $this->morphMany(SentMail::class, 'sendable');
     }
 
     public function filters(): FilterData

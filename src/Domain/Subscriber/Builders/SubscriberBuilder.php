@@ -22,6 +22,6 @@ class SubscriberBuilder extends Builder
 
     public function alreadyReceived(SequenceMail $mail): bool
     {
-        return $this->model->received_mails()->whereMailableId($mail->id)->exists();
+        return $this->model->received_mails()->whereSendableId($mail->id)->exists();
     }
 }

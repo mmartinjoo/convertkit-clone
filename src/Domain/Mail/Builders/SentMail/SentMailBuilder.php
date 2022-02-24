@@ -23,15 +23,15 @@ class SentMailBuilder extends Builder
     public function whereSendable(Sendable $sendable): self
     {
         return $this
-            ->where('mailable_id', $sendable->id())
-            ->where('mailable_type', $sendable->type());
+            ->where('sendable_id', $sendable->id())
+            ->where('sendable_type', $sendable->type());
     }
 
     public function whereSequence(Sequence $sequence): self
     {
         return $this
-            ->whereIn('mailable_id', $sequence->mails->pluck('id'))
-            ->where('mailable_type', SequenceMail::class);
+            ->whereIn('sendable_id', $sequence->mails->pluck('id'))
+            ->where('sendable_type', SequenceMail::class);
     }
 
     public function getCountOf(Sendable $model): int

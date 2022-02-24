@@ -13,8 +13,8 @@ class SentMail extends BaseModel
     public $timestamps = false;
 
     protected $fillable = [
-        'mailable_id',
-        'mailable_type',
+        'sendable_id',
+        'sendable_type',
         'subscriber_id',
     ];
 
