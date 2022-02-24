@@ -4,6 +4,7 @@ namespace Domain\Mail\ViewModels\Sequence;
 
 use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
+use Domain\Mail\Models\SentMail;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\ViewModels\ViewModel;
@@ -40,29 +41,31 @@ class GetSequenceReportsViewModel extends ViewModel
 
     public function progress(): SequenceProgressData
     {
-        $sentMailStats = $this->sentMailProgress();
+        $progresses = $this->sequenceProgresses();
 
         return new SequenceProgressData(
-            total: $sentMailStats->count(),
-            in_progress: $sentMailStats->filter(fn (object $sentMailStat) => $sentMailStat->status === 'in-progress')->count(),
-            completed: $sentMailStats->filter(fn (object $sentMailStat) => $sentMailStat->status === 'completed')->count(),
+            total: $this->sequence->subscribers()->count(),
+            in_progress: $progresses->filter(fn (string $progress) => $progress === 'in-progress')->count(),
+            completed: $progresses->filter(fn (string $progress) => $progress === 'completed')->count(),
         );
     }
 
-    private function sentMailProgress(): Collection
+    /**
+     * @return Collection<string>
+     */
+    private function sequenceProgresses(): Collection
     {
-        return DB::table('sent_mails')
-            ->select(DB::raw('subscriber_id, count(*) count'))
+        $sequenceMailCount = $this->sequence->mails()->count();
+
+        return SentMail::select(['subscriber_id', DB::raw('count(sent_mails.id) sent_mail_count')])
             ->whereIn('mailable_id', $this->sequence->mails()->pluck('id'))
-            ->whereMailableType(SequenceMail::class)
+            ->where('mailable_type', SequenceMail::class)
             ->groupBy('subscriber_id')
             ->get()
-            ->map(function (object $sentMailStat) {
-                $sentMailStat->status = $sentMailStat->count === $this->sequence->mails()->count()
+            ->map(fn (SentMail $mail) =>
+                $mail->sent_mail_count === $sequenceMailCount
                     ? 'completed'
-                    : 'in-progress';
-
-                return $sentMailStat;
-            });
+                    : 'in-progress'
+            );
     }
 }
