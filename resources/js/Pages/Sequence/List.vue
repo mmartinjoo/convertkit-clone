@@ -1,12 +1,14 @@
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import PerformanceLine from "@/Components/Mail/PerformanceLine";
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
         Head,
         Link,
+        PerformanceLine,
     },
     props: {
         model: {
@@ -83,9 +85,8 @@ export default {
                         <div class="text-sm text-gray-900">{{ sequence.status }}</div>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="text-sm text-gray-900">
-                            {{ getPerformance(sequence) }}
-                        </div>
+                        <PerformanceLine v-if="sequence.status === 'published'" :performance="model.performances[sequence.id]" label="Subscribers"></PerformanceLine>
+                        <div v-else>-</div>
                     </td>
                     <td class="px-6 py-4">
                         <button @click.prevent="remove(sequence)" class="bg-transparent hover:bg-red-500 text-red-700 hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">

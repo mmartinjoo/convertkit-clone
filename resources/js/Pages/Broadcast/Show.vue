@@ -2,6 +2,7 @@
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import FiltersShow from "@/Components/Filter/Show";
+import PerformanceLine from "@/Components/Mail/PerformanceLine";
 
 export default {
     components: {
@@ -9,6 +10,7 @@ export default {
         BreezeAuthenticatedLayout,
         Head,
         Link,
+        PerformanceLine,
     },
     props: {
         model: {
@@ -29,13 +31,6 @@ export default {
         getSelectedForms() {
             return this.model.forms.filter(form => this.model.broadcast.filters.form_ids.includes(form.id));
         },
-        getPerformance() {
-            return `
-                ${this.model.performance.total} Recipients •
-                ${this.model.performance.average_open_rate.formatted} Open rate •
-                ${this.model.performance.average_click_rate.formatted} Click rate
-            `;
-        },
     },
 }
 </script>
@@ -52,9 +47,7 @@ export default {
                     {{ model.broadcast.status }}
                 </span>
             </h2>
-            <div v-if="model.broadcast.status === 'sent'" class="text-sm text-gray-900">
-                {{ getPerformance() }}
-            </div>
+            <PerformanceLine v-if="model.broadcast.status === 'sent'" :performance="model.performance"></PerformanceLine>
         </template>
         <div class="py-12 max-w-7xl mx-auto">
             <div v-html="model.broadcast.content" class="mb-6"></div>

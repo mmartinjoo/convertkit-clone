@@ -1,12 +1,14 @@
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import PerformanceLine from "@/Components/Mail/PerformanceLine";
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
         Head,
         Link,
+        PerformanceLine,
     },
     props: {
         model: {
@@ -14,15 +16,6 @@ export default {
             required: true,
         },
     },
-    methods: {
-        getPerformance() {
-            return `
-                ${this.model.total_performance.total} Recipients •
-                ${this.model.total_performance.average_open_rate.formatted} Open rate •
-                ${this.model.total_performance.average_click_rate.formatted} Click rate
-            `;
-        },
-    }
 }
 </script>
 
@@ -34,7 +27,7 @@ export default {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ model.sequence.title }}
             </h2>
-            {{ getPerformance() }}
+            <PerformanceLine :performance="model.total_performance" label="Subscribers"></PerformanceLine>
         </template>
         <div class="py-12 max-w-7xl mx-auto">
             <div class="sm:px-6 lg:px-8 grid grid-cols-3 gap-2 mb-10">

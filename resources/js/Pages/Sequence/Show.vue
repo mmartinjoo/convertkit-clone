@@ -3,6 +3,7 @@ import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import SequenceMailList from "@/Pages/Sequence/SequenceMail/List";
 import SequenceMailForm from "@/Pages/Sequence/SequenceMail/Form";
+import PerformanceLine from "@/Components/Mail/PerformanceLine";
 
 export default {
     components: {
@@ -11,6 +12,7 @@ export default {
         BreezeAuthenticatedLayout,
         Head,
         Link,
+        PerformanceLine,
     },
     props: {
         model: {
@@ -91,9 +93,7 @@ export default {
                 </span>
             </h2>
             <div>
-                <div v-if="model.sequence.status === 'published'" class="text-sm text-gray-900 inline-flex">
-                    {{ getPerformance() }}
-                </div>
+                <PerformanceLine v-if="model.sequence.status === 'published'" :performance="model.performance" label="Subscribers" class="inline-flex"></PerformanceLine>
                 <Link v-if="model.sequence.status === 'published'" :href="`/sequences/${model.sequence.id}/reports`" class="ml-4 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                     See Reports
                 </Link>

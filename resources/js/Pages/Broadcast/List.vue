@@ -1,9 +1,11 @@
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import PerformanceLine from "@/Components/Mail/PerformanceLine";
 
 export default {
     components: {
+        PerformanceLine,
         BreezeAuthenticatedLayout,
         Head,
         Link,
@@ -15,19 +17,6 @@ export default {
         },
     },
     methods: {
-        getPerformance(broadcast) {
-            if (broadcast.status === 'draft') {
-                return '-';
-            }
-
-            const performance = this.model.performances[broadcast.id];
-
-            return `
-                ${performance.total} Recipients •
-                ${performance.average_open_rate.formatted} Open rate •
-                ${performance.average_click_rate.formatted} Click rate
-            `;
-        },
         open(broadcast) {
             this.$inertia.get(`broadcasts/${broadcast.id}`);
         }
@@ -71,9 +60,8 @@ export default {
                         <div class="text-sm text-gray-900">{{ broadcast.status }}</div>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="text-sm text-gray-900">
-                            {{ getPerformance(broadcast) }}
-                        </div>
+                        <PerformanceLine v-if="broadcast.status !== 'draft'" :performance="model.performances[broadcast.id]"></PerformanceLine>
+                        <div v-else>-</div>
                     </td>
                 </tr>
                 </tbody>
