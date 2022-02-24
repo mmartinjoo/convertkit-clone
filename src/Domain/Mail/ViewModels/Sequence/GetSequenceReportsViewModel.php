@@ -4,14 +4,12 @@ namespace Domain\Mail\ViewModels\Sequence;
 
 use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
-use Domain\Mail\Models\SentMail;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceProgressData;
 use Domain\Report\DataTransferObjects\PerformanceData;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class GetSequenceReportsViewModel extends ViewModel
 {
@@ -41,31 +39,10 @@ class GetSequenceReportsViewModel extends ViewModel
 
     public function progress(): SequenceProgressData
     {
-        $progresses = $this->sequenceProgresses();
-
         return new SequenceProgressData(
             total: $this->sequence->activeSubscriberCount(),
             in_progress: $this->sequence->inProgressSubscriberCount(),
             completed: $this->sequence->completedSubscriberCount(),
         );
-    }
-
-    /**
-     * @return Collection<string>
-     */
-    private function sequenceProgresses(): Collection
-    {
-        $sequenceMailCount = $this->sequence->mails()->count();
-
-        return SentMail::select(['subscriber_id', DB::raw('count(sent_mails.id) sent_mail_count')])
-            ->whereIn('mailable_id', $this->sequence->mails()->pluck('id'))
-            ->where('mailable_type', SequenceMail::class)
-            ->groupBy('subscriber_id')
-            ->get()
-            ->map(fn (SentMail $mail) =>
-                $mail->sent_mail_count === $sequenceMailCount
-                    ? 'completed'
-                    : 'in-progress'
-            );
     }
 }
