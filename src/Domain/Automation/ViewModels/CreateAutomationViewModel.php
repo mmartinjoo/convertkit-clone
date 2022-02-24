@@ -8,16 +8,17 @@ use Domain\Automation\Enums\Events;
 use Domain\Automation\Models\Automation;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Models\Sequence\Sequence;
+use Domain\Shared\ViewModels\Concerns\HasForms;
+use Domain\Shared\ViewModels\Concerns\HasTags;
 use Domain\Shared\ViewModels\ViewModel;
-use Domain\Subscriber\DataTransferObjects\FormData;
-use Domain\Subscriber\DataTransferObjects\TagData;
-use Domain\Subscriber\Models\Form;
-use Domain\Subscriber\Models\Tag;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class CreateAutomationViewModel extends ViewModel
 {
+    use HasTags;
+    use HasForms;
+
     public function __construct(private readonly ?Automation $automation = null)
     {
     }
@@ -61,21 +62,5 @@ class CreateAutomationViewModel extends ViewModel
     public function sequences(): Collection
     {
         return Sequence::all()->map(fn (Sequence $sequence) => SequenceData::from($sequence));
-    }
-
-    /**
-     * @return Collection<TagData>
-     */
-    public function tags(): Collection
-    {
-        return Tag::all()->map(fn (Tag $tag) => TagData::from($tag));
-    }
-
-    /**
-     * @return Collection<FormData>
-     */
-    public function forms(): Collection
-    {
-        return Form::all()->map(fn (Form $tag) => FormData::from($tag));
     }
 }
