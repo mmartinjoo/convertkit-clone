@@ -21,14 +21,14 @@ class GetPerformanceAction
 
         if ($total === 0) {
             return new PerformanceData(
-                total_sent_mails: 0,
+                total: 0,
                 average_open_rate: Percent::from(0),
                 average_click_rate: Percent::from(0),
             );
         }
 
         return new PerformanceData(
-            total_sent_mails: $total,
+            total: $total,
             average_open_rate: SentMail::getAverageOpenRate($model, $total),
             average_click_rate: SentMail::getAverageClickRate($model, $total),
         );

@@ -44,7 +44,7 @@ class GetDashboardViewModel extends ViewModel
         $total = SentMail::count();
 
         return new PerformanceData(
-            total_sent_mails: $total,
+            total: $total,
             average_open_rate: $this->averageOpenRate($total),
             average_click_rate: $this->averageClickRate($total),
         );
