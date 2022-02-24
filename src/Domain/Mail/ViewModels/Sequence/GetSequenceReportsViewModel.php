@@ -44,9 +44,9 @@ class GetSequenceReportsViewModel extends ViewModel
         $progresses = $this->sequenceProgresses();
 
         return new SequenceProgressData(
-            total: $this->sequence->subscribers()->count(),
-            in_progress: $progresses->filter(fn (string $progress) => $progress === 'in-progress')->count(),
-            completed: $progresses->filter(fn (string $progress) => $progress === 'completed')->count(),
+            total: $this->sequence->activeSubscriberCount(),
+            in_progress: $this->sequence->inProgressSubscriberCount(),
+            completed: $this->sequence->completedSubscriberCount(),
         );
     }
 
