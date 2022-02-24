@@ -31,6 +31,8 @@ class ProceedSequenceAction
             $sentMailCount += $subscribers->count();
         }
 
+        self::markAsCompleted($sequence);
+
         return $sentMailCount;
     }
 
@@ -57,5 +59,31 @@ class ProceedSequenceAction
             ->update([
                 'status' => 'in-progress',
             ]);
+    }
+
+    public static function markAsCompleted(Sequence $sequence)
+    {
+        $mailWithLargestDelay = $sequence->load('mails.schedule')->mails->sortByDesc(function (SequenceMail $mail) {
+            return $mail->schedule->delayInHours();
+        })->first();
+
+        foreach ($sequence->subscribers as $subscriber) {
+            $lastMail = $subscriber
+                ->sent_mails()
+                ->whereSequence($sequence)
+                ->orderByDesc('sent_at')
+                ->first();
+
+            if (!$lastMail) {
+                continue;
+            }
+
+            $sinceLastMail = now()->diffInHours($lastMail->sent_at);
+            if ($sinceLastMail > $mailWithLargestDelay->schedule->delayInHours()) {
+                $sequence
+                    ->subscribers()
+                    ->updateExistingPivot($subscriber->id, ['status' => 'completed']);
+            }
+        }
     }
 }
