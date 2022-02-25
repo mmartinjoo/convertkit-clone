@@ -3,6 +3,8 @@
 namespace Domain\Mail\Actions\Sequence;
 
 use DB;
+use Domain\Automation\Enums\Actions;
+use Domain\Automation\Models\AutomationStep;
 use Domain\Mail\Models\Sequence\Sequence;
 
 class DeleteSequenceAction
@@ -11,7 +13,13 @@ class DeleteSequenceAction
     {
         DB::transaction(function () use ($sequence) {
             $sequence->subscribers()->detach();
-            $sequence->mails->each->delete();
+            $sequence->mails()->delete();
+
+            AutomationStep::query()
+                ->whereName(Actions::AddToSequence)
+                ->where('value->id', $sequence->id)
+                ->delete();
+
             $sequence->delete();
         });
     }
