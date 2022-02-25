@@ -68,7 +68,7 @@ export default {
                     </td>
                     <td class="px-6 py-4">
                         <div class="text-sm text-gray-900">
-                            <span v-for="tag in subscriber.tags" :key="tag.id" class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-gray-400 rounded-full">
+                            <span v-for="tag in subscriber.tags" :key="tag.id" class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-gray-400 rounded-full mb-2">
                                 {{ tag.title}}
                             </span>
                         </div>

@@ -30,11 +30,11 @@ export default {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Automations
             </h2>
-        </template>
-        <div class="py-12 max-w-7xl mx-auto">
-            <Link href="/automations/create" as="button" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-16 mb-5">
+            <Link href="/automations/create" as="button" type="button" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2">
                 New Automation
             </Link>
+        </template>
+        <div class="py-12 max-w-7xl mx-auto">
             <table class="min-w-full divide-y divide-gray-200 mx-16">
                 <thead class="bg-gray-50">
                 <tr>
