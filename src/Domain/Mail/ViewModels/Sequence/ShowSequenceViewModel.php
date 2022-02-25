@@ -4,6 +4,7 @@ namespace Domain\Mail\ViewModels\Sequence;
 
 use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
+use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Shared\ViewModels\Concerns\HasForms;
 use Domain\Shared\ViewModels\Concerns\HasTags;
@@ -27,5 +28,10 @@ class ShowSequenceViewModel extends ViewModel
     public function performance(): PerformanceData
     {
         return GetPerformanceAction::execute($this->sequence);
+    }
+
+    public function dummyMail(): SequenceMailData
+    {
+        return SequenceMailData::dummy();
     }
 }

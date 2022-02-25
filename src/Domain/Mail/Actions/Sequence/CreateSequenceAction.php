@@ -15,18 +15,7 @@ class CreateSequenceAction
     public static function execute(SequenceData $data): Sequence
     {
         $sequence = Sequence::create($data->all());
-
-        $mailData = SequenceMailData::from([
-            'subject' => 'My Awesome E-mail',
-            'content' => 'My Awesome Content',
-            'status' => SequenceMailStatus::Draft,
-            'filters' => FilterData::empty(),
-            'schedule' => [
-                'delay' => 1,
-                'unit' => 'day',
-                'days' => SequenceMailScheduleDaysData::empty(),
-            ]
-        ]);
+        $mailData = SequenceMailData::dummy();
 
         UpsertSequenceMailAction::execute($mailData, $sequence);
 

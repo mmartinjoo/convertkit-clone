@@ -36,7 +36,12 @@ export default {
                     return;
                 }
 
-                await axios.patch(`/sequences/${this.model.sequence.id}/mails/${mail.id}`, mail);
+                if (mail.id) {
+                    await axios.patch(`/sequences/${this.model.sequence.id}/mails/${mail.id}`, mail);
+                } else {
+                    const { data } = await axios.post(`/sequences/${this.model.sequence.id}/mails`, mail);
+                    this.selectedMail.id = data.id;
+                }
             }, 1000)
         }
     },
@@ -46,18 +51,8 @@ export default {
             this.model.sequence.status = data.status;
         },
         async addMail() {
-            const { data } = await axios.post(`/sequences/${this.model.sequence.id}/mails`, {
-                subject: 'My Awesome E-mail',
-                content: 'My Awesome Content',
-                schedule: {
-                    delay: 1,
-                    unit: 'day',
-                    days: { monday: true, tuesday: true, wednesday: true, thursday: true, friday: true, saturday: true, sunday: true },
-                }
-            });
-
-            this.model.sequence.mails.push(data);
-            this.selectedMail = data;
+            this.model.sequence.mails.push(this.model.dummy_mail);
+            this.selectedMail = this.model.dummy_mail;
         },
         async removeMail() {
             await axios.delete(`/sequences/${this.model.sequence.id}/mails/${this.selectedMail.id}`);

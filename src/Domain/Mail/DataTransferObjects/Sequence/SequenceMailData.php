@@ -42,4 +42,19 @@ class SequenceMailData extends Data
             'schedule' => Lazy::whenLoaded('schedule', $sequenceMail, fn () => SequenceMailScheduleData::from($sequenceMail->schedule)),
         ]);
     }
+
+    public static function dummy(): self
+    {
+        return self::from([
+            'subject' => 'My Awesome E-mail',
+            'content' => 'My Awesome Content',
+            'status' => SequenceMailStatus::Draft,
+            'filters' => FilterData::empty(),
+            'schedule' => [
+                'delay' => 1,
+                'unit' => 'day',
+                'days' => SequenceMailScheduleDaysData::empty(),
+            ]
+        ]);
+    }
 }
