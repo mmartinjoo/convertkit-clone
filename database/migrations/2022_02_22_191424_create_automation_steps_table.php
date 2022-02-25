@@ -11,7 +11,7 @@ class CreateAutomationStepsTable extends Migration
     {
         Schema::create('automation_steps', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Automation::class)->references('id')->on('automations');
+            $table->foreignIdFor(Automation::class)->constrained()->cascadeOnDelete();
             $table->string('type');
             $table->string('name');
             $table->json('value');

@@ -8,7 +8,6 @@ class DeleteAutomationAction
 {
     public static function execute(Automation $automation): void
     {
-        $automation->steps->each->delete();
         $automation->delete();
     }
 }
