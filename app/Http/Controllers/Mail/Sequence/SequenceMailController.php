@@ -35,7 +35,6 @@ class SequenceMailController extends Controller
     public function destroy(Sequence $sequence, SequenceMail $mail): Response
     {
         $mail->delete();
-        $mail->schedule->delete();
 
         return response()->noContent();
     }

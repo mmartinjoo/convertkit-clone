@@ -14,7 +14,6 @@ class CreateSequenceMailsTable extends Migration
         Schema::create('sequence_mails', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Sequence::class)->constrained();
-            $table->foreignIdFor(SequenceMailSchedule::class)->constrained();
             $table->string('subject');
             $table->text('content');
             $table->string('status')->default(SequenceMailStatus::Draft->value);

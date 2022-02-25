@@ -41,6 +41,7 @@ export default {
                 } else {
                     const { data } = await axios.post(`/sequences/${this.model.sequence.id}/mails`, mail);
                     this.selectedMail.id = data.id;
+                    this.selectedMail.schedule = data.schedule;
                 }
             }, 1000)
         }

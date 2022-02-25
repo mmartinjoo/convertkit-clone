@@ -11,21 +11,18 @@ class UpsertSequenceMailAction
 {
     public static function execute(SequenceMailData $data, Sequence $sequence): SequenceMail
     {
-        $schedule = SequenceMailSchedule::updateOrCreate(
-            [
-                'id' => $data->schedule->id
-            ],
-            $data->schedule->toArray()
-        );
-
         $mail = $sequence->mails()->updateOrCreate(
             [
                 'id' => $data->id,
             ],
+            $data->toArray(),
+        );
+
+        $mail->schedule()->updateOrCreate(
             [
-                ...$data->toArray(),
-                'sequence_mail_schedule_id' => $schedule->id,
-            ]
+                'id' => $data->schedule->id
+            ],
+            $data->schedule->toArray(),
         );
 
         return $mail->load(['sequence', 'schedule']);

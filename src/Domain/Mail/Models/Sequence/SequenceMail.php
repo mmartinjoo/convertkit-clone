@@ -10,6 +10,7 @@ use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 
@@ -39,9 +40,9 @@ class SequenceMail extends BaseModel implements Sendable
         return $this->belongsTo(Sequence::class);
     }
 
-    public function schedule(): BelongsTo
+    public function schedule(): HasOne
     {
-        return $this->belongsTo(SequenceMailSchedule::class, 'sequence_mail_schedule_id');
+        return $this->hasOne(SequenceMailSchedule::class);
     }
 
     public function sent_mails(): MorphMany

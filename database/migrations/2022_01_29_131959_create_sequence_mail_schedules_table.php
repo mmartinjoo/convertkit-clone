@@ -11,6 +11,7 @@ class CreateSequenceMailSchedulesTable extends Migration
     {
         Schema::create('sequence_mail_schedules', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(SequenceMail::class)->constrained()->cascadeOnDelete();
             $table->integer('delay');
             $table->string('unit');
             $table->json('days');
