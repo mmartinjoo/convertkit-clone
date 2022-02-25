@@ -2,6 +2,7 @@
 
 namespace Domain\Mail\Actions\Sequence;
 
+use Domain\Mail\Enums\Sequence\SubscriberStatus;
 use Domain\Mail\Mails\EchoMail;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
@@ -57,7 +58,7 @@ class ProceedSequenceAction
             ->subscribers()
             ->whereIn('subscriber_id', $subscribers->pluck('id'))
             ->update([
-                'status' => 'in-progress',
+                'status' => SubscriberStatus::InProgress,
             ]);
     }
 
@@ -82,7 +83,7 @@ class ProceedSequenceAction
             if ($sinceLastMail > $mailWithLargestDelay->schedule->delayInHours()) {
                 $sequence
                     ->subscribers()
-                    ->updateExistingPivot($subscriber->id, ['status' => 'completed']);
+                    ->updateExistingPivot($subscriber->id, ['status' => SubscriberStatus::Completed]);
             }
         }
     }

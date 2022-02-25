@@ -2,6 +2,7 @@
 
 namespace Domain\Mail\Builders\Sequence;
 
+use Domain\Mail\Enums\Sequence\SubscriberStatus;
 use Illuminate\Database\Eloquent\Builder;
 
 class SequenceBuilder extends Builder
@@ -18,7 +19,7 @@ class SequenceBuilder extends Builder
     {
         return $this->model
             ->subscribers()
-            ->whereStatus('in-progress')
+            ->whereStatus(SubscriberStatus::InProgress)
             ->count();
     }
 
@@ -26,7 +27,7 @@ class SequenceBuilder extends Builder
     {
         return $this->model
             ->subscribers()
-            ->whereStatus('completed')
+            ->whereStatus(SubscriberStatus::Completed)
             ->count();
     }
 }
