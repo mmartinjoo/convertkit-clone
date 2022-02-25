@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\Automation\AutomationController;
-use App\Http\Controllers\Automation\GetAutomationEventsController;
 use App\Http\Controllers\Mail\Broadcast\BroadcastController;
 use App\Http\Controllers\Mail\Broadcast\PreviewBroadcastController;
 use App\Http\Controllers\Mail\Broadcast\SendBroadcastController;
+use App\Http\Controllers\Mail\Sequence\PreviewSequenceMailController;
 use App\Http\Controllers\Mail\Sequence\PublishSequenceController;
 use App\Http\Controllers\Mail\Sequence\SequenceController;
 use App\Http\Controllers\Mail\Sequence\SequenceMailController;
@@ -50,6 +50,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('sequences/{sequence}/publish', PublishSequenceController::class);
 
     Route::resource('sequences/{sequence}/mails', SequenceMailController::class);
+    Route::get('sequences/{sequence}/mails/{mail}/preview', PreviewSequenceMailController::class);
 
     Route::resource('automations', AutomationController::class);
 });
