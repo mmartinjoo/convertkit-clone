@@ -17,6 +17,7 @@ export default {
     data() {
         return {
             form: {
+                id: null,
                 first_name: null,
                 last_name: null,
                 email: null,
@@ -25,9 +26,27 @@ export default {
             }
         }
     },
+    created() {
+        if (!this.model.subscriber) {
+            return;
+        }
+
+        this.form = {
+            id: this.model.subscriber.id,
+            first_name: this.model.subscriber.first_name,
+            last_name: this.model.subscriber.last_name,
+            email: this.model.subscriber.email,
+            form_id: this.model.subscriber.form.id,
+            tag_ids: this.model.subscriber.tags.map(t => t.id),
+        };
+    },
     methods: {
         submit() {
-            this.$inertia.post('/subscribers', this.form)
+            if (this.model.subscriber) {
+                this.$inertia.put(`/subscribers/${this.model.subscriber.id}`, this.form)
+            } else {
+                this.$inertia.post('/subscribers', this.form)
+            }
         },
     },
 }

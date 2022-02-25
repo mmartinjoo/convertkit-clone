@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Subscriber;
 
 use App\Http\Controllers\Controller;
-use Domain\Subscriber\Actions\CreateSubscriberAction;
+use Domain\Subscriber\Actions\UpsertSubscriberAction;
 use Domain\Subscriber\Actions\DeleteSubscriberAction;
 use Domain\Subscriber\DataTransferObjects\SubscriberData;
 use Domain\Subscriber\Models\Subscriber;
-use Domain\Subscriber\ViewModels\CreateSubscriberViewModel;
+use Domain\Subscriber\ViewModels\UpsertSubscriberViewModel;
 use Domain\Subscriber\ViewModels\GetSubscribersViewModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response as HttpResponse;
@@ -27,13 +27,27 @@ class SubscriberController extends Controller
     public function create(): Response
     {
         return Inertia::render('Subscriber/Form', [
-            'model' => new CreateSubscriberViewModel(),
+            'model' => new UpsertSubscriberViewModel(),
         ]);
     }
 
     public function store(SubscriberData $data): RedirectResponse
     {
-        CreateSubscriberAction::execute($data);
+        UpsertSubscriberAction::execute($data);
+
+        return Redirect::route('subscribers.index');
+    }
+
+    public function edit(Subscriber $subscriber): Response
+    {
+        return Inertia::render('Subscriber/Form', [
+            'model' => new UpsertSubscriberViewModel($subscriber),
+        ]);
+    }
+
+    public function update(SubscriberData $data): RedirectResponse
+    {
+        UpsertSubscriberAction::execute($data);
 
         return Redirect::route('subscribers.index');
     }

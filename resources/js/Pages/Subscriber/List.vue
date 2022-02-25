@@ -18,6 +18,9 @@ export default {
         importSubscribers() {
             this.$inertia.post('subscribers/import');
         },
+        edit(subscriber) {
+            this.$inertia.get(`subscribers/${subscriber.id}/edit`);
+        },
         async remove(subscriber) {
             await axios.delete(`subscribers/${subscriber.id}`);
             this.model.subscribers = this.model.subscribers.filter(s => s.id !== subscriber.id);
@@ -63,7 +66,7 @@ export default {
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
                 <tr v-for="subscriber in model.subscribers" :key="subscriber.email" class="hover:bg-gray-100">
-                    <td class="px-6 py-4 hover:cursor-pointer">
+                    <td class="px-6 py-4 hover:cursor-pointer" @click="edit(subscriber)">
                         <div class="text-sm text-gray-900">{{ subscriber.email }}</div>
                     </td>
                     <td class="px-6 py-4">
