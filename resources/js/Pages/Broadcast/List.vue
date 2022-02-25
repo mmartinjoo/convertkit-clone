@@ -17,8 +17,8 @@ export default {
         },
     },
     methods: {
-        open(broadcast) {
-            this.$inertia.get(`broadcasts/${broadcast.id}`);
+        edit(broadcast) {
+            this.$inertia.get(`broadcasts/${broadcast.id}/edit`);
         },
         async remove(broadcast) {
             await axios.delete(`broadcasts/${broadcast.id}`);
@@ -59,7 +59,7 @@ export default {
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
                 <tr v-for="broadcast in model.broadcasts" :key="broadcast.id" class="hover:bg-gray-100">
-                    <td class="px-6 py-4 hover:cursor-pointer" @click="open(broadcast)">
+                    <td class="px-6 py-4 hover:cursor-pointer" @click="edit(broadcast)">
                         <div class="text-sm text-gray-900">{{ broadcast.subject }}</div>
                     </td>
                     <td class="px-6 py-4">

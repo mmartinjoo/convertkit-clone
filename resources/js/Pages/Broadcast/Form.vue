@@ -19,6 +19,7 @@ export default {
     data() {
         return {
             form: {
+                id: null,
                 subject: null,
                 content: null,
                 filters: {
@@ -28,9 +29,28 @@ export default {
             }
         }
     },
+    created() {
+        if (!this.model.broadcast) {
+            return;
+        }
+
+        this.form = {
+            id: this.model.broadcast.id,
+            subject: this.model.broadcast.subject,
+            content: this.model.broadcast.content,
+            filters: {
+                form_ids: this.model.broadcast.filters.form_ids,
+                tag_ids: this.model.broadcast.filters.tag_ids,
+            },
+        };
+    },
     methods: {
         submit() {
-            this.$inertia.post('/broadcasts', this.form)
+            if (this.model.broadcast) {
+                this.$inertia.put(`/broadcasts/${this.model.broadcast.id}`, this.form)
+            } else {
+                this.$inertia.post('/broadcasts', this.form)
+            }
         },
         updateFilters(filters) {
             this.form.filters.tag_ids = filters.tagIds;
@@ -67,7 +87,13 @@ export default {
                         <textarea rows="10" v-model="form.content" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="content" type="text" placeholder="HTML content"></textarea>
                     </div>
                 </div>
-                <FiltersForm :tags="model.tags" :forms="model.forms" @filtersChanged="updateFilters($event)" />
+                <FiltersForm
+                    :tags="model.tags"
+                    :forms="model.forms"
+                    :initial-selected-form-ids="form.filters.form_ids"
+                    :initial-selected-tag-ids="form.filters.tag_ids"
+                    @filtersChanged="updateFilters($event)"
+                />
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                     Save
                 </button>

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Mail\Broadcast;
 
 use App\Http\Controllers\Controller;
-use Domain\Mail\Actions\Broadcast\CreateBroadcastAction;
+use Domain\Mail\Actions\Broadcast\UpsertBroadcastAction;
 use Domain\Mail\Actions\Broadcast\DeleteBroadcastAction;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Models\Broadcast\Broadcast;
-use Domain\Mail\ViewModels\Broadcast\CreateBroadcastViewModel;
+use Domain\Mail\ViewModels\Broadcast\UpsertBroadcastViewModel;
 use Domain\Mail\ViewModels\Broadcast\GetBroadcastsViewModel;
 use Domain\Mail\ViewModels\Broadcast\ShowBroadcastViewModel;
 use Illuminate\Http\RedirectResponse;
@@ -29,13 +29,27 @@ class BroadcastController extends Controller
     public function create(): Response
     {
         return Inertia::render('Broadcast/Form', [
-            'model' => new CreateBroadcastViewModel(),
+            'model' => new UpsertBroadcastViewModel(),
         ]);
     }
 
     public function store(Request $request): RedirectResponse
     {
-        CreateBroadcastAction::execute(BroadcastData::fromRequest($request));
+        UpsertBroadcastAction::execute(BroadcastData::fromRequest($request));
+
+        return Redirect::route('broadcasts.index');
+    }
+
+    public function edit(Broadcast $broadcast): Response
+    {
+        return Inertia::render('Broadcast/Form', [
+            'model' => new UpsertBroadcastViewModel($broadcast),
+        ]);
+    }
+
+    public function update(Request $request): RedirectResponse
+    {
+        UpsertBroadcastAction::execute(BroadcastData::fromRequest($request));
 
         return Redirect::route('broadcasts.index');
     }
