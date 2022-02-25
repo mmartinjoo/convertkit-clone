@@ -98,7 +98,7 @@ export default {
                     See Reports
                 </Link>
             </div>
-            <button v-if="model.sequence.status === 'draft'" @click="publish()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
+            <button v-if="model.sequence.status === 'draft'" @click="publish()" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="button">
                 Publish
             </button>
         </template>

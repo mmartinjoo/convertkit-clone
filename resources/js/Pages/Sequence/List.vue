@@ -31,7 +31,7 @@ export default {
             `;
         },
         open(sequence) {
-            this.$inertia.get(`sequences/${sequence.id}`);
+            this.$inertia.get(`sequences/${sequence.id}/edit`);
         },
         async remove(sequence) {
             await axios.delete(`sequences/${sequence.id}`);

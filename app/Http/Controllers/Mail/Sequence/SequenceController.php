@@ -37,12 +37,12 @@ class SequenceController extends Controller
     {
         $sequence = CreateSequenceAction::execute(SequenceData::fromRequest($request));
 
-        return Redirect::route('sequences.show', $sequence);
+        return Redirect::route('sequences.edit', $sequence);
     }
 
-    public function show(Sequence $sequence): InertiaResponse
+    public function edit(Sequence $sequence): InertiaResponse
     {
-        return Inertia::render('Sequence/Show', [
+        return Inertia::render('Sequence/Content', [
             'model' => new ShowSequenceViewModel($sequence),
         ]);
     }
