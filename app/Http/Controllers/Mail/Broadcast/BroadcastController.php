@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mail\Broadcast;
 
 use App\Http\Controllers\Controller;
 use Domain\Mail\Actions\Broadcast\CreateBroadcastAction;
+use Domain\Mail\Actions\Broadcast\DeleteBroadcastAction;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Mail\ViewModels\Broadcast\CreateBroadcastViewModel;
@@ -48,7 +49,7 @@ class BroadcastController extends Controller
 
     public function destroy(Broadcast $broadcast): HttpResponse
     {
-        $broadcast->delete();
+        DeleteBroadcastAction::execute($broadcast);
 
         return response()->noContent();
     }
