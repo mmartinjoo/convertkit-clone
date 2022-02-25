@@ -16,10 +16,10 @@ class SendBroadcastController extends Controller
         try {
             SendBroadcastAction::execute($broadcast);
 
-            return Redirect::route('broadcasts.show', $broadcast);
+            return Redirect::route('broadcasts.index', $broadcast);
         } catch (CannotSendBroadcast $ex) {
             return Redirect::route(
-                'broadcasts.show',
+                'broadcasts.index',
                 $broadcast
             )->withErrors(['status' => $ex->getMessage()]);
         }

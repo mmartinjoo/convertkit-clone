@@ -20,6 +20,9 @@ export default {
         edit(broadcast) {
             this.$inertia.get(`broadcasts/${broadcast.id}/edit`);
         },
+        async send(broadcast) {
+            this.$inertia.patch(`broadcasts/${broadcast.id}/send`);
+        },
         async remove(broadcast) {
             await axios.delete(`broadcasts/${broadcast.id}`);
             this.model.broadcasts = this.model.broadcasts.filter(s => s.id !== broadcast.id);
@@ -72,6 +75,9 @@ export default {
                     <td class="px-6 py-4">
                         <button @click="remove(broadcast)" class="bg-transparent hover:bg-red-500 text-red-700 hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">
                             Remove
+                        </button>
+                        <button v-if="broadcast.status !== 'sent'" @click="send(broadcast)" class="ml-2 bg-transparent hover:bg-green-500 text-green-700 hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded" type="button">
+                            Send
                         </button>
                     </td>
                 </tr>
