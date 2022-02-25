@@ -18,6 +18,10 @@ export default {
         importSubscribers() {
             this.$inertia.post('subscribers/import');
         },
+        async remove(subscriber) {
+            // await axios.delete(`sequences/${sequence.id}`);
+            // this.model.sequences = this.model.sequences.filter(s => s.id !== sequence.id);
+        }
     },
 }
 </script>
@@ -53,11 +57,13 @@ export default {
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Tags
                     </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    </th>
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
                 <tr v-for="subscriber in model.subscribers" :key="subscriber.email" class="hover:bg-gray-100">
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 hover:cursor-pointer">
                         <div class="text-sm text-gray-900">{{ subscriber.email }}</div>
                     </td>
                     <td class="px-6 py-4">
@@ -72,6 +78,11 @@ export default {
                                 {{ tag.title}}
                             </span>
                         </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <button @click="remove(subscriber)" class="bg-transparent hover:bg-red-500 text-red-700 hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">
+                            Remove
+                        </button>
                     </td>
                 </tr>
                 </tbody>

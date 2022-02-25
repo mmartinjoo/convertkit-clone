@@ -89,7 +89,7 @@ export default {
                         <div v-else>-</div>
                     </td>
                     <td class="px-6 py-4">
-                        <button @click.prevent="remove(sequence)" class="bg-transparent hover:bg-red-500 text-red-700 hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">
+                        <button @click="remove(sequence)" class="bg-transparent hover:bg-red-500 text-red-700 hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">
                             Remove
                         </button>
                     </td>

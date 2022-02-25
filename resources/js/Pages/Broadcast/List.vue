@@ -19,6 +19,10 @@ export default {
     methods: {
         open(broadcast) {
             this.$inertia.get(`broadcasts/${broadcast.id}`);
+        },
+        async remove(sequence) {
+            // await axios.delete(`sequences/${sequence.id}`);
+            // this.model.sequences = this.model.sequences.filter(s => s.id !== sequence.id);
         }
     }
 }
@@ -49,11 +53,13 @@ export default {
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Performance
                     </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    </th>
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
-                <tr v-for="broadcast in model.broadcasts" :key="broadcast.id" class="hover:bg-gray-100 hover:cursor-pointer" @click="open(broadcast)">
-                    <td class="px-6 py-4">
+                <tr v-for="broadcast in model.broadcasts" :key="broadcast.id" class="hover:bg-gray-100">
+                    <td class="px-6 py-4 hover:cursor-pointer" @click="open(broadcast)">
                         <div class="text-sm text-gray-900">{{ broadcast.subject }}</div>
                     </td>
                     <td class="px-6 py-4">
@@ -62,6 +68,11 @@ export default {
                     <td class="px-6 py-4">
                         <PerformanceLine v-if="broadcast.status !== 'draft'" :performance="model.performances[broadcast.id]"></PerformanceLine>
                         <div v-else>-</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <button @click="remove(broadcast)" class="bg-transparent hover:bg-red-500 text-red-700 hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">
+                            Remove
+                        </button>
                     </td>
                 </tr>
                 </tbody>

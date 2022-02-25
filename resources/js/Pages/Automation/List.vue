@@ -17,6 +17,10 @@ export default {
     methods: {
         edit(automation) {
             this.$inertia.get(`automations/${automation.id}/edit`);
+        },
+        async remove(automation) {
+            // await axios.delete(`sequences/${sequence.id}`);
+            // this.model.sequences = this.model.sequences.filter(s => s.id !== sequence.id);
         }
     }
 }
@@ -44,15 +48,22 @@ export default {
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Actions
                     </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    </th>
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
-                <tr v-for="automation in model.automations" :key="automation.id" class="hover:bg-gray-100 hover:cursor-pointer" @click="edit(automation)">
-                    <td class="px-6 py-4">
+                <tr v-for="automation in model.automations" :key="automation.id" class="hover:bg-gray-100">
+                    <td class="px-6 py-4 hover:cursor-pointer" @click="edit(automation)">
                         <div class="text-sm text-gray-900">{{ automation.name }}</div>
                     </td>
                     <td class="px-6 py-4">
                         <div class="text-sm text-gray-900">{{ automation.actions.length }}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <button @click="remove(automation)" class="bg-transparent hover:bg-red-500 text-red-700 hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">
+                            Remove
+                        </button>
                     </td>
                 </tr>
                 </tbody>
