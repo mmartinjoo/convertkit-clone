@@ -19,8 +19,8 @@ export default {
             this.$inertia.post('subscribers/import');
         },
         async remove(subscriber) {
-            // await axios.delete(`sequences/${sequence.id}`);
-            // this.model.sequences = this.model.sequences.filter(s => s.id !== sequence.id);
+            await axios.delete(`subscribers/${subscriber.id}`);
+            this.model.subscribers = this.model.subscribers.filter(s => s.id !== subscriber.id);
         }
     },
 }

@@ -3,11 +3,11 @@
 namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Enums\Sequence\SubscriberStatus;
-use Domain\Shared\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class SequenceSubscriber extends BaseModel
+class SequenceSubscriber extends Pivot
 {
-    protected $table = 'sequence_subscriber';
+    public $incrementing = true;
 
     protected $fillable = [
         'sequence_id',
