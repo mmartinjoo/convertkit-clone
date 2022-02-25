@@ -20,8 +20,11 @@ export default {
         edit(broadcast) {
             this.$inertia.get(`broadcasts/${broadcast.id}/edit`);
         },
-        async send(broadcast) {
+        send(broadcast) {
             this.$inertia.patch(`broadcasts/${broadcast.id}/send`);
+        },
+        preview(broadcast) {
+            this.$inertia.get(`broadcasts/${broadcast.id}/preview`);
         },
         async remove(broadcast) {
             await axios.delete(`broadcasts/${broadcast.id}`);
@@ -73,11 +76,14 @@ export default {
                         <div v-else>-</div>
                     </td>
                     <td class="px-6 py-4">
-                        <button @click="remove(broadcast)" class="bg-transparent hover:bg-red-500 text-red-700 hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">
-                            Remove
+                        <button @click="preview(broadcast)" class="bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="button">
+                            Preview
                         </button>
                         <button v-if="broadcast.status !== 'sent'" @click="send(broadcast)" class="ml-2 bg-transparent hover:bg-green-500 text-green-700 hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded" type="button">
                             Send
+                        </button>
+                        <button @click="remove(broadcast)" class="ml-2 bg-transparent hover:bg-red-500 text-red-700 hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">
+                            Remove
                         </button>
                     </td>
                 </tr>

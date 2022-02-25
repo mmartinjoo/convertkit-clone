@@ -3,6 +3,7 @@
 use App\Http\Controllers\Automation\AutomationController;
 use App\Http\Controllers\Automation\GetAutomationEventsController;
 use App\Http\Controllers\Mail\Broadcast\BroadcastController;
+use App\Http\Controllers\Mail\Broadcast\PreviewBroadcastController;
 use App\Http\Controllers\Mail\Broadcast\SendBroadcastController;
 use App\Http\Controllers\Mail\Sequence\PublishSequenceController;
 use App\Http\Controllers\Mail\Sequence\SequenceController;
@@ -42,6 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('broadcasts', BroadcastController::class);
     Route::patch('broadcasts/{broadcast}/send', SendBroadcastController::class);
+    Route::get('broadcasts/{broadcast}/preview', PreviewBroadcastController::class);
 
     Route::resource('sequences', SequenceController::class);
     Route::get('sequences/{sequence}/reports', GetSequenceReportController::class);
