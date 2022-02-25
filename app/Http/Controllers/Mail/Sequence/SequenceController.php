@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mail\Sequence;
 
 use App\Http\Controllers\Controller;
 use Domain\Mail\Actions\Sequence\CreateSequenceAction;
+use Domain\Mail\Actions\Sequence\DeleteSequenceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\ViewModels\Sequence\CreateSequenceViewModel;
@@ -48,9 +49,7 @@ class SequenceController extends Controller
 
     public function destroy(Sequence $sequence): Response
     {
-        $sequence->subscribers()->sync([]);
-        $sequence->mails->each->delete();
-        $sequence->delete();
+        DeleteSequenceAction::execute($sequence);
 
         return response()->noContent();
     }
