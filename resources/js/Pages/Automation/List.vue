@@ -19,8 +19,8 @@ export default {
             this.$inertia.get(`automations/${automation.id}/edit`);
         },
         async remove(automation) {
-            // await axios.delete(`sequences/${sequence.id}`);
-            // this.model.sequences = this.model.sequences.filter(s => s.id !== sequence.id);
+            await axios.delete(`automations/${automation.id}`);
+            this.model.automations = this.model.automations.filter(s => s.id !== automation.id);
         }
     }
 }
