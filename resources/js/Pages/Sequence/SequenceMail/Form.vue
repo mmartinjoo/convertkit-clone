@@ -91,13 +91,13 @@ export default {
         </div>
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full px-3">
-                <button v-if="mail.status === 'draft'" @click="this.mail.status = 'published'" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
+                <button v-if="mail.status === 'draft'" @click="this.mail.status = 'published'" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="button">
                     Publish
                 </button>
-                <button v-if="mail.status === 'published'" @click="this.mail.status = 'draft'" class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
+                <button v-if="mail.status === 'published'" @click="this.mail.status = 'draft'" class="bg-transparent hover:bg-gray-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded ml-2" type="button">
                     Unpublish
                 </button>
-                <button @click="$emit('removed', mail)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline" type="button">
+                <button @click="$emit('removed', mail)" class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded ml-2" type="button">
                     Remove
                 </button>
             </div>
