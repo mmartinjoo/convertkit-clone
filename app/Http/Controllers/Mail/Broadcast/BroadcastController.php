@@ -54,13 +54,6 @@ class BroadcastController extends Controller
         return Redirect::route('broadcasts.index');
     }
 
-    public function show(Broadcast $broadcast): Response
-    {
-        return Inertia::render('Broadcast/Show', [
-            'model' => new ShowBroadcastViewModel($broadcast),
-        ]);
-    }
-
     public function destroy(Broadcast $broadcast): HttpResponse
     {
         DeleteBroadcastAction::execute($broadcast);
