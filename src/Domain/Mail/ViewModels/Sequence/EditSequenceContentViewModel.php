@@ -11,7 +11,7 @@ use Domain\Shared\ViewModels\Concerns\HasTags;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Mail\DataTransferObjects\PerformanceData;
 
-class ShowSequenceViewModel extends ViewModel
+class EditSequenceContentViewModel extends ViewModel
 {
     use HasTags;
     use HasForms;
