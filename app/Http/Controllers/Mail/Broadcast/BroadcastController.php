@@ -11,6 +11,7 @@ use Domain\Mail\ViewModels\Broadcast\GetBroadcastsViewModel;
 use Domain\Mail\ViewModels\Broadcast\ShowBroadcastViewModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use Redirect;
@@ -45,10 +46,10 @@ class BroadcastController extends Controller
         ]);
     }
 
-    public function destroy(Broadcast $broadcast): RedirectResponse
+    public function destroy(Broadcast $broadcast): HttpResponse
     {
         $broadcast->delete();
 
-        return Redirect::route('broadcasts.index');
+        return response()->noContent();
     }
 }

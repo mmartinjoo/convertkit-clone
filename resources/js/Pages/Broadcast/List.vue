@@ -20,9 +20,9 @@ export default {
         open(broadcast) {
             this.$inertia.get(`broadcasts/${broadcast.id}`);
         },
-        async remove(sequence) {
-            // await axios.delete(`sequences/${sequence.id}`);
-            // this.model.sequences = this.model.sequences.filter(s => s.id !== sequence.id);
+        async remove(broadcast) {
+            await axios.delete(`broadcasts/${broadcast.id}`);
+            this.model.broadcasts = this.model.broadcasts.filter(s => s.id !== broadcast.id);
         }
     }
 }
