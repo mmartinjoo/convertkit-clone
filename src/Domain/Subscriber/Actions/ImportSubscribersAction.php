@@ -22,7 +22,7 @@ class ImportSubscribersAction
             ])
             ->map(fn (array $row) => SubscriberData::from($row))
             ->filter(fn (SubscriberData $data) => !Subscriber::whereEmail($data->email)->exists())
-            ->map(fn (SubscriberData $data) => CreateSubscriberAction::execute($data))
+            ->map(fn (SubscriberData $data) => UpsertSubscriberAction::execute($data))
             ->count();
     }
 

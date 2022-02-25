@@ -2,6 +2,7 @@
 
 namespace Domain\Mail\Actions\Sequence;
 
+use Domain\Mail\Enums\Sequence\SubscriberStatus;
 use Domain\Mail\Mails\EchoMail;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
@@ -14,19 +15,26 @@ class ProceedSequenceAction
 {
     public static function execute(Sequence $sequence): int
     {
-        return $sequence->mails()->wherePublished()->get()
-            ->reduce(function (int $count, SequenceMail $mail) {
-                $sentMailsCount = self::subscribers($mail)
-                    ->each(fn (Subscriber $subscriber) =>
-                        Mail::to($subscriber)->queue(new EchoMail($mail))
-                    )
-                    ->each(fn (Subscriber $subscriber) => $mail->sent_mails()->create([
-                        'subscriber_id' => $subscriber->id,
-                    ]))
-                    ->count();
+        $sentMailCount = 0;
+        foreach ($sequence->mails()->wherePublished()->get() as $mail) {
+            $subscribers = self::subscribers($mail);
 
-                return $count + $sentMailsCount;
-            }, 0);
+            foreach ($subscribers as $subscriber) {
+                Mail::to($subscriber)->queue(new EchoMail($mail));
+
+                $mail->sent_mails()->create([
+                    'subscriber_id' => $subscriber->id,
+                ]);
+            }
+
+            self::markAsInProgress($sequence, $subscribers);
+
+            $sentMailCount += $subscribers->count();
+        }
+
+        self::markAsCompleted($sequence);
+
+        return $sentMailCount;
     }
 
     private static function subscribers(SequenceMail $mail): Collection
@@ -38,5 +46,45 @@ class ProceedSequenceAction
         return FilterSubscribersAction::execute($mail)
             ->reject->alreadyReceived($mail)
             ->reject->tooEarlyFor($mail);
+    }
+
+    /**
+     * @param Sequence $sequence
+     * @param Collection<Subscriber> $subscribers
+     */
+    private static function markAsInProgress(Sequence $sequence, Collection $subscribers): void
+    {
+        $sequence
+            ->subscribers()
+            ->whereIn('subscriber_id', $subscribers->pluck('id'))
+            ->update([
+                'status' => SubscriberStatus::InProgress,
+            ]);
+    }
+
+    public static function markAsCompleted(Sequence $sequence)
+    {
+        $mailWithLargestDelay = $sequence->load('mails.schedule')->mails->sortByDesc(function (SequenceMail $mail) {
+            return $mail->schedule->delayInHours();
+        })->first();
+
+        foreach ($sequence->subscribers as $subscriber) {
+            $lastMail = $subscriber
+                ->sent_mails()
+                ->whereSequence($sequence)
+                ->orderByDesc('sent_at')
+                ->first();
+
+            if (!$lastMail) {
+                continue;
+            }
+
+            $sinceLastMail = now()->diffInHours($lastMail->sent_at);
+            if ($sinceLastMail > $mailWithLargestDelay->schedule->delayInHours()) {
+                $sequence
+                    ->subscribers()
+                    ->updateExistingPivot($subscriber->id, ['status' => SubscriberStatus::Completed]);
+            }
+        }
     }
 }

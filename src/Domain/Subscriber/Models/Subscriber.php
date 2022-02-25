@@ -3,19 +3,23 @@
 namespace Domain\Subscriber\Models;
 
 use Domain\Mail\Models\Broadcast\Broadcast;
+use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Models\SentMail;
 use Domain\Subscriber\Builders\SubscriberBuilder;
+use Domain\Subscriber\DataTransferObjects\SubscriberData;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
+use Spatie\LaravelData\WithData;
 
 class Subscriber extends BaseModel
 {
     use Notifiable;
+    use WithData;
 
     protected $fillable = [
         'email',
@@ -27,6 +31,8 @@ class Subscriber extends BaseModel
     protected $casts = [
         'id' => 'integer',
     ];
+
+    protected $dataClass = SubscriberData::class;
 
     public function newEloquentBuilder($query): SubscriberBuilder
     {
@@ -45,7 +51,8 @@ class Subscriber extends BaseModel
 
     public function form(): BelongsTo
     {
-        return $this->belongsTo(Form::class);
+        return $this->belongsTo(Form::class)
+            ->withDefault();
     }
 
     public function received_mails(): HasMany
@@ -58,6 +65,16 @@ class Subscriber extends BaseModel
         return $this->hasOne(SentMail::class)
             ->latestOfMany()
             ->withDefault();
+    }
+
+    public function sequences(): BelongsToMany
+    {
+        return $this->belongsToMany(Sequence::class)->withPivot('subscribed_at');
+    }
+
+    public function sent_mails(): HasMany
+    {
+        return $this->hasMany(SentMail::class);
     }
 
     public function tooEarlyFor(SequenceMail $mail): bool

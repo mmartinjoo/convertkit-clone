@@ -9,8 +9,12 @@ class TagFilter extends Filter
 {
     public function handle(Builder $subscribers, Closure $next): Builder
     {
-        $subscribers->orWhere(fn (Builder $subscribers) =>
-            $subscribers->whereTagsExactly($this->filterData->value)
+        if (count($this->ids) === 0) {
+            return $subscribers;
+        }
+
+        $subscribers->where(fn (Builder $subscribers) =>
+            $subscribers->whereHasSomeTags($this->ids)
         );
 
         return $next($subscribers);

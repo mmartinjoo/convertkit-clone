@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 abstract class Filter
 {
-    public function __construct(protected readonly FilterData $filterData)
+    public function __construct(protected readonly array $ids)
     {
     }
 

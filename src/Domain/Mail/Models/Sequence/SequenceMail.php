@@ -10,8 +10,9 @@ use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class SequenceMail extends BaseModel implements Sendable
 {
@@ -39,14 +40,14 @@ class SequenceMail extends BaseModel implements Sendable
         return $this->belongsTo(Sequence::class);
     }
 
-    public function schedule(): BelongsTo
+    public function schedule(): HasOne
     {
-        return $this->belongsTo(SequenceMailSchedule::class, 'sequence_mail_schedule_id');
+        return $this->hasOne(SequenceMailSchedule::class);
     }
 
     public function sent_mails(): MorphMany
     {
-        return $this->morphMany(SentMail::class, 'mailable');
+        return $this->morphMany(SentMail::class, 'sendable');
     }
 
     public function newEloquentBuilder($query): SequenceMailBuilder
@@ -54,10 +55,7 @@ class SequenceMail extends BaseModel implements Sendable
         return new SequenceMailBuilder($query);
     }
 
-    /**
-     * @return Collection<FilterData>
-     */
-    public function filters(): Collection
+    public function filters(): FilterData
     {
         return $this->filters;
     }
@@ -84,8 +82,8 @@ class SequenceMail extends BaseModel implements Sendable
 
     public function shouldSendToday(): bool
     {
-        return collect($this->schedule->days)
-            ->contains(now()->dayOfWeek);
+        $dayName = Str::lower(now()->dayName);
+        return $this->schedule->days->{$dayName};
     }
 
     public function enoughTimePassedSince(SentMail $mail): bool

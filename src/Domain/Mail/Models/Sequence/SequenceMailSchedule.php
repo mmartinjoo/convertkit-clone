@@ -2,10 +2,10 @@
 
 namespace Domain\Mail\Models\Sequence;
 
-use Carbon\Carbon;
 use Domain\Mail\Enums\Sequence\SequenceMailUnit;
+use Domain\Mail\Models\Casts\Sequence\SequenceMailScheduleDaysCast;
 use Domain\Shared\Models\BaseModel;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SequenceMailSchedule extends BaseModel
 {
@@ -13,15 +13,25 @@ class SequenceMailSchedule extends BaseModel
         'delay',
         'unit',
         'days',
+        'sequence_mail_id',
     ];
 
     protected $casts = [
-        'days' => 'array',
+        'days' => SequenceMailScheduleDaysCast::class,
         'unit' => SequenceMailUnit::class,
     ];
 
-    public function mail(): HasOne
+    public function mail(): BelongsTo
     {
-        return $this->hasOne(SequenceMail::class);
+        return $this->belongsTo(SequenceMail::class);
+    }
+
+    public function delayInHours(): int
+    {
+        if ($this->unit === SequenceMailUnit::Day) {
+            return $this->delay * 24;
+        }
+
+        return $this->delay;
     }
 }

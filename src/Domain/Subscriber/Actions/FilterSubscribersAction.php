@@ -3,7 +3,7 @@
 namespace Domain\Subscriber\Actions;
 
 use Domain\Mail\Contracts\Sendable;
-use Domain\Mail\DataTransferObjects\FilterData;
+use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Subscriber\Exceptions\InvalidFilterException;
 use Domain\Subscriber\Filters\{Filter, FormFilter, TagFilter};
 use Domain\Subscriber\Models\Subscriber;
@@ -17,8 +17,13 @@ class FilterSubscribersAction
      */
     public static function execute(Sendable $mail): Collection
     {
+        $subscribers = Subscriber::query();
+        if ($mail instanceof SequenceMail) {
+            $subscribers = Subscriber::whereIn('id', $mail->sequence->subscribers()->select('subscribers.id')->pluck('id'));
+        }
+
         return app(Pipeline::class)
-            ->send(Subscriber::query())
+            ->send($subscribers)
             ->through(self::filters($mail))
             ->thenReturn()
             ->get();
@@ -27,14 +32,18 @@ class FilterSubscribersAction
     /**
      * @return array<Filter>
      */
-    private static function filters(Sendable $mail): array
+    public static function filters(Sendable $mail): array
     {
-        return $mail->filters()->map(fn (FilterData $filterData) =>
-            match ($filterData->type) {
-                'tag' => new TagFilter($filterData),
-                'form' => new FormFilter($filterData),
-                default => InvalidFilterException::because("Filter not found for type {$filterData->type}"),
-            }
-        )->toArray();
+        return collect($mail->filters()->all())
+            ->reject(fn (array $ids) => count($ids) === 0)
+            ->map(fn (array $ids, string $key) =>
+                match ($key) {
+                    'tag_ids' => new TagFilter($ids),
+                    'form_ids' => new FormFilter($ids),
+                    default => InvalidFilterException::because("Filter not found for type {$key}"),
+                }
+            )
+            ->values()
+            ->all();
     }
 }

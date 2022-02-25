@@ -2,7 +2,7 @@
 
 namespace Domain\Mail\Contracts;
 
-use Illuminate\Support\Collection;
+use Domain\Mail\DataTransferObjects\FilterData;
 
 interface Sendable
 {
@@ -10,5 +10,5 @@ interface Sendable
     public function subject(): string;
     public function content(): string;
     public function type(): string;
-    public function filters(): Collection;
+    public function filters(): FilterData;
 }

@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Statistics;
 
 use App\Http\Controllers\Controller;
-use Domain\Statistics\ViewModels\GetDashboardViewModel;
+use Domain\Shared\ViewModels\GetDashboardViewModel;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class GetDashboardController extends Controller
 {
-    public function __invoke(): GetDashboardViewModel
+    public function __invoke(): Response
     {
-        return new GetDashboardViewModel();
+        return Inertia::render('Dashboard', [
+            'model' => new GetDashboardViewModel(),
+        ]);
     }
 }
