@@ -6,8 +6,8 @@ use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Mail\Models\SentMail;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
-use Domain\Report\DataTransferObjects\PerformanceData;
-use Domain\Report\ValueObjects\Percent;
+use Domain\Mail\DataTransferObjects\PerformanceData;
+use Domain\Shared\ValueObjects\Percent;
 
 class GetPerformanceAction
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Report\Filters;
+namespace Domain\Shared\Filters;
 
 use Carbon\Carbon;
 

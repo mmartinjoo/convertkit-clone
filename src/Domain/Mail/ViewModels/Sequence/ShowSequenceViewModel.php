@@ -8,7 +8,7 @@ use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Shared\ViewModels\Concerns\HasForms;
 use Domain\Shared\ViewModels\Concerns\HasTags;
 use Domain\Shared\ViewModels\ViewModel;
-use Domain\Report\DataTransferObjects\PerformanceData;
+use Domain\Mail\DataTransferObjects\PerformanceData;
 
 class ShowSequenceViewModel extends ViewModel
 {

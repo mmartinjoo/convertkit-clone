@@ -1,14 +1,14 @@
 <?php
 
-namespace Domain\Report\ViewModels;
+namespace Domain\Shared\ViewModels;
 
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\ViewModels\ViewModel;
-use Domain\Report\DataTransferObjects\DailySubscribersData;
-use Domain\Report\DataTransferObjects\NewSubscribersCountData;
-use Domain\Report\DataTransferObjects\PerformanceData;
-use Domain\Report\Filters\DateFilter;
-use Domain\Report\ValueObjects\Percent;
+use Domain\Subscriber\DataTransferObjects\DailySubscribersData;
+use Domain\Subscriber\DataTransferObjects\NewSubscribersCountData;
+use Domain\Mail\DataTransferObjects\PerformanceData;
+use Domain\Shared\Filters\DateFilter;
+use Domain\Shared\ValueObjects\Percent;
 use Domain\Subscriber\DataTransferObjects\SubscriberData;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Support\Collection;

@@ -8,7 +8,7 @@ use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceProgressData;
-use Domain\Report\DataTransferObjects\PerformanceData;
+use Domain\Mail\DataTransferObjects\PerformanceData;
 use Illuminate\Support\Collection;
 
 class GetSequenceReportsViewModel extends ViewModel

@@ -1,8 +1,8 @@
 <?php
 
-namespace Domain\Report\DataTransferObjects;
+namespace Domain\Mail\DataTransferObjects;
 
-use Domain\Report\ValueObjects\Percent;
+use Domain\Shared\ValueObjects\Percent;
 use Spatie\LaravelData\Data;
 
 class PerformanceData extends Data

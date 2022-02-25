@@ -6,7 +6,7 @@ use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Shared\ViewModels\ViewModel;
-use Domain\Report\DataTransferObjects\PerformanceData;
+use Domain\Mail\DataTransferObjects\PerformanceData;
 use Illuminate\Support\Collection;
 
 class GetBroadcastsViewModel extends ViewModel
