@@ -7,6 +7,7 @@ use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Models\SentMail;
+use Domain\Shared\Models\Concerns\HasUser;
 use Domain\Subscriber\Builders\SubscriberBuilder;
 use Domain\Subscriber\DataTransferObjects\SubscriberData;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,6 +21,9 @@ class Subscriber extends BaseModel
 {
     use Notifiable;
     use WithData;
+    use HasUser;
+
+    protected $dataClass = SubscriberData::class;
 
     protected $fillable = [
         'email',
@@ -31,8 +35,6 @@ class Subscriber extends BaseModel
     protected $casts = [
         'id' => 'integer',
     ];
-
-    protected $dataClass = SubscriberData::class;
 
     public function newEloquentBuilder($query): SubscriberBuilder
     {
