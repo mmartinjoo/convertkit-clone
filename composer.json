@@ -12,6 +12,7 @@
         "laravel-shift/blueprint": "^2.1",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.8",
+        "laravel/telescope": "^4.7",
         "laravel/tinker": "^2.5",
         "spatie/laravel-data": "^1.4",
         "tightenco/ziggy": "^1.0"
@@ -56,7 +57,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/telescope"
+            ]
         }
     },
     "config": {
