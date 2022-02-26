@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Domain\Mail\Enums\Sequence\SequenceStatus;
 use Domain\Mail\Models\Sequence\Sequence;
+use Domain\Shared\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SequenceFactory extends Factory
@@ -16,6 +17,7 @@ class SequenceFactory extends Factory
         return [
             'title' => $this->faker->words(4, true),
             'status' => $statuses[rand(0, count($statuses) - 1)]->value,
+            'user_id' => User::factory(),
         ];
     }
 }

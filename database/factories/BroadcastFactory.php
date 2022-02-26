@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Mail\Models\Broadcast\Broadcast;
+use Domain\Shared\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BroadcastFactory extends Factory
@@ -15,7 +17,8 @@ class BroadcastFactory extends Factory
             'title' => $this->faker->words(2, true),
             'content' => $this->faker->randomHtml(),
             'filters' => [],
-            'status' => 'draft',
+            'status' => BroadcastStatus::Draft,
+            'user_id' => User::factory(),
         ];
     }
 }

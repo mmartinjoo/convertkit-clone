@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Domain\Shared\Models\User;
 use Domain\Subscriber\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -13,6 +14,7 @@ class TagFactory extends Factory
     {
         return [
             'title' => $this->faker->words(3, true),
+            'user_id' => User::factory(),
         ];
     }
 }

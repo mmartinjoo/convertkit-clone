@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Domain\Shared\Models\User;
 use Domain\Subscriber\Models\Form;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -14,6 +15,7 @@ class FormFactory extends Factory
         return [
             'title' => $this->faker->words(2, true),
             'content' => $this->faker->randomHtml(),
+            'user_id' => User::factory(),
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Domain\Automation\Models\Automation;
+use Domain\Shared\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AutomationFactory extends Factory
@@ -13,6 +14,7 @@ class AutomationFactory extends Factory
     {
         return [
             'name' => $this->faker->words(3, true),
+            'user_id' => User::factory(),
         ];
     }
 }
