@@ -24,6 +24,7 @@ class ProceedSequenceAction
 
                 $mail->sent_mails()->create([
                     'subscriber_id' => $subscriber->id,
+                    'user_id' => $sequence->user->id,
                 ]);
             }
 

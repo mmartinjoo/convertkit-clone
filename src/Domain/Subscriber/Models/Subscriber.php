@@ -7,8 +7,10 @@ use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Models\SentMail;
+use Domain\Shared\Models\Concerns\HasUser;
 use Domain\Subscriber\Builders\SubscriberBuilder;
 use Domain\Subscriber\DataTransferObjects\SubscriberData;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,19 +22,21 @@ class Subscriber extends BaseModel
 {
     use Notifiable;
     use WithData;
+    use HasUser;
+
+    protected $dataClass = SubscriberData::class;
 
     protected $fillable = [
         'email',
         'first_name',
         'last_name',
-        'form_id'
+        'form_id',
+        'user_id',
     ];
 
     protected $casts = [
         'id' => 'integer',
     ];
-
-    protected $dataClass = SubscriberData::class;
 
     public function newEloquentBuilder($query): SubscriberBuilder
     {
@@ -80,5 +84,12 @@ class Subscriber extends BaseModel
     public function tooEarlyFor(SequenceMail $mail): bool
     {
         return !$mail->enoughTimePassedSince($this->last_received_mail);
+    }
+
+    public function fullName(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->first_name . ' ' . $this->last_name,
+        );
     }
 }

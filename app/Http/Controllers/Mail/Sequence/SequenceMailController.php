@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mail\Sequence;
 
 use App\Http\Controllers\Controller;
+use Domain\Mail\Actions\Sequence\DeleteSequenceMailAction;
 use Domain\Mail\Actions\Sequence\UpsertSequenceMailAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
 use Domain\Mail\Models\Sequence\Sequence;
@@ -34,7 +35,7 @@ class SequenceMailController extends Controller
 
     public function destroy(Sequence $sequence, SequenceMail $mail): Response
     {
-        $mail->delete();
+        DeleteSequenceMailAction::execute($mail);
 
         return response()->noContent();
     }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Domain\Shared\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Domain\Subscriber\Models\Form;
 use Domain\Subscriber\Models\Subscriber;
@@ -27,6 +28,7 @@ class SubscriberFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'form_id' => Form::factory(),
+            'user_id' => User::factory(),
         ];
     }
 }

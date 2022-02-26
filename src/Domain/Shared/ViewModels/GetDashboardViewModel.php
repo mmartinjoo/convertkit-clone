@@ -3,6 +3,7 @@
 namespace Domain\Shared\ViewModels;
 
 use Domain\Mail\Models\SentMail;
+use Domain\Shared\Models\User;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Subscriber\DataTransferObjects\DailySubscribersData;
 use Domain\Subscriber\DataTransferObjects\NewSubscribersCountData;
@@ -16,6 +17,10 @@ use Illuminate\Support\Facades\DB;
 
 class GetDashboardViewModel extends ViewModel
 {
+    public function __construct(private readonly User $user)
+    {
+    }
+
     public function newSubscribersCount(): NewSubscribersCountData
     {
         return new NewSubscribersCountData(
@@ -35,6 +40,7 @@ class GetDashboardViewModel extends ViewModel
             ->select(DB::raw("count(*) count, date_format(created_at, '%Y-%m-%d') day"))
             ->groupBy('day')
             ->orderByDesc('day')
+            ->whereUserId($this->user->id)
             ->get()
             ->map(fn (object $data) => DailySubscribersData::from((array) $data));
     }

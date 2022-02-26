@@ -12,7 +12,6 @@ class DeleteSequenceAction
     public static function execute(Sequence $sequence): void
     {
         DB::transaction(function () use ($sequence) {
-            $sequence->subscribers()->detach();
             $sequence->mails()->delete();
 
             AutomationStep::query()

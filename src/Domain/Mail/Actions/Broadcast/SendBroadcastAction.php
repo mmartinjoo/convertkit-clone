@@ -6,6 +6,7 @@ use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Mail\Exceptions\Broadcast\CannotSendBroadcast;
 use Domain\Mail\Mails\EchoMail;
 use Domain\Mail\Models\Broadcast\Broadcast;
+use Domain\Shared\Models\User;
 use Domain\Subscriber\Actions\FilterSubscribersAction;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Support\Facades\Mail;
@@ -29,6 +30,7 @@ class SendBroadcastAction
 
         return $subscribers->each(fn (Subscriber $subscriber) => $broadcast->sent_mails()->create([
             'subscriber_id' => $subscriber->id,
+            'user_id' => $broadcast->user->id,
         ]))->count();
     }
 }
