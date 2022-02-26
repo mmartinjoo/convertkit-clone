@@ -10,6 +10,7 @@ use Domain\Mail\Models\SentMail;
 use Domain\Shared\Models\Concerns\HasUser;
 use Domain\Subscriber\Builders\SubscriberBuilder;
 use Domain\Subscriber\DataTransferObjects\SubscriberData;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -83,5 +84,12 @@ class Subscriber extends BaseModel
     public function tooEarlyFor(SequenceMail $mail): bool
     {
         return !$mail->enoughTimePassedSince($this->last_received_mail);
+    }
+
+    public function fullName(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->first_name . ' ' . $this->last_name,
+        );
     }
 }

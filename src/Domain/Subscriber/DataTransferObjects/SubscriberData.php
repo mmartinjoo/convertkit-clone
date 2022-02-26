@@ -19,6 +19,7 @@ class SubscriberData extends Data
         public readonly string $email,
         public readonly string $first_name,
         public readonly ?string $last_name,
+        public readonly ?string $full_name,
         public readonly ?Carbon $subscribed_at,
         /** @var DataCollection<TagData> */
         public readonly null|Lazy|DataCollection $tags,
@@ -40,6 +41,7 @@ class SubscriberData extends Data
             ...$subscriber->toArray(),
             'tags' => Lazy::whenLoaded('tags', $subscriber, fn () => TagData::collection($subscriber->tags)),
             'form' => Lazy::whenLoaded('form', $subscriber, fn () => FormData::from($subscriber->form)),
+            'full_name' => $subscriber->fullName,
         ]);
     }
 
