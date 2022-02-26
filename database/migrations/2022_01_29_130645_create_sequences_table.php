@@ -16,6 +16,8 @@ class CreateSequencesTable extends Migration
             $table->string('title');
             $table->string('status')->default(SequenceStatus::Draft->value);
             $table->timestamps();
+
+            $table->unique(['user_id', 'title']);
         });
     }
 

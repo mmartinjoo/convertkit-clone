@@ -14,6 +14,8 @@ class CreateAutomationsTable extends Migration
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->timestamps();
+
+            $table->unique(['user_id', 'name']);
         });
     }
 

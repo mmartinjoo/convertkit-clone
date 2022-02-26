@@ -19,6 +19,7 @@ class CreateSequenceMailsTable extends Migration
             $table->string('status')->default(SequenceMailStatus::Draft->value);
             $table->json('filters')->nullable(true);
             $table->timestamps();
+
             $table->index('status');
         });
     }

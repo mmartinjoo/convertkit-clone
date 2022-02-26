@@ -15,6 +15,8 @@ class CreateFormsTable extends Migration
             $table->string('title');
             $table->text('content');
             $table->timestamps();
+
+            $table->unique(['user_id', 'title']);
         });
     }
 

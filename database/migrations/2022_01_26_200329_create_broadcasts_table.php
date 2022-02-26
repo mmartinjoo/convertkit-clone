@@ -19,6 +19,7 @@ class CreateBroadcastsTable extends Migration
             $table->string('status')->default(BroadcastStatus::Draft->value);
             $table->dateTime('sent_at')->nullable(true);
             $table->timestamps();
+
             $table->index('status');
         });
     }
