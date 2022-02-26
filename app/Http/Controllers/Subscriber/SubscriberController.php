@@ -10,6 +10,7 @@ use Domain\Subscriber\Models\Subscriber;
 use Domain\Subscriber\ViewModels\UpsertSubscriberViewModel;
 use Domain\Subscriber\ViewModels\GetSubscribersViewModel;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -31,9 +32,9 @@ class SubscriberController extends Controller
         ]);
     }
 
-    public function store(SubscriberData $data): RedirectResponse
+    public function store(SubscriberData $data, Request $request): RedirectResponse
     {
-        UpsertSubscriberAction::execute($data);
+        UpsertSubscriberAction::execute($data, $request->user());
 
         return Redirect::route('subscribers.index');
     }
@@ -45,9 +46,9 @@ class SubscriberController extends Controller
         ]);
     }
 
-    public function update(SubscriberData $data): RedirectResponse
+    public function update(SubscriberData $data, Request $request): RedirectResponse
     {
-        UpsertSubscriberAction::execute($data);
+        UpsertSubscriberAction::execute($data, $request->user());
 
         return Redirect::route('subscribers.index');
     }
