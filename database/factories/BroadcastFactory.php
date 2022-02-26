@@ -14,7 +14,7 @@ class BroadcastFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->words(2, true),
+            'subject' => $this->faker->words(2, true),
             'content' => $this->faker->randomHtml(),
             'filters' => [],
             'status' => BroadcastStatus::Draft,

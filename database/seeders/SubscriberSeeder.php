@@ -2,32 +2,29 @@
 
 namespace Database\Seeders;
 
-use Domain\Shared\Models\User;
 use Domain\Subscriber\Models\Form;
 use Domain\Subscriber\Models\Subscriber;
 use Domain\Subscriber\Models\Tag;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Hash;
 
-class SubscriberSeeder extends Seeder
+class SubscriberSeeder extends DatabaseSeeder
 {
     public function run()
     {
-        $demoUser = User::factory([
-            'name' => 'Demo User',
-            'email' => 'demo@convertkit-clone.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('password'),
-        ])->create();
+        $demoUser = $this->demoUser();
 
-        $tags = $this->tags()->map(fn (string $tag) => Tag::factory()->for($demoUser)->create());
-        $forms = $this->forms()->map(fn (string $form) => Form::factory()->for($demoUser)->create());
+        $tags = $this->tags()->map(fn (string $title) =>
+            Tag::factory(compact('title'))->for($demoUser)->create()
+        );
+
+        $forms = $this->forms()->map(fn (string $title) =>
+            Form::factory(compact('title'))->for($demoUser)->create()
+        );
 
         $subscribers = $this->range(1, 200)->map(fn () =>
-        Subscriber::factory([
-            'form_id' => $this->byChance(0.67, $forms, fn (Collection $forms) => $forms->random()),
-        ])
+            Subscriber::factory([
+                'form_id' => $this->byChance(0.67, $forms, fn (Collection $forms) => $forms->random()),
+            ])
             ->for($demoUser)
             ->create()
         );
