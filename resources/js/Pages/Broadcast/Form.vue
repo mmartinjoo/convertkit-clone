@@ -63,7 +63,7 @@ export default {
 </script>
 
 <template>
-    <Head title="New Subscriber" />
+    <Head title="New Broadcast" />
 
     <BreezeAuthenticatedLayout>
         <template #header>

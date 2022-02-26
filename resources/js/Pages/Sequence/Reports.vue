@@ -20,7 +20,7 @@ export default {
 </script>
 
 <template>
-    <Head title="Sequence" />
+    <Head title="Sequence Reports" />
 
     <BreezeAuthenticatedLayout>
         <template #header>
