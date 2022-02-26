@@ -22,7 +22,7 @@ class ImportSubscribersAction
                 'tags' => self::getOrCreateTags($row['tags'], $user),
             ])
             ->map(fn (array $row) => SubscriberData::from($row))
-            ->filter(fn (SubscriberData $data) => !Subscriber::whereEmail($data->email)->exists())
+            ->filter(fn (SubscriberData $data) => !self::isSubscriberExist($data, $user))
             ->map(fn (SubscriberData $data) => UpsertSubscriberAction::execute($data, $user))
             ->count();
     }
@@ -35,5 +35,13 @@ class ImportSubscribersAction
                 'user_id' => $user->id,
             ]))
             ->toArray();
+    }
+
+    private static function isSubscriberExist(SubscriberData $data, User $user): bool
+    {
+        return Subscriber::query()
+            ->whereEmail($data->email)
+            ->whereUserId($user->id)
+            ->exists();
     }
 }
