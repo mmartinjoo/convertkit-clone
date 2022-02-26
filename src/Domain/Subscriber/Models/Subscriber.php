@@ -29,7 +29,8 @@ class Subscriber extends BaseModel
         'email',
         'first_name',
         'last_name',
-        'form_id'
+        'form_id',
+        'user_id',
     ];
 
     protected $casts = [

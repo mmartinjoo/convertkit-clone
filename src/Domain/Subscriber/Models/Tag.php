@@ -17,6 +17,7 @@ class Tag extends BaseModel
 
     protected $fillable = [
         'title',
+        'user_id',
     ];
 
     protected $casts = [

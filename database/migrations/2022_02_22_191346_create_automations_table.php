@@ -11,8 +11,8 @@ class CreateAutomationsTable extends Migration
     {
         Schema::create('automations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->string('name');
             $table->timestamps();
         });
     }

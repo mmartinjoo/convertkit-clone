@@ -15,6 +15,7 @@ class Automation extends BaseModel
 
     protected $fillable = [
         'name',
+        'user_id',
     ];
 
     protected $dataClass = AutomationData::class;

@@ -25,6 +25,7 @@ class Broadcast extends BaseModel implements Sendable
         'status',
         'filters',
         'sent_at',
+        'user_id',
     ];
 
     protected $casts = [

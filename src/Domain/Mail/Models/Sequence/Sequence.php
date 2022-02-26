@@ -22,6 +22,7 @@ class Sequence extends BaseModel
     protected $fillable = [
         'title',
         'status',
+        'user_id',
     ];
 
     protected $casts = [

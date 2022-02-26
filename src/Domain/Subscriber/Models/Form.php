@@ -17,6 +17,7 @@ class Form extends BaseModel
     protected $fillable = [
         'title',
         'content',
+        'user_id',
     ];
 
     protected $attributes = [
