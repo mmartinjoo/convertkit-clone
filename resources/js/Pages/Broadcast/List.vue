@@ -20,8 +20,10 @@ export default {
         edit(broadcast) {
             this.$inertia.get(`broadcasts/${broadcast.id}/edit`);
         },
-        send(broadcast) {
-            this.$inertia.patch(`broadcasts/${broadcast.id}/send`);
+        async send(broadcast) {
+            await axios.patch(`broadcasts/${broadcast.id}/send`);
+            alert('Your broadcast is being processed. It may take a few seconds...');
+            this.$inertia.get('broadcasts');
         },
         preview(broadcast) {
             this.$inertia.get(`broadcasts/${broadcast.id}/preview`);

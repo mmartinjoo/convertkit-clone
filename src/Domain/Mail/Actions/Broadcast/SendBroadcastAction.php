@@ -15,7 +15,7 @@ class SendBroadcastAction
     public static function execute(Broadcast $broadcast): int
     {
         if ($broadcast->status === BroadcastStatus::Sent) {
-            throw new CannotSendBroadcast("Broadcast already sent at {$broadcast->sent_at}");
+            throw CannotSendBroadcast::because("Broadcast already sent at {$broadcast->sent_at}");
         }
 
         $subscribers = FilterSubscribersAction::execute($broadcast)

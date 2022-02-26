@@ -3,25 +3,16 @@
 namespace App\Http\Controllers\Mail\Broadcast;
 
 use App\Http\Controllers\Controller;
-use Domain\Mail\Actions\Broadcast\SendBroadcastAction;
-use Domain\Mail\Exceptions\Broadcast\CannotSendBroadcast;
+use Domain\Mail\Jobs\Broadcast\SendBroadcastJob;
 use Domain\Mail\Models\Broadcast\Broadcast;
-use Illuminate\Http\RedirectResponse;
-use Redirect;
+use Illuminate\Http\Response;
 
 class SendBroadcastController extends Controller
 {
-    public function __invoke(Broadcast $broadcast): RedirectResponse
+    public function __invoke(Broadcast $broadcast): Response
     {
-        try {
-            SendBroadcastAction::execute($broadcast);
+        SendBroadcastJob::dispatch($broadcast);
 
-            return Redirect::route('broadcasts.index', $broadcast);
-        } catch (CannotSendBroadcast $ex) {
-            return Redirect::route(
-                'broadcasts.index',
-                $broadcast
-            )->withErrors(['status' => $ex->getMessage()]);
-        }
+        return response('', Response::HTTP_ACCEPTED);
     }
 }

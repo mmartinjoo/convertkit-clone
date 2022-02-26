@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Subscriber;
 
-use Domain\Subscriber\Actions\ImportSubscribersAction;
+use Domain\Subscriber\Jobs\ImportSubscribersJob;
 use Illuminate\Console\Command;
 
 class ImportSubscribersCommand extends Command
@@ -12,8 +12,9 @@ class ImportSubscribersCommand extends Command
 
     public function handle()
     {
-        $count = ImportSubscribersAction::execute(storage_path('subscribers/subscribers.csv'));
-        $this->info("$count subscribers have been imported successfully");
+        ImportSubscribersJob::dispatch(storage_path('subscribers/subscribers.csv'));
+
+        $this->info("Subscribers are being imported...");
 
         return self::SUCCESS;
     }

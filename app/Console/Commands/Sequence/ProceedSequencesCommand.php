@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Sequence;
 
-use Domain\Mail\Actions\Sequence\ProceedSequenceAction;
+use Domain\Mail\Jobs\Sequence\ProceedSequenceJob;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Enums\Sequence\SequenceStatus;
 use Illuminate\Console\Command;
@@ -14,12 +14,14 @@ class ProceedSequencesCommand extends Command
 
     public function handle(): int
     {
-        $countsBySequence = Sequence::with('mails.schedule')
+        $count = Sequence::with('mails.schedule')
             ->whereStatus(SequenceStatus::Published)
             ->get()
-            ->map(fn (Sequence $sequence) => ProceedSequenceAction::execute($sequence));
+            ->map(fn (Sequence $sequence) => ProceedSequenceJob::dispatch($sequence))
+            ->count();
 
-        $this->info("{$countsBySequence->sum()} mails have been sent to subscribers");
+        $this->info("{$count} sequences are being proceeded");
+
         return self::SUCCESS;
     }
 }
