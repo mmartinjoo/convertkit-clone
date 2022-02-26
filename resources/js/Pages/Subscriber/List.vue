@@ -15,8 +15,9 @@ export default {
         },
     },
     methods: {
-        importSubscribers() {
-            this.$inertia.post('subscribers/import');
+        async importSubscribers() {
+            await axios.post('subscribers/import');
+            alert('Subscribers are being imported... Please refresh the page after a few seconds');
         },
         edit(subscriber) {
             this.$inertia.get(`subscribers/${subscriber.id}/edit`);
