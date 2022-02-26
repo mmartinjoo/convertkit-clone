@@ -21,8 +21,16 @@ export default {
             this.$inertia.get(`broadcasts/${broadcast.id}/edit`);
         },
         async send(broadcast) {
+            const areYouSure = confirm('Are you sure you want to send fake e-mails to fake people? 😱😱😱');
+
+            if (!areYouSure) {
+                return;
+            }
+
             await axios.patch(`broadcasts/${broadcast.id}/send`);
+
             alert('Your broadcast is being processed. It may take a few seconds...');
+
             this.$inertia.get('broadcasts');
         },
         preview(broadcast) {
