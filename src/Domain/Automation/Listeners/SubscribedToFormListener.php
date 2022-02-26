@@ -2,13 +2,13 @@
 
 namespace Domain\Automation\Listeners;
 
-use Domain\Automation\Actions\RunAutomationsAction;
 use Domain\Automation\Events\SubscribedToFormEvent;
+use Domain\Automation\Jobs\RunAutomationsJob;
 
 class SubscribedToFormListener
 {
     public function handle(SubscribedToFormEvent $event)
     {
-        RunAutomationsAction::execute($event->subscriber);
+        RunAutomationsJob::dispatch($event->subscriber);
     }
 }
