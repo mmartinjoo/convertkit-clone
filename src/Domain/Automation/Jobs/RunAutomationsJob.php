@@ -3,6 +3,7 @@
 namespace Domain\Automation\Jobs;
 
 use Domain\Automation\Actions\RunAutomationsAction;
+use Domain\Shared\Models\User;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,12 +15,13 @@ class RunAutomationsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(private readonly Subscriber $subscriber)
-    {
-    }
+    public function __construct(
+        private readonly Subscriber $subscriber,
+        private readonly User $user,
+    ) {}
 
     public function handle()
     {
-        RunAutomationsAction::execute($this->subscriber);
+        RunAutomationsAction::execute($this->subscriber, $this->user);
     }
 }

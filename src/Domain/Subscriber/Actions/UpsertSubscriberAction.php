@@ -26,7 +26,7 @@ class UpsertSubscriberAction
 
         // Only fires automation if it's a new subscriber
         if ($data->form && !$data->id) {
-            event(new SubscribedToFormEvent($subscriber));
+            event(new SubscribedToFormEvent($subscriber, $user));
         }
 
         return $subscriber->load('tags', 'form');

@@ -9,6 +9,6 @@ class SubscribedToFormListener
 {
     public function handle(SubscribedToFormEvent $event)
     {
-        RunAutomationsJob::dispatch($event->subscriber);
+        RunAutomationsJob::dispatch($event->subscriber, $event->user);
     }
 }
