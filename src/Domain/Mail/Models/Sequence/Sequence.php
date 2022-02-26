@@ -7,6 +7,7 @@ use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Enums\Sequence\SequenceStatus;
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\Models\BaseModel;
+use Domain\Shared\Models\Concerns\HasUser;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,6 +17,7 @@ use Spatie\LaravelData\WithData;
 class Sequence extends BaseModel
 {
     use WithData;
+    use HasUser;
 
     protected $fillable = [
         'title',
