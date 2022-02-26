@@ -10,9 +10,9 @@ use Illuminate\Http\Response;
 
 class SendBroadcastController extends Controller
 {
-    public function __invoke(Broadcast $broadcast, Request $request): Response
+    public function __invoke(Broadcast $broadcast): Response
     {
-        SendBroadcastJob::dispatch($broadcast, $request->user());
+        SendBroadcastJob::dispatch($broadcast);
 
         return response('', Response::HTTP_ACCEPTED);
     }

@@ -15,13 +15,12 @@ class SendBroadcastJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(
-        private readonly Broadcast $broadcast,
-        private readonly User $user,
-    ) {}
+    public function __construct(private readonly Broadcast $broadcast)
+    {
+    }
 
     public function handle()
     {
-        SendBroadcastAction::execute($this->broadcast, $this->user);
+        SendBroadcastAction::execute($this->broadcast);
     }
 }

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Mail;
 
 class SendBroadcastAction
 {
-    public static function execute(Broadcast $broadcast, User $user): int
+    public static function execute(Broadcast $broadcast): int
     {
         if ($broadcast->status === BroadcastStatus::Sent) {
             throw CannotSendBroadcast::because("Broadcast already sent at {$broadcast->sent_at}");
@@ -30,7 +30,7 @@ class SendBroadcastAction
 
         return $subscribers->each(fn (Subscriber $subscriber) => $broadcast->sent_mails()->create([
             'subscriber_id' => $subscriber->id,
-            'user_id' => $user->id,
+            'user_id' => $broadcast->user->id,
         ]))->count();
     }
 }
