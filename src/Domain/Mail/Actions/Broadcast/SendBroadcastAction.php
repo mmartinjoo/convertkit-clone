@@ -6,13 +6,14 @@ use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Mail\Exceptions\Broadcast\CannotSendBroadcast;
 use Domain\Mail\Mails\EchoMail;
 use Domain\Mail\Models\Broadcast\Broadcast;
+use Domain\Shared\Models\User;
 use Domain\Subscriber\Actions\FilterSubscribersAction;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Support\Facades\Mail;
 
 class SendBroadcastAction
 {
-    public static function execute(Broadcast $broadcast): int
+    public static function execute(Broadcast $broadcast, User $user): int
     {
         if ($broadcast->status === BroadcastStatus::Sent) {
             throw CannotSendBroadcast::because("Broadcast already sent at {$broadcast->sent_at}");
@@ -29,6 +30,7 @@ class SendBroadcastAction
 
         return $subscribers->each(fn (Subscriber $subscriber) => $broadcast->sent_mails()->create([
             'subscriber_id' => $subscriber->id,
+            'user_id' => $user->id,
         ]))->count();
     }
 }
