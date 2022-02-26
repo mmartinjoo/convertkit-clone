@@ -12,9 +12,10 @@ class CreateSequenceSubscriberTable extends Migration
     {
         Schema::create('sequence_subscriber', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Sequence::class)->references('id')->on('sequences');
-            $table->foreignIdFor(Subscriber::class)->references('id')->on('subscribers');
+            $table->foreignIdFor(Sequence::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Subscriber::class)->constrained()->cascadeOnDelete();
             $table->dateTime('subscribed_at')->useCurrent();
+            $table->string('status')->nullable()->default(null);
 
             $table->unique(['sequence_id', 'subscriber_id']);
         });

@@ -19,6 +19,7 @@ class CreateSubscribersTable extends Migration
             $table->string('first_name');
             $table->string('last_name')->nullable();
             $table->foreignId('form_id')->nullable()->constrained()->nullOnDelete();
+            $table->dateTime('subscribed_at')->useCurrent();
             $table->timestamps();
         });
     }

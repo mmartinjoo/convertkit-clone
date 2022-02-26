@@ -15,6 +15,12 @@ class CreateSentMailsTable extends Migration
             $table->string('sendable_type');
             $table->foreignIdFor(Subscriber::class)->nullable(true)->constrained()->nullOnDelete();
             $table->dateTime('sent_at')->useCurrent();
+            $table->dateTime('opened_at')->nullable();
+            $table->dateTime('clicked_at')->nullable();
+
+            $table->index('opened_at');
+            $table->index('clicked_at');
+            $table->index('sent_at');
         });
     }
 
