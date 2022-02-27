@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Domain\Subscriber\Models\Form;
 use Domain\Subscriber\Models\Subscriber;
 use Domain\Subscriber\Models\Tag;
@@ -24,6 +25,7 @@ class SubscriberSeeder extends DatabaseSeeder
         $subscribers = $this->range(1, 200)->map(fn () =>
             Subscriber::factory([
                 'form_id' => $this->byChance(0.67, $forms, fn (Collection $forms) => $forms->random()),
+                'subscribed_at' => $this->last30Days(),
             ])
             ->for($demoUser)
             ->create()
@@ -68,5 +70,10 @@ class SubscriberSeeder extends DatabaseSeeder
     private function range(int $from, int $to): Collection
     {
         return collect(range($from, $to));
+    }
+
+    private function last30Days(): Carbon
+    {
+        return now()->subDays(rand(0, 30));
     }
 }

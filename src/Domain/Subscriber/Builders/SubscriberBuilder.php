@@ -17,7 +17,7 @@ class SubscriberBuilder extends Builder
 
     public function whereSubscribedBetween(DateFilter $dateFilter): self
     {
-        return $this->whereBetween('created_at', $dateFilter->toArray());
+        return $this->whereBetween('subscribed_at', $dateFilter->toArray());
     }
 
     public function alreadyReceived(SequenceMail $mail): bool
