@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             SubscriberSeeder::class,
             BroadcastSeeder::class,
             SequenceSeeder::class,
+            AutomationSeeder::class,
         ]);
     }
 

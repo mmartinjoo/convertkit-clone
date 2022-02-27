@@ -8,7 +8,7 @@ use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Mail\Models\SentMail;
 use Queue;
 
-class BroadcastSeeder extends SubscriberSeeder
+class BroadcastSeeder extends AutomationSeeder
 {
     public function run()
     {

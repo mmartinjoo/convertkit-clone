@@ -8,6 +8,7 @@ use Domain\Mail\Enums\Sequence\SequenceStatus;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Mail\Models\Sequence\SequenceMailSchedule;
+use Domain\Subscriber\Models\Subscriber;
 
 class SequenceSeeder extends SubscriberSeeder
 {
@@ -52,6 +53,8 @@ class SequenceSeeder extends SubscriberSeeder
             ],
         ])->for($sequence)->create();
         $this->everyWednesday($chapterMail);
+
+        $sequence->subscribers()->sync(Subscriber::select('id')->pluck('id'));
     }
 
     protected function everyWednesday(SequenceMail $mail): SequenceMailSchedule
