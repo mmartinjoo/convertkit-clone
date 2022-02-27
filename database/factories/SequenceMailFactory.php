@@ -17,8 +17,7 @@ class SequenceMailFactory extends Factory
         $statuses = SequenceMailStatus::cases();
         return [
             'sequence_id' => Sequence::factory(),
-            'sequence_mail_schedule_id' => SequenceMailSchedule::factory(),
-            'title' => $this->faker->words(3, true),
+            'subject' => $this->faker->words(3, true),
             'content' => $this->faker->randomHtml(),
             'status' => $statuses[rand(0, count($statuses) - 1)],
         ];

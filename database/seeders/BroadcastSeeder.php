@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use Domain\Mail\Models\Broadcast\Broadcast;
-use Domain\Subscriber\Models\Form;
-use Domain\Subscriber\Models\Tag;
 
 class BroadcastSeeder extends SubscriberSeeder
 {
@@ -33,15 +31,5 @@ class BroadcastSeeder extends SubscriberSeeder
         ])
         ->for($demoUser)
         ->create();
-    }
-
-    private function tagId(string $title): int
-    {
-        return Tag::whereTitle($title)->firstOrFail()->id;
-    }
-
-    private function formId(string $title): int
-    {
-        return Form::whereTitle($title)->firstOrFail()->id;
     }
 }
