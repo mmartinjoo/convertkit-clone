@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Web\Controllers\Mail\SentMail;
+namespace App\Http\Api\Controllers\Mail;
 
+use Domain\Mail\Actions\SentMail\ClickSentMailAction;
 use Domain\Mail\Models\SentMail;
 use Illuminate\Http\Response;
 
-class OpenSentMailController
+class ClickSentMailController
 {
     public function __invoke(SentMail $sentMail): Response
     {
-        $sentMail->opened_at = now();
-        $sentMail->save();
+        ClickSentMailAction::execute($sentMail);
 
         return response()->noContent();
     }

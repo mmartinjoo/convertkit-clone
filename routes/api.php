@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Web\Controllers\Mail\SentMail\ClickSentMailController;
-use App\Http\Web\Controllers\Mail\SentMail\OpenSentMailController;
+use App\Http\Api\Controllers\Mail\ClickSentMailController;
+use App\Http\Api\Controllers\Mail\OpenSentMailController;
 use Illuminate\Support\Facades\Route;
 
 //Route::post('subscribers', )
