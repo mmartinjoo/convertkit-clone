@@ -1,17 +1,17 @@
 <?php
 
-use App\Http\Controllers\Automation\AutomationController;
-use App\Http\Controllers\Mail\Broadcast\BroadcastController;
-use App\Http\Controllers\Mail\Broadcast\PreviewBroadcastController;
-use App\Http\Controllers\Mail\Broadcast\SendBroadcastController;
-use App\Http\Controllers\Mail\Sequence\PreviewSequenceMailController;
-use App\Http\Controllers\Mail\Sequence\PublishSequenceController;
-use App\Http\Controllers\Mail\Sequence\SequenceController;
-use App\Http\Controllers\Mail\Sequence\SequenceMailController;
-use App\Http\Controllers\Mail\Sequence\GetSequenceReportController;
-use App\Http\Controllers\Statistics\GetDashboardController;
-use App\Http\Controllers\Subscriber\ImportSubscribersController;
-use App\Http\Controllers\Subscriber\SubscriberController;
+use App\Http\Web\Controllers\Automation\AutomationController;
+use App\Http\Web\Controllers\Mail\Broadcast\BroadcastController;
+use App\Http\Web\Controllers\Mail\Broadcast\PreviewBroadcastController;
+use App\Http\Web\Controllers\Mail\Broadcast\SendBroadcastController;
+use App\Http\Web\Controllers\Mail\Sequence\PreviewSequenceMailController;
+use App\Http\Web\Controllers\Mail\Sequence\PublishSequenceController;
+use App\Http\Web\Controllers\Mail\Sequence\SequenceController;
+use App\Http\Web\Controllers\Mail\Sequence\SequenceMailController;
+use App\Http\Web\Controllers\Mail\Sequence\GetSequenceReportController;
+use App\Http\Web\Controllers\GetDashboardController;
+use App\Http\Web\Controllers\Subscriber\ImportSubscribersController;
+use App\Http\Web\Controllers\Subscriber\SubscriberController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
