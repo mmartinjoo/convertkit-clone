@@ -37,7 +37,7 @@ class GetDashboardViewModel extends ViewModel
     public function dailySubscribers(): Collection
     {
         return DB::table('subscribers')
-            ->select(DB::raw("count(*) count, date_format(created_at, '%Y-%m-%d') day"))
+            ->select(DB::raw("count(*) count, date_format(subscribed_at, '%Y-%m-%d') day"))
             ->groupBy('day')
             ->orderByDesc('day')
             ->whereUserId($this->user->id)
