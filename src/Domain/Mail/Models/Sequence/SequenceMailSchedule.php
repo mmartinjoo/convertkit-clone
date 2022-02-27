@@ -3,7 +3,7 @@
 namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Enums\Sequence\SequenceMailUnit;
-use Domain\Mail\Models\Casts\Sequence\SequenceMailScheduleDaysCast;
+use Domain\Mail\Models\Casts\Sequence\SequenceMailScheduleAllowedDaysCast;
 use Domain\Shared\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -12,12 +12,12 @@ class SequenceMailSchedule extends BaseModel
     protected $fillable = [
         'delay',
         'unit',
-        'days',
+        'allowed_days',
         'sequence_mail_id',
     ];
 
     protected $casts = [
-        'days' => SequenceMailScheduleDaysCast::class,
+        'allowed_days' => SequenceMailScheduleAllowedDaysCast::class,
         'unit' => SequenceMailUnit::class,
     ];
 

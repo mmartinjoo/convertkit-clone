@@ -2,11 +2,8 @@
 
 namespace Domain\Mail\Actions\Sequence;
 
-use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
-use Domain\Mail\DataTransferObjects\Sequence\SequenceMailScheduleDaysData;
-use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Subscriber\Models\Subscriber;
 

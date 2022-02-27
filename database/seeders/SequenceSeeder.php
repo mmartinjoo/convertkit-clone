@@ -63,7 +63,7 @@ class SequenceSeeder extends SubscriberSeeder
             'sequence_mail_id' => $mail->id,
             'delay' => 1,
             'unit' => SequenceMailUnit::Hour,
-            'days' => [
+            'allowed_days' => [
                 'monday' => false,
                 'tuesday' => false,
                 'wednesday' => true,

@@ -18,7 +18,7 @@ class SequenceMailScheduleFactory extends Factory
             'sequence_mail_id' => SequenceMail::factory(),
             'delay' => rand(1, 5),
             'unit' => $units[rand(0, count($units) - 1)]->value,
-            'days' => [
+            'allowed_days' => [
                 'monday' => true,
                 'tuesday' => true,
                 'wednesday' => true,

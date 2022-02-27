@@ -53,7 +53,7 @@ class SequenceMailData extends Data
             'schedule' => [
                 'delay' => 1,
                 'unit' => 'day',
-                'days' => SequenceMailScheduleDaysData::empty(),
+                'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
             ]
         ]);
     }

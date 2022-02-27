@@ -71,13 +71,13 @@ export default {
                     <p class="inline-flex ml-2">After the last e-mail</p>
                 </div>
                 <div>
-                    <input v-model="mail.schedule.days.monday" type="checkbox" class="mr-1"><span class="mr-3">Mon</span>
-                    <input v-model="mail.schedule.days.tuesday" type="checkbox" class="mr-1"><span class="mr-3">Tue</span>
-                    <input v-model="mail.schedule.days.wednesday" type="checkbox" class="mr-1"><span class="mr-3">Wed</span>
-                    <input v-model="mail.schedule.days.thursday" type="checkbox" class="mr-1"><span class="mr-3">Thur</span>
-                    <input v-model="mail.schedule.days.friday" type="checkbox" class="mr-1"><span class="mr-3">Fri</span>
-                    <input v-model="mail.schedule.days.saturday" type="checkbox" class="mr-1"><span class="mr-3">Sat</span>
-                    <input v-model="mail.schedule.days.sunday" type="checkbox" class="mr-1"><span class="mr-3">Sun</span>
+                    <input v-model="mail.schedule.allowed_days.monday" type="checkbox" class="mr-1"><span class="mr-3">Mon</span>
+                    <input v-model="mail.schedule.allowed_days.tuesday" type="checkbox" class="mr-1"><span class="mr-3">Tue</span>
+                    <input v-model="mail.schedule.allowed_days.wednesday" type="checkbox" class="mr-1"><span class="mr-3">Wed</span>
+                    <input v-model="mail.schedule.allowed_days.thursday" type="checkbox" class="mr-1"><span class="mr-3">Thur</span>
+                    <input v-model="mail.schedule.allowed_days.friday" type="checkbox" class="mr-1"><span class="mr-3">Fri</span>
+                    <input v-model="mail.schedule.allowed_days.saturday" type="checkbox" class="mr-1"><span class="mr-3">Sat</span>
+                    <input v-model="mail.schedule.allowed_days.sunday" type="checkbox" class="mr-1"><span class="mr-3">Sun</span>
                 </div>
             </div>
         </div>

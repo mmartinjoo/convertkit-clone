@@ -83,7 +83,7 @@ class SequenceMail extends BaseModel implements Sendable
     public function shouldSendToday(): bool
     {
         $dayName = Str::lower(now()->dayName);
-        return $this->schedule->days->{$dayName};
+        return $this->schedule->allowed_days->{$dayName};
     }
 
     public function enoughTimePassedSince(SentMail $mail): bool

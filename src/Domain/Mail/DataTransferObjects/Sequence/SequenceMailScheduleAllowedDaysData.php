@@ -4,7 +4,7 @@ namespace Domain\Mail\DataTransferObjects\Sequence;
 
 use Spatie\LaravelData\Data;
 
-class SequenceMailScheduleDaysData extends Data
+class SequenceMailScheduleAllowedDaysData extends Data
 {
     public function __construct(
         public readonly bool $monday,

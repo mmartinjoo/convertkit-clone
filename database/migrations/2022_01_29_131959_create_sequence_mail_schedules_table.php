@@ -14,7 +14,7 @@ class CreateSequenceMailSchedulesTable extends Migration
             $table->foreignIdFor(SequenceMail::class)->constrained()->cascadeOnDelete();
             $table->integer('delay');
             $table->string('unit');
-            $table->json('days');
+            $table->json('allowed_days');
             $table->timestamps();
         });
     }
