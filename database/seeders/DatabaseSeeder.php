@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    private const DEMO_USER_EMAIL = 'demo@convertkit-clone.com';
+    private const DEMO_USER_EMAIL = 'demo@mailkit.com';
 
     public function run()
     {

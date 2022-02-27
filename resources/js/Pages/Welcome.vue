@@ -32,10 +32,10 @@ defineProps({
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div class="justify-center pt-8 sm:justify-start sm:pt-0">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    ConvertKit Clone
+                    MailKit
                 </h2>
                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                    A demo e-mail marketing application for the course "Domain-Driven Design with Laravel" by Martin Joo
+                    A demo e-mail marketing application based on ConvertKit for the course "Domain-Driven Design with Laravel" by Martin Joo
                 </div>
             </div>
 
