@@ -1,9 +1,11 @@
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import Pagination from "@/Components/Pagination";
 
 export default {
     components: {
+        Pagination,
         BreezeAuthenticatedLayout,
         Head,
         Link,
@@ -26,15 +28,15 @@ export default {
             await axios.delete(`subscribers/${subscriber.id}`);
             this.model.subscribers = this.model.subscribers.filter(s => s.id !== subscriber.id);
         },
-        nextPage() {
-            this.$inertia.get(`subscribers?page=${this.model.pagination.current_page + 1}`);
+        nextPage(page) {
+            this.$inertia.get(`subscribers?page=${page}`);
         },
-        previousPage() {
-            if (this.model.pagination.current_page === 1) {
+        prevPage(page) {
+            if (page === 0) {
                 return;
             }
 
-            this.$inertia.get(`subscribers?page=${this.model.pagination.current_page - 1}`);
+            this.$inertia.get(`subscribers?page=${page}`);
         },
     },
 }
@@ -107,20 +109,12 @@ export default {
                 </tr>
                 </tbody>
             </table>
-            <div class="min-w-full divide-gray-200 mx-16 pt-4 grid grid-cols-3">
-                <div class="mt-1">
-                    Total: {{ model.pagination.total }}
-                </div>
-                <div></div>
-                <div class="text-right">
-                    <button @click="previousPage()" :disabled="this.model.pagination.current_page === 1" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
-                        Prev
-                    </button>
-                    <button @click="nextPage()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
-                        Next
-                    </button>
-                </div>
-            </div>
+            <Pagination
+                :total="model.pagination.total"
+                :current_page="model.pagination.current_page"
+                @paginated-prev="prevPage($event)"
+                @paginated-next="nextPage($event)"
+            ></Pagination>
         </div>
     </BreezeAuthenticatedLayout>
 </template>
