@@ -25,7 +25,17 @@ export default {
         async remove(subscriber) {
             await axios.delete(`subscribers/${subscriber.id}`);
             this.model.subscribers = this.model.subscribers.filter(s => s.id !== subscriber.id);
-        }
+        },
+        nextPage() {
+            this.$inertia.get(`subscribers?page=${this.model.pagination.current_page + 1}`);
+        },
+        previousPage() {
+            if (this.model.pagination.current_page === 1) {
+                return;
+            }
+
+            this.$inertia.get(`subscribers?page=${this.model.pagination.current_page - 1}`);
+        },
     },
 }
 </script>
@@ -97,6 +107,15 @@ export default {
                 </tr>
                 </tbody>
             </table>
+            <div class="min-w-full divide-y divide-gray-200 mx-16 pt-4">
+                Total: {{ model.pagination.total }}
+                <button @click="previousPage()" :disabled="this.model.pagination.current_page === 1" class="bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="button">
+                    Previous
+                </button>
+                <button @click="nextPage()" class="bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="button">
+                    Next
+                </button>
+            </div>
         </div>
     </BreezeAuthenticatedLayout>
 </template>

@@ -18,10 +18,10 @@ use Redirect;
 
 class SubscriberController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
         return Inertia::render('Subscriber/List', [
-            'model' => new GetSubscribersViewModel(),
+            'model' => new GetSubscribersViewModel($request->get('page', 1)),
         ]);
     }
 
