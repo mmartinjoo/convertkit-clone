@@ -88,7 +88,7 @@ defineProps({
 
                         <div class="ml-12">
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                You can create some pretty cool flows, something like "if that event happens then do this action". With this feature you can make sure that even new subscribers will get your older newsletters.
+                                You can create some pretty cool flows, something like "when that event happens then do this action". With this feature you can make sure that even new subscribers will get your older newsletters.
                             </div>
                         </div>
                     </div>
