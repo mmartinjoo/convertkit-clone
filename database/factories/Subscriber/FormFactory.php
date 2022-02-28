@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Subscriber;
 
 use Domain\Shared\Models\User;
 use Domain\Subscriber\Models\Form;

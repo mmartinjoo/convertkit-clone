@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Mail;
 
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\Models\Sequence\Sequence;

@@ -1,10 +1,11 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Automation;
 
 use Domain\Automation\Models\Automation;
 use Domain\Automation\Models\AutomationStep;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use function collect;
 
 class AutomationStepFactory extends Factory
 {

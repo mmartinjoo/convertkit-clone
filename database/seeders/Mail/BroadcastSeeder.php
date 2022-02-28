@@ -1,14 +1,16 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Mail;
 
+use Database\Seeders\DatabaseSeeder;
 use Domain\Mail\Actions\Broadcast\SendBroadcastAction;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Mail\Models\SentMail;
 use Queue;
+use function now;
 
-class BroadcastSeeder extends AutomationSeeder
+class BroadcastSeeder extends DatabaseSeeder
 {
     public function run()
     {

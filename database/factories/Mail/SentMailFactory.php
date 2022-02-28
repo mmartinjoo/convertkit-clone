@@ -1,11 +1,12 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Mail;
 
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Mail\Models\SentMail;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use function now;
 
 class SentMailFactory extends Factory
 {

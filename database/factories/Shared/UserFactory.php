@@ -1,10 +1,11 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Shared;
 
 use Domain\Shared\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use function now;
 
 class UserFactory extends Factory
 {

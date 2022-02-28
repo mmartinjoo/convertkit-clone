@@ -1,7 +1,8 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Automation;
 
+use Database\Seeders\DatabaseSeeder;
 use Domain\Automation\Enums\Actions;
 use Domain\Automation\Enums\AutomationStepType;
 use Domain\Automation\Enums\Events;

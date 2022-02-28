@@ -1,7 +1,8 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Mail;
 
+use Database\Seeders\Subscriber\SubscriberSeeder;
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\Enums\Sequence\SequenceMailUnit;
 use Domain\Mail\Enums\Sequence\SequenceStatus;

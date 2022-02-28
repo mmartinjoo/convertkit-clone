@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Automation;
 
 use Domain\Automation\Models\Automation;
 use Domain\Shared\Models\User;

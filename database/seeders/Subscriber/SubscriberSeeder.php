@@ -1,12 +1,15 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Subscriber;
 
 use Carbon\Carbon;
+use Database\Seeders\DatabaseSeeder;
 use Domain\Subscriber\Models\Form;
 use Domain\Subscriber\Models\Subscriber;
 use Domain\Subscriber\Models\Tag;
 use Illuminate\Support\Collection;
+use function collect;
+use function now;
 
 class SubscriberSeeder extends DatabaseSeeder
 {

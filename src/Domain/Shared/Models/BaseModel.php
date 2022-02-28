@@ -12,7 +12,10 @@ abstract class BaseModel extends Model
 
     protected static function newFactory()
     {
-        $modelName = Str::of(get_called_class())->explode("\\")->last();
-        return app("Database\\Factories\\${modelName}Factory");
+        $parts = Str::of(get_called_class())->explode("\\");
+        $domain = $parts[1];
+        $model = $parts->last();
+
+        return app("Database\\Factories\\$domain\\{$model}Factory");
     }
 }
