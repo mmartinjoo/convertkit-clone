@@ -41,7 +41,7 @@ class SubscriberData extends Data
             ...$subscriber->toArray(),
             'tags' => Lazy::whenLoaded('tags', $subscriber, fn () => TagData::collection($subscriber->tags)),
             'form' => Lazy::whenLoaded('form', $subscriber, fn () => FormData::from($subscriber->form)),
-            'full_name' => $subscriber->fullName,
+            'full_name' => $subscriber->full_name,
         ]);
     }
 
