@@ -25,14 +25,21 @@ export default {
             this.$inertia.get(`subscribers/${subscriber.id}/edit`);
         },
         async remove(subscriber) {
-            await axios.delete(`subscribers/${subscriber.id}`);
-            this.model.subscribers = this.model.subscribers.filter(s => s.id !== subscriber.id);
+            this.$inertia.delete(`subscribers/${subscriber.id}`);
         },
         nextPage() {
-            this.$inertia.get(this.model.pagination.next_page_url);
+            if (!this.model.subscribers.next_page_url) {
+                return;
+            }
+
+            this.$inertia.get(this.model.subscribers.next_page_url);
         },
         prevPage() {
-            this.$inertia.get(this.model.pagination.prev_page_url);
+            if (!this.model.subscribers.prev_page_url) {
+                return;
+            }
+
+            this.$inertia.get(this.model.subscribers.prev_page_url);
         },
     },
 }
@@ -77,7 +84,7 @@ export default {
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
-                <tr v-for="subscriber in model.subscribers" :key="subscriber.email" class="hover:bg-gray-100">
+                <tr v-for="subscriber in model.subscribers.data" :key="subscriber.email" class="hover:bg-gray-100">
                     <td class="px-6 py-4 hover:cursor-pointer" @click="edit(subscriber)">
                         <div class="text-sm text-gray-900">{{ subscriber.full_name }}</div>
                     </td>
@@ -106,8 +113,8 @@ export default {
                 </tbody>
             </table>
             <Pagination
-                :total="model.pagination.total"
-                :current_page="model.pagination.current_page"
+                :total="model.total"
+                :current_page="model.subscribers.current_page"
                 @paginated-prev="prevPage()"
                 @paginated-next="nextPage()"
             ></Pagination>

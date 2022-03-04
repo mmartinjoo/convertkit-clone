@@ -2,10 +2,9 @@
 
 namespace Domain\Subscriber\ViewModels;
 
-use Domain\Shared\ValueObjects\PaginationData;
 use Domain\Shared\ViewModels\ViewModel;
-use Domain\Subscriber\DataTransferObjects\SubscriberData;
 use Domain\Subscriber\Models\Subscriber;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
 class GetSubscribersViewModel extends ViewModel
@@ -16,26 +15,29 @@ class GetSubscribersViewModel extends ViewModel
     {
     }
 
-    /**
-     * @return Collection<SubscriberData>
-     */
-    public function subscribers(): Collection
+    public function subscribers(): Paginator
     {
-        return Subscriber::with(['form', 'tags'])
-            ->limit(self::PER_PAGE)
-            ->offset(self::PER_PAGE * ($this->currentPage - 1))
+        /** @var Collection $items */
+        $items = Subscriber::with(['form', 'tags'])
             ->orderBy('first_name')
             ->get()
             ->map
             ->getData();
+
+        $items = $items->slice(self::PER_PAGE * ($this->currentPage - 1));
+
+        return new Paginator(
+            $items,
+            self::PER_PAGE,
+            $this->currentPage,
+            [
+                'path' => route('subscribers.index'),
+            ],
+        );
     }
 
-    public function pagination(): PaginationData
+    public function total(): int
     {
-        return new PaginationData(
-            total: Subscriber::count(),
-            currentPage: $this->currentPage,
-            baseUrl: route('subscribers.index'),
-        );
+        return Subscriber::count();
     }
 }
