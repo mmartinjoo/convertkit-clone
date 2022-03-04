@@ -28,15 +28,11 @@ export default {
             await axios.delete(`subscribers/${subscriber.id}`);
             this.model.subscribers = this.model.subscribers.filter(s => s.id !== subscriber.id);
         },
-        nextPage(page) {
-            this.$inertia.get(`subscribers?page=${page}`);
+        nextPage() {
+            this.$inertia.get(this.model.pagination.next_page_url);
         },
-        prevPage(page) {
-            if (page === 0) {
-                return;
-            }
-
-            this.$inertia.get(`subscribers?page=${page}`);
+        prevPage() {
+            this.$inertia.get(this.model.pagination.prev_page_url);
         },
     },
 }
@@ -112,8 +108,8 @@ export default {
             <Pagination
                 :total="model.pagination.total"
                 :current_page="model.pagination.current_page"
-                @paginated-prev="prevPage($event)"
-                @paginated-next="nextPage($event)"
+                @paginated-prev="prevPage()"
+                @paginated-next="nextPage()"
             ></Pagination>
         </div>
     </BreezeAuthenticatedLayout>

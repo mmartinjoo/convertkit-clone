@@ -2,7 +2,7 @@
 
 namespace Domain\Subscriber\ViewModels;
 
-use Domain\Shared\DataTransferObject\PaginationData;
+use Domain\Shared\ValueObjects\PaginationData;
 use Domain\Shared\ViewModels\ViewModel;
 use Domain\Subscriber\DataTransferObjects\SubscriberData;
 use Domain\Subscriber\Models\Subscriber;
@@ -34,7 +34,8 @@ class GetSubscribersViewModel extends ViewModel
     {
         return new PaginationData(
             total: Subscriber::count(),
-            current_page: $this->currentPage,
+            currentPage: $this->currentPage,
+            baseUrl: route('subscribers.index'),
         );
     }
 }
