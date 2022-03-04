@@ -34,7 +34,10 @@ class SequenceController
 
     public function store(Request $request): RedirectResponse
     {
-        $sequence = CreateSequenceAction::execute(SequenceData::fromRequest($request));
+        $sequence = CreateSequenceAction::execute(
+            SequenceData::fromRequest($request),
+            $request->user(),
+        );
 
         return Redirect::route('sequences.edit', $sequence);
     }

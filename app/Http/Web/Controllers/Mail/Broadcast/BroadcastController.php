@@ -33,7 +33,10 @@ class BroadcastController
 
     public function store(Request $request): RedirectResponse
     {
-        UpsertBroadcastAction::execute(BroadcastData::fromRequest($request));
+        UpsertBroadcastAction::execute(
+            BroadcastData::fromRequest($request),
+            $request->user(),
+        );
 
         return Redirect::route('broadcasts.index');
     }
@@ -47,7 +50,10 @@ class BroadcastController
 
     public function update(Request $request): RedirectResponse
     {
-        UpsertBroadcastAction::execute(BroadcastData::fromRequest($request));
+        UpsertBroadcastAction::execute(
+            BroadcastData::fromRequest($request),
+            $request->user(),
+        );
 
         return Redirect::route('broadcasts.index');
     }

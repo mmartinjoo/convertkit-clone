@@ -6,18 +6,22 @@ use Domain\Automation\DataTransferObjects\AutomationData;
 use Domain\Automation\DataTransferObjects\AutomationStepData;
 use Domain\Automation\Enums\AutomationStepType;
 use Domain\Automation\Models\Automation;
+use Domain\Shared\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class UpsertAutomationAction
 {
-    public static function execute(AutomationData $data): Automation
+    public static function execute(AutomationData $data, User $user): Automation
     {
-        return DB::transaction(function () use ($data) {
+        return DB::transaction(function () use ($data, $user) {
             $automation = Automation::updateOrcreate(
                 [
                     'id' => $data->id,
                 ],
-                $data->toArray(),
+                [
+                    ...$data->toArray(),
+                    'user_id' => $user->id,
+                ],
             );
 
             $automation->steps->each->delete();
