@@ -10,23 +10,45 @@ use Domain\Subscriber\Models\Tag;
 
 class ImportSubscribersAction
 {
-    public static function execute(string $path, User $user): int
+    public static function execute(string $path, User $user)
     {
         return ReadCsvAction::execute($path)
-            ->map(fn (array $row) => [
-                ...$row,
-                'tags' => collect(explode(',', $row['tags']))->filter()->toArray(),
-            ])
-            ->map(fn (array $row) => [
-                ...$row,
-                'tags' => self::getOrCreateTags($row['tags'], $user),
-            ])
-            ->map(fn (array $row) => SubscriberData::from($row))
-            ->filter(fn (SubscriberData $data) => !self::isSubscriberExist($data, $user))
-            ->map(fn (SubscriberData $data) => UpsertSubscriberAction::execute($data, $user))
+            ->each(function (array $row) use ($user) {
+                $parsed = [
+                    ...$row,
+                    'tags' => self::parseTags($row, $user),
+                ];
+
+                $data = SubscriberData::from($parsed);
+
+                if (self::isSubscriberExist($data, $user)) {
+                    return;
+                }
+
+                UpsertSubscriberAction::execute($data, $user);
+            })
             ->count();
     }
 
+    /**
+     * @param string[] $row
+     * @param User $user
+     * @return Tag[]
+     */
+    private static function parseTags(array $row, User $user): array
+    {
+        $tags = collect(explode(',', $row['tags']))
+            ->filter()
+            ->toArray();
+
+        return self::getOrCreateTags($tags, $user);
+    }
+
+    /**
+     * @param string[] $tags
+     * @param User $user
+     * @return Tag[]
+     */
     private static function getOrCreateTags(array $tags, User $user): array
     {
         return collect($tags)
@@ -41,7 +63,7 @@ class ImportSubscribersAction
     {
         return Subscriber::query()
             ->whereEmail($data->email)
-            ->whereUserId($user->id)
+            ->whereBelongsTo($user)
             ->exists();
     }
 }
