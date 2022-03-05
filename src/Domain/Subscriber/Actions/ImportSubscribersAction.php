@@ -10,9 +10,9 @@ use Domain\Subscriber\Models\Tag;
 
 class ImportSubscribersAction
 {
-    public static function execute(string $path, User $user)
+    public static function execute(string $path, User $user): void
     {
-        return ReadCsvAction::execute($path)
+        ReadCsvAction::execute($path)
             ->each(function (array $row) use ($user) {
                 $parsed = [
                     ...$row,
@@ -26,8 +26,7 @@ class ImportSubscribersAction
                 }
 
                 UpsertSubscriberAction::execute($data, $user);
-            })
-            ->count();
+            });
     }
 
     /**

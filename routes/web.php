@@ -38,6 +38,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', GetDashboardController::class)->name('dashboard');
+
     Route::resource('subscribers', SubscriberController::class);
     Route::post('subscribers/import', ImportSubscribersController::class);
 
