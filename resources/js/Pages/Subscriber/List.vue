@@ -92,7 +92,7 @@ export default {
                         <div class="text-sm text-gray-900">{{ subscriber.email }}</div>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="text-sm text-gray-900">{{ subscriber.form.title }}</div>
+                        <div class="text-sm text-gray-900">{{ subscriber.form?.title }}</div>
                     </td>
                     <td class="px-6 py-4">
                         <div class="text-sm text-gray-900">{{ subscriber.subscribed_at }}</div>

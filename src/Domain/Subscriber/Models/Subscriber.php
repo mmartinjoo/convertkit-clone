@@ -89,7 +89,7 @@ class Subscriber extends BaseModel
     public function fullName(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->first_name . ' ' . $this->last_name,
+            get: fn () => "{$this->first_name} {$this->last_name}",
         );
     }
 }
