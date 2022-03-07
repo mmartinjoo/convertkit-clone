@@ -31,12 +31,9 @@ class BroadcastController
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(BroadcastData $data, Request $request): RedirectResponse
     {
-        UpsertBroadcastAction::execute(
-            BroadcastData::fromRequest($request),
-            $request->user(),
-        );
+        UpsertBroadcastAction::execute($data, $request->user());
 
         return Redirect::route('broadcasts.index');
     }
@@ -48,12 +45,9 @@ class BroadcastController
         ]);
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(BroadcastData $data, Request $request): RedirectResponse
     {
-        UpsertBroadcastAction::execute(
-            BroadcastData::fromRequest($request),
-            $request->user(),
-        );
+        UpsertBroadcastAction::execute($data, $request->user());
 
         return Redirect::route('broadcasts.index');
     }
