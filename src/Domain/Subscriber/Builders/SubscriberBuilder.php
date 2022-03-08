@@ -8,13 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SubscriberBuilder extends Builder
 {
-    public function whereHasSomeTags(array $ids): self
-    {
-        return $this->whereHas('tags', fn (Builder $tags) =>
-            $tags->whereIn('id', $ids)
-        );
-    }
-
     public function whereSubscribedBetween(DateFilter $dateFilter): self
     {
         return $this->whereBetween('subscribed_at', $dateFilter->toArray());

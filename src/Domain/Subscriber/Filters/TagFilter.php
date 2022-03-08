@@ -13,8 +13,8 @@ class TagFilter extends Filter
             return $subscribers;
         }
 
-        $subscribers->where(fn (Builder $subscribers) =>
-            $subscribers->whereHasSomeTags($this->ids)
+        $subscribers->whereHas('tags', fn (Builder $tags) =>
+            $tags->whereIn('id', $this->ids)
         );
 
         return $next($subscribers);

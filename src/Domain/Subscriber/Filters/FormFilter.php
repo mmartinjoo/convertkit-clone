@@ -13,9 +13,7 @@ class FormFilter extends Filter
             return $subscribers;
         }
 
-        $subscribers->where(fn (Builder $subscribers) =>
-            $subscribers->whereIn('form_id', $this->ids)
-        );
+        $subscribers->whereIn('form_id', $this->ids);
 
         return $next($subscribers);
     }

@@ -34,7 +34,7 @@ class FilterSubscribersAction
      */
     public static function filters(Sendable $mail): array
     {
-        return collect($mail->filters()->all())
+        return collect($mail->filters()->toArray())
             ->reject(fn (array $ids) => count($ids) === 0)
             ->map(fn (array $ids, string $key) => Filters::from($key)->createFilter($ids))
             ->values()
