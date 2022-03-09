@@ -4,7 +4,6 @@ namespace Domain\Mail\Jobs\Broadcast;
 
 use Domain\Mail\Actions\Broadcast\SendBroadcastAction;
 use Domain\Mail\Models\Broadcast\Broadcast;
-use Domain\Shared\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

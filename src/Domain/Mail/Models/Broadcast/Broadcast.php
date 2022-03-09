@@ -2,6 +2,7 @@
 
 namespace Domain\Mail\Models\Broadcast;
 
+use Domain\Mail\Builders\Broadcast\BroadcastBuilder;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
@@ -42,6 +43,11 @@ class Broadcast extends BaseModel implements Sendable
     public function sent_mails(): MorphMany
     {
         return $this->morphMany(SentMail::class, 'sendable');
+    }
+
+    public function newEloquentBuilder($query): BroadcastBuilder
+    {
+        return new BroadcastBuilder($query);
     }
 
     public function filters(): FilterData

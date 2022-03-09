@@ -15,7 +15,7 @@ class SendBroadcastAction
 {
     public static function execute(Broadcast $broadcast): int
     {
-        if ($broadcast->status === BroadcastStatus::Sent) {
+        if (!$broadcast->status->canSend()) {
             throw CannotSendBroadcast::because("Broadcast already sent at {$broadcast->sent_at}");
         }
 
@@ -24,9 +24,7 @@ class SendBroadcastAction
                 Mail::to($subscriber)->queue(new EchoMail($broadcast))
             );
 
-        $broadcast->status = BroadcastStatus::Sent;
-        $broadcast->sent_at = now();
-        $broadcast->save();
+        $broadcast->markAsSent();
 
         return $subscribers->each(fn (Subscriber $subscriber) => $broadcast->sent_mails()->create([
             'subscriber_id' => $subscriber->id,

@@ -36,7 +36,7 @@ class SentMail extends BaseModel
         return $this->belongsTo(Subscriber::class);
     }
 
-    public function mailable(): MorphTo
+    public function sendable(): MorphTo
     {
         return $this->morphTo();
     }
