@@ -70,10 +70,10 @@ export default {
                         <div class="text-sm text-gray-900">{{ model.mail_performances[mail.id].total }}</div>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="text-sm text-gray-900">{{ model.mail_performances[mail.id].average_open_rate.formatted }}</div>
+                        <div class="text-sm text-gray-900">{{ model.mail_performances[mail.id].open_rate.formatted }}</div>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="text-sm text-gray-900">{{ model.mail_performances[mail.id].average_click_rate.formatted }}</div>
+                        <div class="text-sm text-gray-900">{{ model.mail_performances[mail.id].click_rate.formatted }}</div>
                     </td>
                 </tr>
                 </tbody>

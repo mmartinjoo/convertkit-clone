@@ -26,8 +26,8 @@ export default {
 
             return `
                 ${performance.total} Recipients •
-                ${performance.average_open_rate.formatted} Open rate •
-                ${performance.average_click_rate.formatted} Click rate
+                ${performance.open_rate.formatted} Open rate •
+                ${performance.click_rate.formatted} Click rate
             `;
         },
         open(sequence) {

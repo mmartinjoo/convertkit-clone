@@ -74,7 +74,7 @@ export default {
                     Sent
                 </span>
             </h2>
-            <PerformanceLine v-if="model.broadcast?.status === 'sent'" :performance="model.performance" label="Subscribers" class="inline-flex"></PerformanceLine>
+            <PerformanceLine v-if="model.broadcast?.status === 'sent'" :performance="model.performance" class="inline-flex"></PerformanceLine>
         </template>
         <div class="py-12 max-w-7xl mx-auto">
             <form class="w-full max-w-lg mx-auto" @submit.prevent="submit">
