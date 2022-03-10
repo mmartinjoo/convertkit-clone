@@ -4,7 +4,6 @@ namespace Domain\Shared\ViewModels;
 
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\Models\User;
-use Domain\Shared\ViewModels\ViewModel;
 use Domain\Subscriber\DataTransferObjects\DailySubscribersData;
 use Domain\Subscriber\DataTransferObjects\NewSubscribersCountData;
 use Domain\Mail\DataTransferObjects\PerformanceData;
@@ -51,8 +50,8 @@ class GetDashboardViewModel extends ViewModel
 
         return new PerformanceData(
             total: $total,
-            average_open_rate: $this->averageOpenRate($total),
-            average_click_rate: $this->averageClickRate($total),
+            open_rate: $this->averageOpenRate($total),
+            click_rate: $this->averageClickRate($total),
         );
     }
 

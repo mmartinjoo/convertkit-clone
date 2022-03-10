@@ -7,7 +7,6 @@ use Domain\Mail\Models\SentMail;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Mail\DataTransferObjects\PerformanceData;
-use Domain\Shared\ValueObjects\Percent;
 
 class GetPerformanceAction
 {
@@ -21,8 +20,8 @@ class GetPerformanceAction
 
         return new PerformanceData(
             total: $total,
-            average_open_rate: SentMail::getOpenRate($model, $total),
-            average_click_rate: SentMail::getClickRate($model, $total),
+            open_rate: SentMail::getOpenRate($model, $total),
+            click_rate: SentMail::getClickRate($model, $total),
         );
     }
 }
