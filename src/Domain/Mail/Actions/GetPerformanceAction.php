@@ -21,8 +21,8 @@ class GetPerformanceAction
 
         return new PerformanceData(
             total: $total,
-            average_open_rate: SentMail::getAverageOpenRate($model, $total),
-            average_click_rate: SentMail::getAverageClickRate($model, $total),
+            average_open_rate: SentMail::getOpenRate($model, $total),
+            average_click_rate: SentMail::getClickRate($model, $total),
         );
     }
 }

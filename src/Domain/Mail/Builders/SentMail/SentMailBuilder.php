@@ -39,7 +39,7 @@ class SentMailBuilder extends Builder
         return $this->whereSendable($model)->count();
     }
 
-    public function getAverageOpenRate(Sendable|Sequence $model, int $total): Percent
+    public function getOpenRate(Sendable|Sequence $model, int $total): Percent
     {
         $query = $model instanceof Sequence
             ? $this->whereSequence($model)
@@ -50,7 +50,7 @@ class SentMailBuilder extends Builder
         );
     }
 
-    public function getAverageClickRate(Sendable|Sequence $model, int $total): Percent
+    public function getClickRate(Sendable|Sequence $model, int $total): Percent
     {
         $query = $model instanceof Sequence
             ? $this->whereSequence($model)
