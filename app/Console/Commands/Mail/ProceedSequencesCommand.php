@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Sequence;
+namespace App\Console\Commands\Mail;
 
 use Domain\Mail\Jobs\Sequence\ProceedSequenceJob;
 use Domain\Mail\Models\Sequence\Sequence;
@@ -17,7 +17,7 @@ class ProceedSequencesCommand extends Command
         $count = Sequence::with('mails.schedule')
             ->whereStatus(SequenceStatus::Published)
             ->get()
-            ->map(fn (Sequence $sequence) => ProceedSequenceJob::dispatch($sequence))
+            ->each(fn (Sequence $sequence) => ProceedSequenceJob::dispatch($sequence))
             ->count();
 
         $this->info("{$count} sequences are being proceeded");
