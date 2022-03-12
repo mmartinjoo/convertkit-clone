@@ -88,6 +88,6 @@ class SequenceMail extends BaseModel implements Sendable
 
     public function enoughTimePassedSince(SentMail $mail): bool
     {
-        return $this->schedule->unit->timePassed($mail->sent_at) >= $this->schedule->delay;
+        return $this->schedule->unit->timePassedSince($mail->sent_at) >= $this->schedule->delay;
     }
 }

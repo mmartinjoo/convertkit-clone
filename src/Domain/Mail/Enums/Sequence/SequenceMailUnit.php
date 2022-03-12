@@ -9,15 +9,15 @@ enum SequenceMailUnit: string
     case Day = 'day';
     case Hour = 'hour';
 
-    public function timePassed(?Carbon $since): int
+    public function timePassedSince(?Carbon $date): int
     {
-        if (!$since) {
+        if (!$date) {
             return PHP_INT_MAX;
         }
 
         return match ($this) {
-            self::Day => now()->diffInDays($since),
-            self::Hour => now()->diffInHours($since),
+            self::Day => now()->diffInDays($date),
+            self::Hour => now()->diffInHours($date),
         };
     }
 }
