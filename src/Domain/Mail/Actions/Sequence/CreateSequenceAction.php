@@ -2,6 +2,7 @@
 
 namespace Domain\Mail\Actions\Sequence;
 
+use DB;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
 use Domain\Mail\Models\Sequence\Sequence;
@@ -12,17 +13,17 @@ class CreateSequenceAction
 {
     public static function execute(SequenceData $data, User $user): Sequence
     {
-        $sequence = Sequence::create([
-            ...$data->all(),
-            'user_id' => $user->id,
-        ]);
+        return DB::transaction(function () use ($data, $user) {
+            $sequence = Sequence::create([
+                ...$data->all(),
+                'user_id' => $user->id,
+            ]);
 
-        $mailData = SequenceMailData::dummy();
+            UpsertSequenceMailAction::execute(SequenceMailData::dummy(), $sequence, $user);
 
-        UpsertSequenceMailAction::execute($mailData, $sequence, $user);
+            $sequence->subscribers()->sync(Subscriber::select('id')->pluck('id'));
 
-        $sequence->subscribers()->sync(Subscriber::select('id')->pluck('id'));
-
-        return $sequence;
+            return $sequence;
+        });
     }
 }
