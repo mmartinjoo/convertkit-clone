@@ -10,7 +10,7 @@ class TagFilter extends Filter
     public function handle(Builder $subscribers, Closure $next): Builder
     {
         if (count($this->ids) === 0) {
-            return $subscribers;
+            return $next($subscribers);
         }
 
         $subscribers->whereHas('tags', fn (Builder $tags) =>
