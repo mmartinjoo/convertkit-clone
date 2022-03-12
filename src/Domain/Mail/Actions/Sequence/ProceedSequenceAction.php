@@ -22,17 +22,9 @@ class ProceedSequenceAction
     public static function execute(Sequence $sequence): void
     {
         foreach ($sequence->mails()->wherePublished()->get() as $mail) {
-            $audience = $mail->audience();
-            $schedulableAudience = self::schedulableAudience($audience, $mail);
+            [$audience, $schedulableAudience] = self::audience($mail);
 
-            foreach ($schedulableAudience as $subscriber) {
-                Mail::to($subscriber)->queue(new EchoMail($mail));
-
-                $mail->sent_mails()->create([
-                    'subscriber_id' => $subscriber->id,
-                    'user_id' => $sequence->user->id,
-                ]);
-            }
+            self::sendMails($schedulableAudience, $mail, $sequence);
 
             self::addMailToAudience($audience, $mail);
 
@@ -43,19 +35,33 @@ class ProceedSequenceAction
     }
 
     /**
-     * @param Collection<Subscriber> $audience
-     * @param SequenceMail $mail
-     * @return Collection<Subscriber>
+     * @return array{Collection<Subscriber>}
      */
-    private static function schedulableAudience(Collection $audience, SequenceMail $mail): Collection
+    private static function audience(SequenceMail $mail): array
     {
+        $audience = $mail->audience();
+
         if (!$mail->shouldSendToday()) {
-            return collect([]);
+            return [$audience, collect([])];
         }
 
-        return $audience
+        $schedulableAudience = $audience
             ->reject->alreadyReceived($mail)
             ->reject->tooEarlyFor($mail);
+
+        return [$audience, $schedulableAudience];
+    }
+
+    private static function sendMails(Collection $schedulableAudience, SequenceMail $mail, Sequence $sequence): void
+    {
+        foreach ($schedulableAudience as $subscriber) {
+            Mail::to($subscriber)->queue(new EchoMail($mail));
+
+            $mail->sent_mails()->create([
+                'subscriber_id' => $subscriber->id,
+                'user_id' => $sequence->user->id,
+            ]);
+        }
     }
 
     /**
