@@ -7,23 +7,25 @@ use Domain\Mail\Enums\Sequence\SubscriberStatus;
 use Domain\Mail\Mails\EchoMail;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
+use Domain\Mail\Models\Sequence\SequenceSubscriber;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 
 class ProceedSequenceAction
 {
-    public static function execute(Sequence $sequence): int
+    /**
+     * @var array<int, array<int>>
+     */
+    private static array $mailsBySubscribers = [];
+
+    public static function execute(Sequence $sequence): void
     {
-        $sentMailCount = 0;
-        $mailsBySubscribers = [];
-
         foreach ($sequence->mails()->wherePublished()->get() as $mail) {
-            // Azért nem jó, mert a tooEarly stb miatt a második e-mail audience nem tartalmazza az első palit
-            $potentialSubscribers = $mail->audience();
-            $subscribers = self::subscribers($mail, $potentialSubscribers);
+            $audience = $mail->audience();
+            $schedulableAudience = self::schedulableAudience($audience, $mail);
 
-            foreach ($subscribers as $subscriber) {
+            foreach ($schedulableAudience as $subscriber) {
                 Mail::to($subscriber)->queue(new EchoMail($mail));
 
                 $mail->sent_mails()->create([
@@ -32,33 +34,26 @@ class ProceedSequenceAction
                 ]);
             }
 
-            foreach ($potentialSubscribers as $subscriber) {
-                if (!Arr::get($mailsBySubscribers, $subscriber->id)) {
-                    $mailsBySubscribers[$subscriber->id] = [];
-                }
+            self::addMailToAudience($audience, $mail);
 
-                $mailsBySubscribers[$subscriber->id][] = $mail->id;
-            }
-
-            self::markAsInProgress($sequence, $subscribers);
-
-            $sentMailCount += $subscribers->count();
+            self::markAsInProgress($sequence, $schedulableAudience);
         }
 
-        self::markAsCompleted($mailsBySubscribers, $sequence);
-
-//        self::markAsCompleted($sequence);
-
-        return $sentMailCount;
+        self::markAsCompleted($sequence);
     }
 
-    private static function subscribers(SequenceMail $mail, Collection $potentialSubscribers): Collection
+    /**
+     * @param Collection<Subscriber> $audience
+     * @param SequenceMail $mail
+     * @return Collection<Subscriber>
+     */
+    private static function schedulableAudience(Collection $audience, SequenceMail $mail): Collection
     {
         if (!$mail->shouldSendToday()) {
             return collect([]);
         }
 
-        return $potentialSubscribers
+        return $audience
             ->reject->alreadyReceived($mail)
             ->reject->tooEarlyFor($mail);
     }
@@ -77,49 +72,42 @@ class ProceedSequenceAction
             ]);
     }
 
-    public static function markAsCompleted(array $mailsBySubscribers, Sequence $sequence): void
+    public static function markAsCompleted(Sequence $sequence): void
     {
-        // 1 query per sub
-        $subscribers = Subscriber::with('received_mails')->find(array_keys($mailsBySubscribers));
-        foreach ($mailsBySubscribers as $subscriberId => $mailIds) {
-            $subscriber = $subscribers->where('id', $subscriberId)->first();
+        $subscribers = Subscriber::withCount('received_mails')
+            ->find(array_keys(self::$mailsBySubscribers))
+            ->mapWithKeys(fn (Subscriber $subscriber) => [
+                $subscriber->id => $subscriber,
+            ]);
 
-            if ($subscriber->received_mails->count() === count($mailIds)) {
-                $sequence
-                    ->subscribers()
-                    ->updateExistingPivot($subscriber->id, ['status' => SubscriberStatus::Completed]);
+        $completedSubscriberIds = [];
+        foreach (self::$mailsBySubscribers as $subscriberId => $mailIds) {
+            $subscriber = $subscribers[$subscriberId];
+
+            if ($subscriber->received_mails_count === count($mailIds)) {
+                $completedSubscriberIds[] = $subscriber->id;
             }
         }
+
+        SequenceSubscriber::query()
+            ->whereBelongsTo($sequence)
+            ->whereIn('subscriber_id', $completedSubscriberIds)
+            ->update([
+                'status' => SubscriberStatus::Completed,
+            ]);
     }
 
-    // mail * (1) + (per sequence subscriber * 2)
-    // 8 mail, 50000 subs = 100008 query
-    public static function markAsCompletedOld(Sequence $sequence)
+    /**
+     * @param Collection<Subscriber> $audience
+     */
+    private static function addMailToAudience(Collection $audience, SequenceMail $mail): void
     {
-        // query
-        $mailWithLargestDelay = $sequence->load('mails.schedule')->mails->sortByDesc(function (SequenceMail $mail) {
-            return $mail->schedule->delayInHours();
-        })->first();
-
-        // can be eager loaded
-        foreach ($sequence->subscribers as $subscriber) {
-            // query
-            $lastMail = $subscriber
-                ->sent_mails()
-                ->whereSequence($sequence)
-                ->orderByDesc('sent_at')
-                ->first();
-
-            if (!$lastMail) {
-                continue;
+        foreach ($audience as $subscriber) {
+            if (!Arr::get(self::$mailsBySubscribers, $subscriber->id)) {
+                self::$mailsBySubscribers[$subscriber->id] = [];
             }
 
-            $sinceLastMail = now()->diffInHours($lastMail->sent_at);
-            if ($sinceLastMail > $mailWithLargestDelay->schedule->delayInHours()) {
-                $sequence
-                    ->subscribers()
-                    ->updateExistingPivot($subscriber->id, ['status' => SubscriberStatus::Completed]);
-            }
+            self::$mailsBySubscribers[$subscriber->id][] = $mail->id;
         }
     }
 }
