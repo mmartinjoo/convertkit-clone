@@ -31,9 +31,9 @@ class GetSequenceReportsViewModel extends ViewModel
      */
     public function mailPerformances(): Collection
     {
-        return $this->sequence->mails->mapWithKeys(fn (SequenceMail $mail) =>
-            [$mail->id => $mail->performance()],
-        );
+        return $this->sequence->mails->mapWithKeys(fn (SequenceMail $mail) => [
+            $mail->id => $mail->performance()
+        ]);
     }
 
     public function progress(): SequenceProgressData
