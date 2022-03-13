@@ -35,7 +35,7 @@ class ProceedSequenceAction
     }
 
     /**
-     * @return array{Collection<Subscriber>}
+     * @return array<Collection<Subscriber>>
      */
     private static function audience(SequenceMail $mail): array
     {
@@ -66,13 +66,13 @@ class ProceedSequenceAction
 
     /**
      * @param Sequence $sequence
-     * @param Collection<Subscriber> $subscribers
+     * @param Collection<Subscriber> $schedulableAudience
      */
-    private static function markAsInProgress(Sequence $sequence, Collection $subscribers): void
+    private static function markAsInProgress(Sequence $sequence, Collection $schedulableAudience): void
     {
         $sequence
             ->subscribers()
-            ->whereIn('subscriber_id', $subscribers->pluck('id'))
+            ->whereIn('subscriber_id', $schedulableAudience->pluck('id'))
             ->update([
                 'status' => SubscriberStatus::InProgress,
             ]);
