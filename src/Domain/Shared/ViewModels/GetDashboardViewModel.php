@@ -24,8 +24,8 @@ class GetDashboardViewModel extends ViewModel
     {
         return new NewSubscribersCountData(
             total: Subscriber::count(),
-            this_week: Subscriber::whereSubscribedBetween(DateFilter::thisWeek())->count(),
             this_month: Subscriber::whereSubscribedBetween(DateFilter::thisMonth())->count(),
+            this_week: Subscriber::whereSubscribedBetween(DateFilter::thisWeek())->count(),
             today: Subscriber::whereSubscribedBetween(DateFilter::today())->count(),
         );
     }
