@@ -16,7 +16,8 @@ class SequenceMailController
     {
         $mail = UpsertSequenceMailAction::execute(
             SequenceMailData::fromRequest($request),
-            $sequence
+            $sequence,
+            $request->user(),
         );
 
         return SequenceMailData::from($mail);
@@ -26,7 +27,8 @@ class SequenceMailController
     {
         UpsertSequenceMailAction::execute(
             SequenceMailData::fromRequest($request),
-            $sequence
+            $sequence,
+            $request->user(),
         );
 
         return response()->noContent();

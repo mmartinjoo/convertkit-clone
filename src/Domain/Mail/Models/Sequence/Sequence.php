@@ -3,18 +3,21 @@
 namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Builders\Sequence\SequenceBuilder;
+use Domain\Mail\Contracts\Measurable;
+use Domain\Mail\DataTransferObjects\PerformanceData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Enums\Sequence\SequenceStatus;
 use Domain\Mail\Models\SentMail;
 use Domain\Shared\Models\BaseModel;
 use Domain\Shared\Models\Concerns\HasUser;
 use Domain\Subscriber\Models\Subscriber;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\LaravelData\WithData;
 
-class Sequence extends BaseModel
+class Sequence extends BaseModel implements Measurable
 {
     use WithData;
     use HasUser;
@@ -47,11 +50,29 @@ class Sequence extends BaseModel
 
     public function sent_mails(): HasManyThrough
     {
-        return $this->hasManyThrough(SentMail::class, SequenceMail::class, 'id', 'sendable_id');
+        return $this->hasManyThrough(
+            SentMail::class,
+            SequenceMail::class,
+            'sequence_id',
+            'sendable_id'
+        )->where('sent_mails.sendable_type', SequenceMail::class);
     }
 
     public function subscribers(): BelongsToMany
     {
         return $this->belongsToMany(Subscriber::class)->withPivot('subscribed_at');
+    }
+
+    // -------- Measurable --------
+
+    public function performance(): PerformanceData
+    {
+        $total = $this->activeSubscriberCount();
+
+        return new PerformanceData(
+            total: $total,
+            open_rate: SentMail::getOpenRate($this, $total),
+            click_rate: SentMail::getClickRate($this, $total),
+        );
     }
 }

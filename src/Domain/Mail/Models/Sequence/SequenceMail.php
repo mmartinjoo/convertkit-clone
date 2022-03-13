@@ -3,19 +3,26 @@
 namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Builders\Sequence\SequenceMailBuilder;
+use Domain\Mail\Contracts\Measurable;
+use Domain\Mail\DataTransferObjects\PerformanceData;
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
+use Domain\Subscriber\Models\Concerns\HasAudience;
+use Domain\Subscriber\Models\Subscriber;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 
-class SequenceMail extends BaseModel implements Sendable
+class SequenceMail extends BaseModel implements Sendable, Measurable
 {
+    use HasAudience;
+
     protected $fillable = [
         'sequence_id',
         'sequence_mail_schedule_id',
@@ -55,10 +62,18 @@ class SequenceMail extends BaseModel implements Sendable
         return new SequenceMailBuilder($query);
     }
 
-    public function filters(): FilterData
+    public function shouldSendToday(): bool
     {
-        return $this->filters;
+        $dayName = Str::lower(now()->dayName);
+        return $this->schedule->allowed_days->{$dayName};
     }
+
+    public function enoughTimePassedSince(SentMail $mail): bool
+    {
+        return $this->schedule->unit->timePassedSince($mail->sent_at) >= $this->schedule->delay;
+    }
+
+    // -------- Sendable --------
 
     public function id(): int
     {
@@ -80,14 +95,28 @@ class SequenceMail extends BaseModel implements Sendable
         return $this::class;
     }
 
-    public function shouldSendToday(): bool
+    // -------- HasAudience --------
+
+    public function filters(): FilterData
     {
-        $dayName = Str::lower(now()->dayName);
-        return $this->schedule->allowed_days->{$dayName};
+        return $this->filters;
     }
 
-    public function enoughTimePassedSince(SentMail $mail): bool
+    protected function audienceQuery(): Builder
     {
-        return $this->schedule->unit->timePassedSince($mail->sent_at) >= $this->schedule->delay;
+        return Subscriber::whereIn('id', $this->sequence->subscribers()->select('subscribers.id')->pluck('id'));
+    }
+
+    // -------- Measurable --------
+
+    public function performance(): PerformanceData
+    {
+        $total = SentMail::getCountOf($this);
+
+        return new PerformanceData(
+            total: $total,
+            open_rate: SentMail::getOpenRate($this, $total),
+            click_rate: SentMail::getClickRate($this, $total),
+        );
     }
 }

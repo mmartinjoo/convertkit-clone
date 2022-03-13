@@ -2,6 +2,7 @@
 
 namespace Domain\Mail\Builders\SentMail;
 
+use Domain\Mail\Contracts\Measurable;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
@@ -39,25 +40,25 @@ class SentMailBuilder extends Builder
         return $this->whereSendable($model)->count();
     }
 
-    public function getOpenRate(Sendable|Sequence $model, int $total): Percent
+    public function getOpenRate(Measurable $model, int $total): Percent
     {
-        $query = $model instanceof Sequence
-            ? $this->whereSequence($model)
-            : $this->whereSendable($model);
+//        $query = $model instanceof Sequence
+//            ? $this->whereSequence($model)
+//            : $this->whereSendable($model);
 
         return Percent::from(
-            $query->whereOpened()->count(), $total
+            $model->sent_mails()->whereOpened()->count(), $total
         );
     }
 
-    public function getClickRate(Sendable|Sequence $model, int $total): Percent
+    public function getClickRate(Measurable $model, int $total): Percent
     {
-        $query = $model instanceof Sequence
-            ? $this->whereSequence($model)
-            : $this->whereSendable($model);
+//        $query = $model instanceof Sequence
+//            ? $this->whereSequence($model)
+//            : $this->whereSendable($model);
 
         return Percent::from(
-            $query->whereClicked()->count(), $total
+            $model->sent_mails()->whereClicked()->count(), $total
         );
     }
 }
