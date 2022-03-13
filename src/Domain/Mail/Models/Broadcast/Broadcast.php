@@ -95,4 +95,9 @@ class Broadcast extends BaseModel implements Sendable, Measurable
     {
         return SentMail::getCountOf($this);
     }
+
+    public function sentMailsQuery(): Builder
+    {
+        return SentMail::whereSendable($this);
+    }
 }

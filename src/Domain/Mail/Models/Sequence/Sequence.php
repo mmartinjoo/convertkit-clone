@@ -10,6 +10,7 @@ use Domain\Mail\Models\SentMail;
 use Domain\Shared\Models\BaseModel;
 use Domain\Shared\Models\Concerns\HasUser;
 use Domain\Subscriber\Models\Subscriber;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -61,5 +62,10 @@ class Sequence extends BaseModel implements Measurable
     public function totalInstances(): int
     {
         return $this->activeSubscriberCount();
+    }
+
+    public function sentMailsQuery(): Builder
+    {
+        return SentMail::whereSequence($this);
     }
 }
