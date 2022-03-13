@@ -3,6 +3,7 @@
 namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Builders\Sequence\SequenceBuilder;
+use Domain\Mail\Contracts\Measurable;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Enums\Sequence\SequenceStatus;
 use Domain\Mail\Models\SentMail;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\LaravelData\WithData;
 
-class Sequence extends BaseModel
+class Sequence extends BaseModel implements Measurable
 {
     use WithData;
     use HasUser;
@@ -53,5 +54,12 @@ class Sequence extends BaseModel
     public function subscribers(): BelongsToMany
     {
         return $this->belongsToMany(Subscriber::class)->withPivot('subscribed_at');
+    }
+
+    // -------- Measurable --------
+
+    public function totalInstances(): int
+    {
+        return $this->activeSubscriberCount();
     }
 }

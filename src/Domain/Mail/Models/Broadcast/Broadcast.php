@@ -3,6 +3,7 @@
 namespace Domain\Mail\Models\Broadcast;
 
 use Domain\Mail\Builders\Broadcast\BroadcastBuilder;
+use Domain\Mail\Contracts\Measurable;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\LaravelData\WithData;
 use Illuminate\Contracts\Database\Query\Builder;
 
-class Broadcast extends BaseModel implements Sendable
+class Broadcast extends BaseModel implements Sendable, Measurable
 {
     use WithData;
     use HasUser;
@@ -86,5 +87,12 @@ class Broadcast extends BaseModel implements Sendable
     protected function audienceQuery(): Builder
     {
         return Subscriber::query();
+    }
+
+    // -------- Measurable --------
+
+    public function totalInstances(): int
+    {
+        return SentMail::getCountOf($this);
     }
 }

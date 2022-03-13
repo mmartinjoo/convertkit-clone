@@ -3,6 +3,7 @@
 namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Builders\Sequence\SequenceMailBuilder;
+use Domain\Mail\Contracts\Measurable;
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 
-class SequenceMail extends BaseModel implements Sendable
+class SequenceMail extends BaseModel implements Sendable, Measurable
 {
     use HasAudience;
 
@@ -103,5 +104,12 @@ class SequenceMail extends BaseModel implements Sendable
     protected function audienceQuery(): Builder
     {
         return Subscriber::whereIn('id', $this->sequence->subscribers()->select('subscribers.id')->pluck('id'));
+    }
+
+    // -------- Measurable --------
+
+    public function totalInstances(): int
+    {
+        return SentMail::getCountOf($this);
     }
 }
