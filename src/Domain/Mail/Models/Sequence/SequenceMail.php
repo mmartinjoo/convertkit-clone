@@ -4,6 +4,7 @@ namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Builders\Sequence\SequenceMailBuilder;
 use Domain\Mail\Contracts\Measurable;
+use Domain\Mail\DataTransferObjects\PerformanceData;
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Shared\Models\BaseModel;
@@ -108,13 +109,19 @@ class SequenceMail extends BaseModel implements Sendable, Measurable
 
     // -------- Measurable --------
 
-    public function totalInstances(): int
-    {
-        return SentMail::getCountOf($this);
-    }
-
     public function sentMailsQuery(): Builder
     {
         return SentMail::whereSendable($this);
+    }
+
+    public function performance(): PerformanceData
+    {
+        $total = SentMail::getCountOf($this);
+
+        return new PerformanceData(
+            total: $total,
+            open_rate: SentMail::getOpenRate($this, $total),
+            click_rate: SentMail::getClickRate($this, $total),
+        );
     }
 }
