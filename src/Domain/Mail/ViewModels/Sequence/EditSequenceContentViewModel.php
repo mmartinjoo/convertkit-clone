@@ -2,7 +2,6 @@
 
 namespace Domain\Mail\ViewModels\Sequence;
 
-use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
 use Domain\Mail\Models\Sequence\Sequence;
@@ -27,7 +26,7 @@ class EditSequenceContentViewModel extends ViewModel
 
     public function performance(): PerformanceData
     {
-        return GetPerformanceAction::execute($this->sequence);
+        return $this->sequence->performance();
     }
 
     public function dummyMail(): SequenceMailData

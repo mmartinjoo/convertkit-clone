@@ -2,7 +2,6 @@
 
 namespace Domain\Mail\ViewModels\Broadcast;
 
-use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\Models\Broadcast\Broadcast;
 use Domain\Mail\DataTransferObjects\PerformanceData;
@@ -34,6 +33,6 @@ class UpsertBroadcastViewModel extends ViewModel
             return null;
         }
 
-        return GetPerformanceAction::execute($this->broadcast);
+        return $this->broadcast->performance();
     }
 }

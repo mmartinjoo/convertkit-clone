@@ -2,11 +2,9 @@
 
 namespace Domain\Mail\Builders\SentMail;
 
-use Domain\Mail\Contracts\Measurable;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
-use Domain\Shared\ValueObjects\Percent;
 use Illuminate\Database\Eloquent\Builder;
 
 class SentMailBuilder extends Builder
@@ -38,27 +36,5 @@ class SentMailBuilder extends Builder
     public function getCountOf(Sendable $model): int
     {
         return $this->whereSendable($model)->count();
-    }
-
-    public function getOpenRate(Measurable $model, int $total): Percent
-    {
-//        $query = $model instanceof Sequence
-//            ? $this->whereSequence($model)
-//            : $this->whereSendable($model);
-
-        return Percent::from(
-            $model->sent_mails()->whereOpened()->count(), $total
-        );
-    }
-
-    public function getClickRate(Measurable $model, int $total): Percent
-    {
-//        $query = $model instanceof Sequence
-//            ? $this->whereSequence($model)
-//            : $this->whereSendable($model);
-
-        return Percent::from(
-            $model->sent_mails()->whereClicked()->count(), $total
-        );
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Domain\Mail\ViewModels\Sequence;
 
-use Domain\Mail\Actions\GetPerformanceAction;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
@@ -24,7 +23,7 @@ class GetSequenceReportsViewModel extends ViewModel
 
     public function totalPerformance(): PerformanceData
     {
-        return GetPerformanceAction::execute($this->sequence);
+        return $this->sequence->performance();
     }
 
     /*
@@ -32,9 +31,9 @@ class GetSequenceReportsViewModel extends ViewModel
      */
     public function mailPerformances(): Collection
     {
-        return $this->sequence->mails->mapWithKeys(fn (SequenceMail $mail) =>
-            [$mail->id => GetPerformanceAction::execute($mail)],
-        );
+        return $this->sequence->mails->mapWithKeys(fn (SequenceMail $mail) => [
+            $mail->id => $mail->performance()
+        ]);
     }
 
     public function progress(): SequenceProgressData
