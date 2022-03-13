@@ -60,11 +60,12 @@ class GetDashboardViewModel extends ViewModel
      */
     public function recentSubscribers(): Collection
     {
-        return Subscriber::with('form')
-            ->latest()
+        return Subscriber::with(['form', 'tags'])
+            ->orderByDesc('subscribed_at')
             ->take(10)
             ->get()
-            ->map->getData();
+            ->map
+            ->getData();
     }
 
     private function averageOpenRate(int $total): Percent

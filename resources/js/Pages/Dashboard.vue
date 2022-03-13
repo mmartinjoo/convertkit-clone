@@ -68,20 +68,42 @@ export default {
                 <thead class="bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Full Name
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         E-mail
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Form
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Subscribed At
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Tags
                     </th>
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
                 <tr v-for="subscriber in model.recent_subscribers" :key="subscriber.email" class="hover:bg-gray-100">
                     <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">{{ subscriber.full_name }}</div>
+                    </td>
+                    <td class="px-6 py-4">
                         <div class="text-sm text-gray-900">{{ subscriber.email }}</div>
                     </td>
                     <td class="px-6 py-4">
                         <div class="text-sm text-gray-900">{{ subscriber.form.title }}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">{{ subscriber.subscribed_at }}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">
+                            <span v-for="tag in subscriber.tags" :key="tag.id" class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-gray-400 rounded-full mb-2">
+                                {{ tag.title}}
+                            </span>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
