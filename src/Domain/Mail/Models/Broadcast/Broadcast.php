@@ -3,12 +3,12 @@
 namespace Domain\Mail\Models\Broadcast;
 
 use Domain\Mail\Builders\Broadcast\BroadcastBuilder;
-use Domain\Mail\Contracts\Measurable;
 use Domain\Mail\DataTransferObjects\Broadcast\BroadcastData;
 use Domain\Mail\DataTransferObjects\PerformanceData;
 use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Enums\Broadcast\BroadcastStatus;
 use Domain\Mail\DataTransferObjects\FilterData;
+use Domain\Mail\Models\Concerns\HasPerformance;
 use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
@@ -19,11 +19,12 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\LaravelData\WithData;
 use Illuminate\Contracts\Database\Query\Builder;
 
-class Broadcast extends BaseModel implements Sendable, Measurable
+class Broadcast extends BaseModel implements Sendable
 {
     use WithData;
     use HasUser;
     use HasAudience;
+    use HasPerformance;
 
     protected $fillable = [
         'id',
@@ -90,7 +91,7 @@ class Broadcast extends BaseModel implements Sendable, Measurable
         return Subscriber::query();
     }
 
-    // -------- Measurable --------
+    // -------- HasPerformance --------
 
     public function performance(): PerformanceData
     {
@@ -98,8 +99,8 @@ class Broadcast extends BaseModel implements Sendable, Measurable
 
         return new PerformanceData(
             total: $total,
-            open_rate: SentMail::getOpenRate($this, $total),
-            click_rate: SentMail::getClickRate($this, $total),
+            open_rate: $this->openRate($total),
+            click_rate: $this->clickRate($total),
         );
     }
 }

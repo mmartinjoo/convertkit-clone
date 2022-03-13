@@ -3,10 +3,10 @@
 namespace Domain\Mail\Models\Sequence;
 
 use Domain\Mail\Builders\Sequence\SequenceMailBuilder;
-use Domain\Mail\Contracts\Measurable;
 use Domain\Mail\DataTransferObjects\PerformanceData;
 use Domain\Mail\Enums\Sequence\SequenceMailStatus;
 use Domain\Mail\DataTransferObjects\FilterData;
+use Domain\Mail\Models\Concerns\HasPerformance;
 use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Contracts\Sendable;
@@ -19,9 +19,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 
-class SequenceMail extends BaseModel implements Sendable, Measurable
+class SequenceMail extends BaseModel implements Sendable
 {
     use HasAudience;
+    use HasPerformance;
 
     protected $fillable = [
         'sequence_id',
@@ -107,7 +108,7 @@ class SequenceMail extends BaseModel implements Sendable, Measurable
         return Subscriber::whereIn('id', $this->sequence->subscribers()->select('subscribers.id')->pluck('id'));
     }
 
-    // -------- Measurable --------
+    // -------- HasPerformance --------
 
     public function performance(): PerformanceData
     {
@@ -115,8 +116,8 @@ class SequenceMail extends BaseModel implements Sendable, Measurable
 
         return new PerformanceData(
             total: $total,
-            open_rate: SentMail::getOpenRate($this, $total),
-            click_rate: SentMail::getClickRate($this, $total),
+            open_rate: $this->openRate($total),
+            click_rate: $this->clickRate($total),
         );
     }
 }
