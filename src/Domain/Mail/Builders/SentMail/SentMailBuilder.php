@@ -47,7 +47,7 @@ class SentMailBuilder extends Builder
 //            : $this->whereSendable($model);
 
         return Percent::from(
-            $model->sentMailsQuery()->whereOpened()->count(), $total
+            $model->sent_mails()->whereOpened()->count(), $total
         );
     }
 
@@ -58,7 +58,7 @@ class SentMailBuilder extends Builder
 //            : $this->whereSendable($model);
 
         return Percent::from(
-            $model->sentMailsQuery()->whereClicked()->count(), $total
+            $model->sent_mails()->whereClicked()->count(), $total
         );
     }
 }

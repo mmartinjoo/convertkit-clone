@@ -109,11 +109,6 @@ class SequenceMail extends BaseModel implements Sendable, Measurable
 
     // -------- Measurable --------
 
-    public function sentMailsQuery(): Builder
-    {
-        return SentMail::whereSendable($this);
-    }
-
     public function performance(): PerformanceData
     {
         $total = SentMail::getCountOf($this);

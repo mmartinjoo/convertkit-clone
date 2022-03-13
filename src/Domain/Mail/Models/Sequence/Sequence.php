@@ -50,7 +50,12 @@ class Sequence extends BaseModel implements Measurable
 
     public function sent_mails(): HasManyThrough
     {
-        return $this->hasManyThrough(SentMail::class, SequenceMail::class, 'id', 'sendable_id');
+        return $this->hasManyThrough(
+            SentMail::class,
+            SequenceMail::class,
+            'sequence_id',
+            'sendable_id'
+        )->where('sent_mails.sendable_type', SequenceMail::class);
     }
 
     public function subscribers(): BelongsToMany
@@ -59,11 +64,6 @@ class Sequence extends BaseModel implements Measurable
     }
 
     // -------- Measurable --------
-
-    public function sentMailsQuery(): Builder
-    {
-        return SentMail::whereSequence($this);
-    }
 
     public function performance(): PerformanceData
     {
