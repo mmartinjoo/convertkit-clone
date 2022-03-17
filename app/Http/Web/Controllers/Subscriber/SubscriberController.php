@@ -52,10 +52,10 @@ class SubscriberController
         return Redirect::route('subscribers.index');
     }
 
-    public function destroy(Subscriber $subscriber): HttpResponse
+    public function destroy(Subscriber $subscriber): RedirectResponse
     {
         DeleteSubscriberAction::execute($subscriber);
 
-        return response()->noContent();
+        return Redirect::route('subscribers.index');
     }
 }

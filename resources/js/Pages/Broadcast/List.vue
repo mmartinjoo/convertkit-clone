@@ -37,8 +37,7 @@ export default {
             this.$inertia.get(`broadcasts/${broadcast.id}/preview`);
         },
         async remove(broadcast) {
-            await axios.delete(`broadcasts/${broadcast.id}`);
-            this.model.broadcasts = this.model.broadcasts.filter(s => s.id !== broadcast.id);
+            this.$inertia.delete(`broadcasts/${broadcast.id}`);
         }
     }
 }

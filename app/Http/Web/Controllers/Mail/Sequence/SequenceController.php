@@ -49,10 +49,10 @@ class SequenceController
         ]);
     }
 
-    public function destroy(Sequence $sequence): Response
+    public function destroy(Sequence $sequence): RedirectResponse
     {
         DeleteSequenceAction::execute($sequence);
 
-        return response()->noContent();
+        return Redirect::route('sequences.index');
     }
 }

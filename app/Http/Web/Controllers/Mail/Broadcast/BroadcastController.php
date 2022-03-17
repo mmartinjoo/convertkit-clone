@@ -52,10 +52,10 @@ class BroadcastController
         return Redirect::route('broadcasts.index');
     }
 
-    public function destroy(Broadcast $broadcast): HttpResponse
+    public function destroy(Broadcast $broadcast): RedirectResponse
     {
         DeleteBroadcastAction::execute($broadcast);
 
-        return response()->noContent();
+        return Redirect::route('broadcasts.index');
     }
 }

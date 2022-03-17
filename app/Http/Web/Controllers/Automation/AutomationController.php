@@ -52,10 +52,10 @@ class AutomationController
         return Redirect::route('automations.index');
     }
 
-    public function destroy(Automation $automation): HttpResponse
+    public function destroy(Automation $automation): RedirectResponse
     {
         DeleteAutomationAction::execute($automation);
 
-        return response()->noContent();
+        return Redirect::route('automations.index');
     }
 }
