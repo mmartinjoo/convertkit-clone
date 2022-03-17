@@ -25,7 +25,7 @@ trait HasAudience
             ->all();
 
         return app(Pipeline::class)
-            ->send($this->audienceQuery())
+            ->send($this->audienceQuery()->whereBelongsTo($this->user))
             ->through($filters)
             ->thenReturn()
             ->get();
