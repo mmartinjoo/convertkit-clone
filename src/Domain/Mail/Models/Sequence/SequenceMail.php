@@ -11,6 +11,7 @@ use Domain\Shared\Models\BaseModel;
 use Domain\Mail\Models\Casts\FiltersCast;
 use Domain\Mail\Contracts\Sendable;
 use Domain\Mail\Models\SentMail;
+use Domain\Shared\Models\Concerns\HasUser;
 use Domain\Subscriber\Models\Concerns\HasAudience;
 use Domain\Subscriber\Models\Subscriber;
 use Illuminate\Contracts\Database\Query\Builder;
@@ -23,6 +24,7 @@ class SequenceMail extends BaseModel implements Sendable
 {
     use HasAudience;
     use HasPerformance;
+    use HasUser;
 
     protected $fillable = [
         'sequence_id',
@@ -32,6 +34,7 @@ class SequenceMail extends BaseModel implements Sendable
         'status',
         'filters',
         'status',
+        'user_id',
     ];
 
     protected $casts = [

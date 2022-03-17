@@ -25,7 +25,10 @@ class UpsertSequenceMailAction
             [
                 'id' => $data->schedule->id
             ],
-            $data->schedule->toArray(),
+            [
+                ...$data->schedule->toArray(),
+                'user_id' => $user->id,
+            ],
         );
 
         return $mail->load(['sequence', 'schedule']);

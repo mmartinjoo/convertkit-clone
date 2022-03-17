@@ -30,7 +30,7 @@ class SequenceSeeder extends SubscriberSeeder
                 'form_ids' => [],
                 'tag_ids' => [],
             ],
-        ])->for($sequence)->create();
+        ])->for($sequence)->for($demoUser)->create();
         $this->everyWednesday($welcomeMail);
 
         $vueMail = SequenceMail::factory([
