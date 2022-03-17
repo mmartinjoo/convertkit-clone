@@ -13,12 +13,12 @@ class Automation extends BaseModel
     use WithData;
     use HasUser;
 
+    protected $dataClass = AutomationData::class;
+
     protected $fillable = [
         'name',
         'user_id',
     ];
-
-    protected $dataClass = AutomationData::class;
 
     public function steps(): HasMany
     {

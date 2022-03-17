@@ -24,7 +24,7 @@ class UpsertSubscriberAction
 
         $subscriber->tags()->sync($data->tags->toCollection()->pluck('id'));
 
-        // Only fires automation if it's a new subscriber
+        // Only fires automations if it's a new subscriber
         if ($data->form && !$data->id) {
             event(new SubscribedToFormEvent($subscriber, $user));
         }
