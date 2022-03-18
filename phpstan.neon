@@ -7,6 +7,11 @@ parameters:
         - src
 
     level: 1
+    ignoreErrors:
+        - '#Call to an undefined static method .+::count\(\)#'
+        - '#Call to an undefined static method .+::select\(\)#'
+        - '#Call to an undefined static method .+::whereIn\(\)#'
+        - '#Call to private method where.+#'
     excludePaths:
         - 'app/Http/Middleware'
         - 'app/Http/Kernel.php'
