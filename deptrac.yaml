@@ -1,0 +1,68 @@
+parameters:
+  paths:
+    - ./app
+    - ./src
+  exclude_files:
+    - '#.*test.*#'
+    - '#.*Factory\.php$#'
+  layers:
+    - name: Controller
+      collectors:
+        - type: className
+          regex: .*App\\Http\\*\\Controllers\\.*
+    - name: Action
+      collectors:
+        - type: className
+          regex: .*Actions\\.*
+    - name: ViewModel
+      collectors:
+        - type: className
+          regex: .*ViewModels\\.*
+    - name: Builder
+      collectors:
+        - type: className
+          regex: .*Builders\\.*
+    - name: Model
+      collectors:
+        - type: className
+          regex: .*\\Models\\.*
+    - name: DTO
+      collectors:
+        - type: className
+          regex: .*DataTransferObjects\\.*
+    - name: ValueObject
+      collectors:
+        - type: className
+          regex: .*ValueObjects\\.*
+  ruleset:
+    Controller:
+      - Action
+      - ViewModel
+      - Model
+      - DTO
+      - ValueObject
+    Action:
+      - Model
+      - DTO
+      - Builder
+      - ValueObject
+    ViewModel:
+      - Model
+      - DTO
+      - Builder
+      - ValueObject
+    Builder:
+      - Model
+      - DTO
+      - ValueObject
+    Model:
+      - Builder
+      - Model
+      - DTO
+      - ValueObject
+    DTO:
+      - Model
+      - DTO
+      - ValueObject
+    ValueObject:
+      - ValueObject
