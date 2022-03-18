@@ -18,6 +18,14 @@ parameters:
       collectors:
         - type: className
           regex: .*ViewModels\\.*
+    - name: Job
+      collectors:
+        - type: className
+          regex: .*Jobs\\.*
+    - name: Event
+      collectors:
+        - type: className
+          regex: .*Events\\.*
     - name: Builder
       collectors:
         - type: className
@@ -42,6 +50,7 @@ parameters:
       - DTO
       - ValueObject
     Action:
+      - Event
       - Model
       - DTO
       - Builder
@@ -51,6 +60,12 @@ parameters:
       - DTO
       - Builder
       - ValueObject
+    Job:
+      - Action
+      - Model
+      - DTO
+    Event:
+      - Model
     Builder:
       - Model
       - DTO
