@@ -9,6 +9,7 @@ use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Mail\Models\Sequence\SequenceSubscriber;
 use Domain\Subscriber\Models\Subscriber;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 
@@ -80,7 +81,10 @@ class ProceedSequenceAction
 
     public static function markAsCompleted(Sequence $sequence): void
     {
-        $subscribers = Subscriber::withCount('received_mails')
+        $subscribers = Subscriber::withCount([
+            'received_mails' => fn (Builder $receivedMails) =>
+                $receivedMails->whereSequence($sequence)
+            ])
             ->find(array_keys(self::$mailsBySubscribers))
             ->mapWithKeys(fn (Subscriber $subscriber) => [
                 $subscriber->id => $subscriber,
