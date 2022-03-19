@@ -95,7 +95,7 @@ class Broadcast extends BaseModel implements Sendable
 
     public function performance(): PerformanceData
     {
-        $total = SentMail::getCountOf($this);
+        $total = SentMail::countOf($this);
 
         return new PerformanceData(
             total: $total,

@@ -33,7 +33,7 @@ class SentMailBuilder extends Builder
             ->where('sendable_type', SequenceMail::class);
     }
 
-    public function getCountOf(Sendable $model): int
+    public function countOf(Sendable $model): int
     {
         return $this->whereSendable($model)->count();
     }
