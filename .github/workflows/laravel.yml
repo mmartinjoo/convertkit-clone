@@ -28,7 +28,13 @@ jobs:
         run: |
           mkdir -p database
           touch database/database.sqlite
-      - name: Execute tests (Unit and Feature tests) via PHPUnit
+      - name: Run phpinsights
+        run: ./vendor/bin/phpinsights --no-interaction --min-quality=80 --min-complexity=90 --min-architecture=70 --min-style=75
+      - name: Run phpstan
+        run: ./vendor/bin/phpstan analyse --memory-limit=1G
+      - name: Run deptrac
+        run: ./vendor/bin/deptrac analyse
+      - name: Test
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
