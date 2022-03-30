@@ -29,8 +29,8 @@ class SequenceMailData extends Data
         // When creating a new one, the status and filters can be null in the request
         return self::from([
             ...$request->all(),
-            'status' => $request->status ?: SequenceMailStatus::Draft,
-            'filters' => $request->filters ?: FilterData::empty(),
+            'status' => $request->status ?? SequenceMailStatus::Draft,
+            'filters' => $request->filters ?? FilterData::empty(),
         ]);
     }
 

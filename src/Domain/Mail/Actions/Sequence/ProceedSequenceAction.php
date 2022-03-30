@@ -84,8 +84,7 @@ class ProceedSequenceAction
     public static function markAsCompleted(Sequence $sequence): void
     {
         $subscribers = Subscriber::withCount([
-            'received_mails' => fn (Builder $receivedMails) =>
-                $receivedMails->whereSequence($sequence)
+            'received_mails' => fn (Builder $receivedMails) => $receivedMails->whereSequence($sequence)
         ])
         ->find(array_keys(self::$mailsBySubscribers))
         ->mapWithKeys(fn (Subscriber $subscriber) => [
