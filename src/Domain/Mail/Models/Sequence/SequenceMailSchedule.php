@@ -21,7 +21,7 @@ class SequenceMailSchedule extends BaseModel
         'unit' => SequenceMailUnit::class,
     ];
 
-    public function mail(): BelongsTo
+    public function sequence_mail(): BelongsTo
     {
         return $this->belongsTo(SequenceMail::class);
     }
