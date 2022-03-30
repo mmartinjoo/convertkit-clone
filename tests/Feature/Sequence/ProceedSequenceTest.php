@@ -92,6 +92,21 @@ class ProceedSequenceTest extends TestCase
             $user
         );
 
+        $generalMailData = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
+        $generalMail = UpsertSequenceMailAction::execute(
+            SequenceMailData::from([
+                ...$generalMailData->toArray(),
+                'filters' => [],
+                'schedule' => [
+                    'delay' => 1,
+                    'unit' => SequenceMailUnit::Hour->value,
+                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
+                ]
+            ]),
+            $sequence,
+            $user
+        );
+
         ProceedSequenceAction::execute($sequence);
 
         $this->assertDatabaseHas('sent_mails', [
@@ -107,16 +122,40 @@ class ProceedSequenceTest extends TestCase
         $this->assertDatabaseHas('sequence_subscriber', [
             'sequence_id' => $sequence->id,
             'subscriber_id' => $laravelSubscriber->id,
-            'status' => SubscriberStatus::Completed,
+            'status' => SubscriberStatus::InProgress,
         ]);
 
         $this->assertDatabaseHas('sequence_subscriber', [
             'sequence_id' => $sequence->id,
             'subscriber_id' => $vueSubscriber->id,
-            'status' => SubscriberStatus::Completed,
+            'status' => SubscriberStatus::InProgress,
         ]);
 
-        // TODO 3. mail amit mindketten megkapnak
+        $this->travelTo(now()->addHours(2), function () use ($sequence, $laravelSubscriber, $vueSubscriber, $generalMail) {
+            ProceedSequenceAction::execute($sequence);
+
+            $this->assertDatabaseHas('sent_mails', [
+                'sendable_id' => $generalMail->id,
+                'subscriber_id' => $laravelSubscriber->id,
+            ]);
+
+            $this->assertDatabaseHas('sent_mails', [
+                'sendable_id' => $generalMail->id,
+                'subscriber_id' => $vueSubscriber->id,
+            ]);
+
+            $this->assertDatabaseHas('sequence_subscriber', [
+                'sequence_id' => $sequence->id,
+                'subscriber_id' => $laravelSubscriber->id,
+                'status' => SubscriberStatus::Completed,
+            ]);
+
+            $this->assertDatabaseHas('sequence_subscriber', [
+                'sequence_id' => $sequence->id,
+                'subscriber_id' => $vueSubscriber->id,
+                'status' => SubscriberStatus::Completed,
+            ]);
+        });
     }
 
     /** @test */
