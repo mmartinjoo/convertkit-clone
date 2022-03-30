@@ -251,4 +251,147 @@ class ProceedSequenceTest extends TestCase
             ]);
         });
     }
+
+    /** @test */
+    public function it_should_not_send_mails_if_its_too_early()
+    {
+        $user = User::factory()->create();
+
+        $subscriber1 = Subscriber::factory()->for($user)->create();
+        $subscriber2 = Subscriber::factory()->for($user)->create();
+
+        $sequence = CreateSequenceAction::execute(
+            SequenceData::from(Sequence::factory(['title' => 'My Seqi'])->for($user)->make()),
+            $user
+        );
+
+        $mail1Data = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
+        $mail1 = UpsertSequenceMailAction::execute(
+            SequenceMailData::from([
+                ...$mail1Data->toArray(),
+                'filters' => [],
+                'schedule' => [
+                    'delay' => 1,
+                    'unit' => SequenceMailUnit::Hour->value,
+                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
+                ]
+            ]),
+            $sequence,
+            $user
+        );
+
+        $mail2Data = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
+        $mail2 = UpsertSequenceMailAction::execute(
+            SequenceMailData::from([
+                ...$mail2Data->toArray(),
+                'filters' => [],
+                'schedule' => [
+                    'delay' => 1,
+                    'unit' => SequenceMailUnit::Hour->value,
+                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
+                ]
+            ]),
+            $sequence,
+            $user
+        );
+
+        ProceedSequenceAction::execute($sequence);
+        ProceedSequenceAction::execute($sequence);
+
+        $this->assertDatabaseHas('sent_mails', [
+            'sendable_id' => $mail1->id,
+            'subscriber_id' => $subscriber1->id,
+        ]);
+
+        $this->assertDatabaseHas('sent_mails', [
+            'sendable_id' => $mail1->id,
+            'subscriber_id' => $subscriber2->id,
+        ]);
+
+        $this->assertDatabaseMissing('sent_mails', [
+            'sendable_id' => $mail2->id,
+            'subscriber_id' => $subscriber1->id,
+        ]);
+
+        $this->assertDatabaseMissing('sent_mails', [
+            'sendable_id' => $mail2->id,
+            'subscriber_id' => $subscriber2->id,
+        ]);
+
+        $this->assertDatabaseHas('sequence_subscriber', [
+            'sequence_id' => $sequence->id,
+            'subscriber_id' => $subscriber1->id,
+            'status' => SubscriberStatus::InProgress,
+        ]);
+
+        $this->assertDatabaseHas('sequence_subscriber', [
+            'sequence_id' => $sequence->id,
+            'subscriber_id' => $subscriber2->id,
+            'status' => SubscriberStatus::InProgress,
+        ]);
+    }
+
+    /** @test */
+    public function it_should_not_send_mails_if_its_not_the_right_day()
+    {
+        $user = User::factory()->create();
+
+        $subscriber1 = Subscriber::factory()->for($user)->create();
+        $subscriber2 = Subscriber::factory()->for($user)->create();
+
+        $sequence = CreateSequenceAction::execute(
+            SequenceData::from(Sequence::factory(['title' => 'My Seqi'])->for($user)->make()),
+            $user
+        );
+
+        $mail1Data = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
+        $mail = UpsertSequenceMailAction::execute(
+            SequenceMailData::from([
+                ...$mail1Data->toArray(),
+                'filters' => [],
+                'schedule' => [
+                    'delay' => 1,
+                    'unit' => SequenceMailUnit::Hour->value,
+                    'allowed_days' => [
+                        'monday' => true,
+                        'tuesday' => false,
+                        'wednesday' => false,
+                        'thursday' => false,
+                        'friday' => false,
+                        'saturday' => false,
+                        'sunday' => false,
+                    ],
+                ]
+            ]),
+            $sequence,
+            $user
+        );
+
+        // Not monday
+        $this->travelTo('2022-03-30', function () use ($sequence, $mail, $subscriber1, $subscriber2) {
+            ProceedSequenceAction::execute($sequence);
+
+            $this->assertDatabaseMissing('sent_mails', [
+                'sendable_id' => $mail->id,
+                'subscriber_id' => $subscriber1->id,
+            ]);
+
+            $this->assertDatabaseMissing('sent_mails', [
+                'sendable_id' => $mail->id,
+                'subscriber_id' => $subscriber2->id,
+            ]);
+
+            $this->assertDatabaseHas('sequence_subscriber', [
+                'sequence_id' => $sequence->id,
+                'subscriber_id' => $subscriber1->id,
+                'status' => null,
+            ]);
+
+            $this->assertDatabaseHas('sequence_subscriber', [
+                'sequence_id' => $sequence->id,
+                'subscriber_id' => $subscriber2->id,
+                'status' => null,
+            ]);
+        });
+    }
 }
