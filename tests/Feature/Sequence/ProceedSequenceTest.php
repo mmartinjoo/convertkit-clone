@@ -52,60 +52,20 @@ class ProceedSequenceTest extends TestCase
             $user
         );
 
-        $laravelMailData = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
         $laravelMailFilter = FilterData::from([
             'form_ids' => [],
             'tag_ids' => [$laravel->id],
         ]);
 
-        $laravelMail = UpsertSequenceMailAction::execute(
-            SequenceMailData::from([
-                ...$laravelMailData->toArray(),
-                'filters' => $laravelMailFilter,
-                'schedule' => [
-                    'delay' => 1,
-                    'unit' => SequenceMailUnit::Hour->value,
-                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
-                ]
-            ]),
-            $sequence,
-            $user
-        );
+        $laravelMail = $this->createMail($sequence, $user, $laravelMailFilter);
 
-        $vueMailData = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
         $vueMailFilter = FilterData::from([
             'form_ids' => [],
             'tag_ids' => [$vue->id],
         ]);
 
-        $vueMail = UpsertSequenceMailAction::execute(
-            SequenceMailData::from([
-                ...$vueMailData->toArray(),
-                'filters' => $vueMailFilter,
-                'schedule' => [
-                    'delay' => 1,
-                    'unit' => SequenceMailUnit::Hour->value,
-                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
-                ]
-            ]),
-            $sequence,
-            $user
-        );
-
-        $generalMailData = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
-        $generalMail = UpsertSequenceMailAction::execute(
-            SequenceMailData::from([
-                ...$generalMailData->toArray(),
-                'filters' => [],
-                'schedule' => [
-                    'delay' => 1,
-                    'unit' => SequenceMailUnit::Hour->value,
-                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
-                ]
-            ]),
-            $sequence,
-            $user
-        );
+        $vueMail = $this->createMail($sequence, $user, $vueMailFilter);
+        $generalMail = $this->createMail($sequence, $user);
 
         ProceedSequenceAction::execute($sequence);
 
@@ -135,39 +95,12 @@ class ProceedSequenceTest extends TestCase
         $subscriber2 = Subscriber::factory()->for($user)->create();
 
         $sequence = CreateSequenceAction::execute(
-            SequenceData::from(Sequence::factory(['title' => 'My Seqi'])->for($user)->make()),
+            SequenceData::from(Sequence::factory()->for($user)->make()),
             $user
         );
 
-        $mail1Data = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
-        $mail1 = UpsertSequenceMailAction::execute(
-            SequenceMailData::from([
-                ...$mail1Data->toArray(),
-                'filters' => [],
-                'schedule' => [
-                    'delay' => 1,
-                    'unit' => SequenceMailUnit::Hour->value,
-                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
-                ]
-            ]),
-            $sequence,
-            $user
-        );
-
-        $mail2Data = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
-        $mail2 = UpsertSequenceMailAction::execute(
-            SequenceMailData::from([
-                ...$mail2Data->toArray(),
-                'filters' => [],
-                'schedule' => [
-                    'delay' => 1,
-                    'unit' => SequenceMailUnit::Hour->value,
-                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
-                ]
-            ]),
-            $sequence,
-            $user
-        );
+        $mail1 = $this->createMail($sequence, $user);
+        $mail2 = $this->createMail($sequence, $user);
 
         ProceedSequenceAction::execute($sequence);
 
@@ -197,39 +130,12 @@ class ProceedSequenceTest extends TestCase
         $subscriber2 = Subscriber::factory()->for($user)->create();
 
         $sequence = CreateSequenceAction::execute(
-            SequenceData::from(Sequence::factory(['title' => 'My Seqi'])->for($user)->make()),
+            SequenceData::from(Sequence::factory()->for($user)->make()),
             $user
         );
 
-        $mail1Data = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
-        $mail1 = UpsertSequenceMailAction::execute(
-            SequenceMailData::from([
-                ...$mail1Data->toArray(),
-                'filters' => [],
-                'schedule' => [
-                    'delay' => 1,
-                    'unit' => SequenceMailUnit::Hour->value,
-                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
-                ]
-            ]),
-            $sequence,
-            $user
-        );
-
-        $mail2Data = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
-        $mail2 = UpsertSequenceMailAction::execute(
-            SequenceMailData::from([
-                ...$mail2Data->toArray(),
-                'filters' => [],
-                'schedule' => [
-                    'delay' => 1,
-                    'unit' => SequenceMailUnit::Hour->value,
-                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
-                ]
-            ]),
-            $sequence,
-            $user
-        );
+        $mail1 = $this->createMail($sequence, $user);
+        $mail2 = $this->createMail($sequence, $user);
 
         ProceedSequenceAction::execute($sequence);
         ProceedSequenceAction::execute($sequence);
@@ -253,7 +159,7 @@ class ProceedSequenceTest extends TestCase
         $subscriber2 = Subscriber::factory()->for($user)->create();
 
         $sequence = CreateSequenceAction::execute(
-            SequenceData::from(Sequence::factory(['title' => 'My Seqi'])->for($user)->make()),
+            SequenceData::from(Sequence::factory()->for($user)->make()),
             $user
         );
 
@@ -333,5 +239,24 @@ class ProceedSequenceTest extends TestCase
             'subscriber_id' => $subscriber->id,
             'status' => null,
         ]);
+    }
+
+    private function createMail(Sequence $sequence, User $user, ?FilterData $filters = null): SequenceMail
+    {
+        $generalMailData = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
+
+        return UpsertSequenceMailAction::execute(
+            SequenceMailData::from([
+                ...$generalMailData->toArray(),
+                'filters' => $filters ?? [],
+                'schedule' => [
+                    'delay' => 1,
+                    'unit' => SequenceMailUnit::Hour->value,
+                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
+                ]
+            ]),
+            $sequence,
+            $user
+        );
     }
 }
