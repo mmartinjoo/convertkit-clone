@@ -73,8 +73,8 @@ class ProceedSequenceAction
      */
     private static function markAsInProgress(Sequence $sequence, Collection $schedulableAudience): void
     {
-        $sequence
-            ->subscribers()
+        SequenceSubscriber::query()
+            ->whereBelongsTo($sequence)
             ->whereIn('subscriber_id', $schedulableAudience->pluck('id'))
             ->update([
                 'status' => SubscriberStatus::InProgress,
