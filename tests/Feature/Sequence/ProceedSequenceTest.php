@@ -109,52 +109,20 @@ class ProceedSequenceTest extends TestCase
 
         ProceedSequenceAction::execute($sequence);
 
-        $this->assertDatabaseHas('sent_mails', [
-            'sendable_id' => $laravelMail->id,
-            'subscriber_id' => $laravelSubscriber->id,
-        ]);
+        $this->assertMailSent($laravelMail, $laravelSubscriber);
+        $this->assertMailSent($vueMail, $vueSubscriber);
 
-        $this->assertDatabaseHas('sent_mails', [
-            'sendable_id' => $vueMail->id,
-            'subscriber_id' => $vueSubscriber->id,
-        ]);
-
-        $this->assertDatabaseHas('sequence_subscriber', [
-            'sequence_id' => $sequence->id,
-            'subscriber_id' => $laravelSubscriber->id,
-            'status' => SubscriberStatus::InProgress,
-        ]);
-
-        $this->assertDatabaseHas('sequence_subscriber', [
-            'sequence_id' => $sequence->id,
-            'subscriber_id' => $vueSubscriber->id,
-            'status' => SubscriberStatus::InProgress,
-        ]);
+        $this->assertInProgress($sequence, $laravelSubscriber);
+        $this->assertInProgress($sequence, $vueSubscriber);
 
         $this->travelTo(now()->addHours(2), function () use ($sequence, $laravelSubscriber, $vueSubscriber, $generalMail) {
             ProceedSequenceAction::execute($sequence);
 
-            $this->assertDatabaseHas('sent_mails', [
-                'sendable_id' => $generalMail->id,
-                'subscriber_id' => $laravelSubscriber->id,
-            ]);
+            $this->assertMailSent($generalMail, $laravelSubscriber);
+            $this->assertMailSent($generalMail, $vueSubscriber);
 
-            $this->assertDatabaseHas('sent_mails', [
-                'sendable_id' => $generalMail->id,
-                'subscriber_id' => $vueSubscriber->id,
-            ]);
-
-            $this->assertDatabaseHas('sequence_subscriber', [
-                'sequence_id' => $sequence->id,
-                'subscriber_id' => $laravelSubscriber->id,
-                'status' => SubscriberStatus::Completed,
-            ]);
-
-            $this->assertDatabaseHas('sequence_subscriber', [
-                'sequence_id' => $sequence->id,
-                'subscriber_id' => $vueSubscriber->id,
-                'status' => SubscriberStatus::Completed,
-            ]);
+            $this->assertCompleted($sequence, $laravelSubscriber);
+            $this->assertCompleted($sequence, $vueSubscriber);
         });
     }
 
@@ -203,52 +171,20 @@ class ProceedSequenceTest extends TestCase
 
         ProceedSequenceAction::execute($sequence);
 
-        $this->assertDatabaseHas('sent_mails', [
-            'sendable_id' => $mail1->id,
-            'subscriber_id' => $subscriber1->id,
-        ]);
+        $this->assertMailSent($mail1, $subscriber1);
+        $this->assertMailSent($mail1, $subscriber2);
 
-        $this->assertDatabaseHas('sent_mails', [
-            'sendable_id' => $mail1->id,
-            'subscriber_id' => $subscriber2->id,
-        ]);
-
-        $this->assertDatabaseHas('sequence_subscriber', [
-            'sequence_id' => $sequence->id,
-            'subscriber_id' => $subscriber1->id,
-            'status' => SubscriberStatus::InProgress,
-        ]);
-
-        $this->assertDatabaseHas('sequence_subscriber', [
-            'sequence_id' => $sequence->id,
-            'subscriber_id' => $subscriber2->id,
-            'status' => SubscriberStatus::InProgress,
-        ]);
+        $this->assertInProgress($sequence, $subscriber1);
+        $this->assertInProgress($sequence, $subscriber2);
 
         $this->travelTo(now()->addHours(2), function () use ($sequence, $subscriber1, $subscriber2, $mail2) {
             ProceedSequenceAction::execute($sequence);
 
-            $this->assertDatabaseHas('sent_mails', [
-                'sendable_id' => $mail2->id,
-                'subscriber_id' => $subscriber1->id,
-            ]);
+            $this->assertMailSent($mail2, $subscriber1);
+            $this->assertMailSent($mail2, $subscriber2);
 
-            $this->assertDatabaseHas('sent_mails', [
-                'sendable_id' => $mail2->id,
-                'subscriber_id' => $subscriber2->id,
-            ]);
-
-            $this->assertDatabaseHas('sequence_subscriber', [
-                'sequence_id' => $sequence->id,
-                'subscriber_id' => $subscriber1->id,
-                'status' => SubscriberStatus::Completed,
-            ]);
-
-            $this->assertDatabaseHas('sequence_subscriber', [
-                'sequence_id' => $sequence->id,
-                'subscriber_id' => $subscriber2->id,
-                'status' => SubscriberStatus::Completed,
-            ]);
+            $this->assertCompleted($sequence, $subscriber1);
+            $this->assertCompleted($sequence, $subscriber2);
         });
     }
 
@@ -298,37 +234,14 @@ class ProceedSequenceTest extends TestCase
         ProceedSequenceAction::execute($sequence);
         ProceedSequenceAction::execute($sequence);
 
-        $this->assertDatabaseHas('sent_mails', [
-            'sendable_id' => $mail1->id,
-            'subscriber_id' => $subscriber1->id,
-        ]);
+        $this->assertMailSent($mail1, $subscriber1);
+        $this->assertMailSent($mail1, $subscriber2);
 
-        $this->assertDatabaseHas('sent_mails', [
-            'sendable_id' => $mail1->id,
-            'subscriber_id' => $subscriber2->id,
-        ]);
+        $this->assertMailNotSent($mail2, $subscriber1);
+        $this->assertMailNotSent($mail2, $subscriber2);
 
-        $this->assertDatabaseMissing('sent_mails', [
-            'sendable_id' => $mail2->id,
-            'subscriber_id' => $subscriber1->id,
-        ]);
-
-        $this->assertDatabaseMissing('sent_mails', [
-            'sendable_id' => $mail2->id,
-            'subscriber_id' => $subscriber2->id,
-        ]);
-
-        $this->assertDatabaseHas('sequence_subscriber', [
-            'sequence_id' => $sequence->id,
-            'subscriber_id' => $subscriber1->id,
-            'status' => SubscriberStatus::InProgress,
-        ]);
-
-        $this->assertDatabaseHas('sequence_subscriber', [
-            'sequence_id' => $sequence->id,
-            'subscriber_id' => $subscriber2->id,
-            'status' => SubscriberStatus::InProgress,
-        ]);
+        $this->assertInProgress($sequence, $subscriber1);
+        $this->assertInProgress($sequence, $subscriber2);
     }
 
     /** @test */
@@ -371,27 +284,54 @@ class ProceedSequenceTest extends TestCase
         $this->travelTo('2022-03-30', function () use ($sequence, $mail, $subscriber1, $subscriber2) {
             ProceedSequenceAction::execute($sequence);
 
-            $this->assertDatabaseMissing('sent_mails', [
-                'sendable_id' => $mail->id,
-                'subscriber_id' => $subscriber1->id,
-            ]);
+            $this->assertMailNotSent($mail, $subscriber1);
+            $this->assertMailNotSent($mail, $subscriber2);
 
-            $this->assertDatabaseMissing('sent_mails', [
-                'sendable_id' => $mail->id,
-                'subscriber_id' => $subscriber2->id,
-            ]);
-
-            $this->assertDatabaseHas('sequence_subscriber', [
-                'sequence_id' => $sequence->id,
-                'subscriber_id' => $subscriber1->id,
-                'status' => null,
-            ]);
-
-            $this->assertDatabaseHas('sequence_subscriber', [
-                'sequence_id' => $sequence->id,
-                'subscriber_id' => $subscriber2->id,
-                'status' => null,
-            ]);
+            $this->assertNotStarted($sequence, $subscriber1);
+            $this->assertNotStarted($sequence, $subscriber2);
         });
+    }
+
+    private function assertMailSent(SequenceMail $mail, Subscriber $subscriber): void
+    {
+        $this->assertDatabaseHas('sent_mails', [
+            'sendable_id' => $mail->id,
+            'subscriber_id' => $subscriber->id,
+        ]);
+    }
+
+    private function assertMailNotSent(SequenceMail $mail, Subscriber $subscriber): void
+    {
+        $this->assertDatabaseMissing('sent_mails', [
+            'sendable_id' => $mail->id,
+            'subscriber_id' => $subscriber->id,
+        ]);
+    }
+
+    private function assertInProgress(Sequence $sequence, Subscriber $subscriber): void
+    {
+        $this->assertDatabaseHas('sequence_subscriber', [
+            'sequence_id' => $sequence->id,
+            'subscriber_id' => $subscriber->id,
+            'status' => SubscriberStatus::InProgress,
+        ]);
+    }
+
+    private function assertCompleted(Sequence $sequence, Subscriber $subscriber): void
+    {
+        $this->assertDatabaseHas('sequence_subscriber', [
+            'sequence_id' => $sequence->id,
+            'subscriber_id' => $subscriber->id,
+            'status' => SubscriberStatus::Completed,
+        ]);
+    }
+
+    private function assertNotStarted(Sequence $sequence, Subscriber $subscriber): void
+    {
+        $this->assertDatabaseHas('sequence_subscriber', [
+            'sequence_id' => $sequence->id,
+            'subscriber_id' => $subscriber->id,
+            'status' => null,
+        ]);
     }
 }
