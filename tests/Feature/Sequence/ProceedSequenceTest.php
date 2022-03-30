@@ -3,12 +3,14 @@
 namespace Tests\Feature\Sequence;
 
 use Domain\Mail\Actions\Sequence\CreateSequenceAction;
+use Domain\Mail\Actions\Sequence\ProceedSequenceAction;
 use Domain\Mail\Actions\Sequence\UpsertSequenceMailAction;
 use Domain\Mail\DataTransferObjects\FilterData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailScheduleAllowedDaysData;
 use Domain\Mail\Enums\Sequence\SequenceMailUnit;
+use Domain\Mail\Enums\Sequence\SubscriberStatus;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\Models\User;
@@ -34,16 +36,16 @@ class ProceedSequenceTest extends TestCase
             'title' => 'Vue',
         ])->for($user)->create();
 
-        $subscriber1 = Subscriber::factory([
+        $laravelSubscriber = Subscriber::factory([
             'first_name' => 'Laravel',
         ])->for($user)->create();
 
-        $subscriber2 = Subscriber::factory([
+        $vueSubscriber = Subscriber::factory([
             'first_name' => 'Vue',
         ])->for($user)->create();
 
-        $subscriber1->tags()->attach($laravel->id);
-        $subscriber2->tags()->attach($vue->id);
+        $laravelSubscriber->tags()->attach($laravel->id);
+        $vueSubscriber->tags()->attach($vue->id);
 
         $sequence = CreateSequenceAction::execute(
             SequenceData::from(Sequence::factory()->for($user)->make()),
@@ -90,6 +92,28 @@ class ProceedSequenceTest extends TestCase
             $user
         );
 
-        $this->artisan('sequence:proceed');
+        ProceedSequenceAction::execute($sequence);
+
+        $this->assertDatabaseHas('sent_mails', [
+            'sendable_id' => $laravelMail->id,
+            'subscriber_id' => $laravelSubscriber->id,
+        ]);
+
+        $this->assertDatabaseHas('sent_mails', [
+            'sendable_id' => $vueMail->id,
+            'subscriber_id' => $vueSubscriber->id,
+        ]);
+
+        $this->assertDatabaseHas('sequence_subscriber', [
+            'sequence_id' => $sequence->id,
+            'subscriber_id' => $laravelSubscriber->id,
+            'status' => SubscriberStatus::Completed,
+        ]);
+
+        $this->assertDatabaseHas('sequence_subscriber', [
+            'sequence_id' => $sequence->id,
+            'subscriber_id' => $vueSubscriber->id,
+            'status' => SubscriberStatus::Completed,
+        ]);
     }
 }

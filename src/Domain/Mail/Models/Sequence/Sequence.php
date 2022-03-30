@@ -60,7 +60,7 @@ class Sequence extends BaseModel
 
     public function subscribers(): BelongsToMany
     {
-        return $this->belongsToMany(Subscriber::class)->withPivot('subscribed_at');
+        return $this->belongsToMany(Subscriber::class)->withPivot(['subscribed_at', 'status']);
     }
 
     // -------- HasPerformance --------
