@@ -1,0 +1,5 @@
+email,first_name,last_name,tags
+first@example.com,First,Example,"Laravel,Vue,Inertia"
+second@example.com,Second,Example,
+third@example.com,Third,Example,"Laravel,DDD"
+fourth@example.com,Fourth,Example,"DDD"
