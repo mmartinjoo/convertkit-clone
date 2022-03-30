@@ -86,11 +86,11 @@ class ProceedSequenceAction
         $subscribers = Subscriber::withCount([
             'received_mails' => fn (Builder $receivedMails) =>
                 $receivedMails->whereSequence($sequence)
-            ])
-            ->find(array_keys(self::$mailsBySubscribers))
-            ->mapWithKeys(fn (Subscriber $subscriber) => [
-                $subscriber->id => $subscriber,
-            ]);
+        ])
+        ->find(array_keys(self::$mailsBySubscribers))
+        ->mapWithKeys(fn (Subscriber $subscriber) => [
+            $subscriber->id => $subscriber,
+        ]);
 
         $completedSubscriberIds = [];
         foreach (self::$mailsBySubscribers as $subscriberId => $mailIds) {
