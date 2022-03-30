@@ -24,7 +24,7 @@ class ProceedSequenceTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_should_proceed_a_sequence()
+    public function it_should_proceed_subscribers_at_a_different_phase()
     {
         $user = User::factory()->create();
 
@@ -115,5 +115,101 @@ class ProceedSequenceTest extends TestCase
             'subscriber_id' => $vueSubscriber->id,
             'status' => SubscriberStatus::Completed,
         ]);
+
+        // TODO 3. mail amit mindketten megkapnak
+    }
+
+    /** @test */
+    public function it_should_proceed_subscribers_at_the_same_phase()
+    {
+        $user = User::factory()->create();
+
+        $subscriber1 = Subscriber::factory()->for($user)->create();
+        $subscriber2 = Subscriber::factory()->for($user)->create();
+
+        $sequence = CreateSequenceAction::execute(
+            SequenceData::from(Sequence::factory(['title' => 'My Seqi'])->for($user)->make()),
+            $user
+        );
+
+        $mail1Data = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
+        $mail1 = UpsertSequenceMailAction::execute(
+            SequenceMailData::from([
+                ...$mail1Data->toArray(),
+                'filters' => [],
+                'schedule' => [
+                    'delay' => 1,
+                    'unit' => SequenceMailUnit::Hour->value,
+                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
+                ]
+            ]),
+            $sequence,
+            $user
+        );
+
+        $mail2Data = SequenceMail::factory()->for($sequence)->for($user)->published()->make();
+        $mail2 = UpsertSequenceMailAction::execute(
+            SequenceMailData::from([
+                ...$mail2Data->toArray(),
+                'filters' => [],
+                'schedule' => [
+                    'delay' => 1,
+                    'unit' => SequenceMailUnit::Hour->value,
+                    'allowed_days' => SequenceMailScheduleAllowedDaysData::empty(),
+                ]
+            ]),
+            $sequence,
+            $user
+        );
+
+        ProceedSequenceAction::execute($sequence);
+
+        $this->assertDatabaseHas('sent_mails', [
+            'sendable_id' => $mail1->id,
+            'subscriber_id' => $subscriber1->id,
+        ]);
+
+        $this->assertDatabaseHas('sent_mails', [
+            'sendable_id' => $mail1->id,
+            'subscriber_id' => $subscriber2->id,
+        ]);
+
+        $this->assertDatabaseHas('sequence_subscriber', [
+            'sequence_id' => $sequence->id,
+            'subscriber_id' => $subscriber1->id,
+            'status' => SubscriberStatus::InProgress,
+        ]);
+
+        $this->assertDatabaseHas('sequence_subscriber', [
+            'sequence_id' => $sequence->id,
+            'subscriber_id' => $subscriber2->id,
+            'status' => SubscriberStatus::InProgress,
+        ]);
+
+        $this->travelTo(now()->addHours(2), function () use ($sequence, $subscriber1, $subscriber2, $mail2) {
+            ProceedSequenceAction::execute($sequence);
+
+            $this->assertDatabaseHas('sent_mails', [
+                'sendable_id' => $mail2->id,
+                'subscriber_id' => $subscriber1->id,
+            ]);
+
+            $this->assertDatabaseHas('sent_mails', [
+                'sendable_id' => $mail2->id,
+                'subscriber_id' => $subscriber2->id,
+            ]);
+
+            $this->assertDatabaseHas('sequence_subscriber', [
+                'sequence_id' => $sequence->id,
+                'subscriber_id' => $subscriber1->id,
+                'status' => SubscriberStatus::Completed,
+            ]);
+
+            $this->assertDatabaseHas('sequence_subscriber', [
+                'sequence_id' => $sequence->id,
+                'subscriber_id' => $subscriber2->id,
+                'status' => SubscriberStatus::Completed,
+            ]);
+        });
     }
 }

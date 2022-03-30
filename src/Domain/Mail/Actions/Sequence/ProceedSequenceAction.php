@@ -22,6 +22,8 @@ class ProceedSequenceAction
 
     public static function execute(Sequence $sequence): void
     {
+        self::$mailsBySubscribers = [];
+
         foreach ($sequence->mails()->wherePublished()->get() as $mail) {
             [$audience, $schedulableAudience] = self::audience($mail);
 
