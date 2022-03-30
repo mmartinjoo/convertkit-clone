@@ -46,6 +46,8 @@ jobs:
       run: ./vendor/bin/deptrac analyse
     - name: Test
       env:
+        DB_HOST: mysql
         DB_DATABASE: mailkit-test
+        DB_USERNAME: root
         DB_PASSWORD: password
       run: php artisan test
