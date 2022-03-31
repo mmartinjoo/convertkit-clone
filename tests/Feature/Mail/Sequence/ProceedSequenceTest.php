@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Sequence;
+namespace Tests\Feature\Mail\Sequence;
 
 use Domain\Mail\Actions\Sequence\CreateSequenceAction;
 use Domain\Mail\Actions\Sequence\ProceedSequenceAction;
