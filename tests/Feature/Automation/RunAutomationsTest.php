@@ -12,6 +12,7 @@ use Domain\Shared\Models\User;
 use Domain\Subscriber\Actions\UpsertSubscriberAction;
 use Domain\Subscriber\DataTransferObjects\SubscriberData;
 use Domain\Subscriber\Models\Form;
+use Domain\Subscriber\Models\Subscriber;
 use Domain\Subscriber\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
@@ -59,7 +60,7 @@ class RunAutomationsTest extends TestCase
     }
 
     /** @test */
-    public function it_should_add_subscriber_to_sequence()
+    public function it_should_add_a_subscriber_to_a_sequence()
     {
         $user = User::factory()->create();
         $form = Form::factory()->create();
@@ -93,7 +94,7 @@ class RunAutomationsTest extends TestCase
     }
 
     /** @test */
-    public function it_should_not_run_automations()
+    public function it_should_not_run_automations_if_subscriber_doesnt_have_the_form()
     {
         $user = User::factory()->create();
         $form = Form::factory()->create();
@@ -123,6 +124,38 @@ class RunAutomationsTest extends TestCase
                 'subscribed_at' => now(),
                 'form' => null,
                 'tags' => [],
+            ]),
+            $user
+        );
+
+        Queue::assertNothingPushed();
+    }
+
+    /** @test */
+    public function it_should_not_run_automations_if_the_subscriber_is_being_updated()
+    {
+        $user = User::factory()->create();
+        $form = Form::factory()->create();
+
+        $subscriber = Subscriber::factory(['form_id' => $form->id])->create();
+        $sequence = Sequence::factory()->create();
+
+        UpsertAutomationAction::execute(
+            AutomationData::from([
+                'name' => 'Test Automation',
+                'event' => new AutomationStepData(null, Events::SubscribedToForm->value, $form->id),
+                'actions' => [
+                    new AutomationStepData(null, Actions::AddToSequence->value, $sequence->id),
+                ]
+            ]),
+            $user
+        );
+
+        Queue::fake();
+
+        UpsertSubscriberAction::execute(
+            SubscriberData::from([
+                ...$subscriber->load(['form', 'tags'])->getData()->all(),
             ]),
             $user
         );
