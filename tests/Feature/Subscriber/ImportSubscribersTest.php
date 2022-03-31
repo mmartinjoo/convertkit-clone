@@ -13,24 +13,25 @@ class ImportSubscribersTest extends TestCase
 {
     use RefreshDatabase;
 
+    private const NUMBER_OF_SUBSCRIBERS_IN_CSV = 4;
+    private const NUMBER_OF_TAGS_IN_CSV = 4;
+
     /** @test */
-    public function it_should_should_import_subscribers()
+    public function it_should_import_subscribers()
     {
         $user = User::factory()->create();
 
         ImportSubscribersAction::execute(storage_path('testing/subscribers.csv'), $user);
 
-        $this->assertDatabaseCount('subscribers', 4);
+        $this->assertDatabaseCount('subscribers', self::NUMBER_OF_SUBSCRIBERS_IN_CSV);
     }
 
     /** @test */
-    public function it_should_should_import_subscribers_with_tags()
+    public function it_should_import_subscribers_with_tags()
     {
         $user = User::factory()->create();
 
         ImportSubscribersAction::execute(storage_path('testing/subscribers.csv'), $user);
-
-        $this->assertDatabaseCount('tags', 4);
 
         $subscriber = Subscriber::whereEmail('first@example.com')->first();
         $this->assertTags($subscriber, ['Laravel', 'Vue', 'Inertia']);
@@ -56,7 +57,7 @@ class ImportSubscribersTest extends TestCase
 
         ImportSubscribersAction::execute(storage_path('testing/subscribers.csv'), $user);
 
-        $this->assertDatabaseCount('subscribers', 4);
+        $this->assertDatabaseCount('subscribers', self::NUMBER_OF_SUBSCRIBERS_IN_CSV);
     }
 
     /** @test */
@@ -69,7 +70,7 @@ class ImportSubscribersTest extends TestCase
 
         ImportSubscribersAction::execute(storage_path('testing/subscribers.csv'), $user);
 
-        $this->assertDatabaseCount('tags', 4);
+        $this->assertDatabaseCount('tags', self::NUMBER_OF_TAGS_IN_CSV);
     }
 
     private function assertTags(Subscriber $subscriber, array $expectedTitles): void
