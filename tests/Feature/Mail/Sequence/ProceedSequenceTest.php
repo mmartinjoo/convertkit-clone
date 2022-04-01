@@ -11,17 +11,25 @@ use Domain\Mail\DataTransferObjects\Sequence\SequenceMailData;
 use Domain\Mail\DataTransferObjects\Sequence\SequenceMailScheduleAllowedDaysData;
 use Domain\Mail\Enums\Sequence\SequenceMailUnit;
 use Domain\Mail\Enums\Sequence\SubscriberStatus;
+use Domain\Mail\Mails\EchoMail;
 use Domain\Mail\Models\Sequence\Sequence;
 use Domain\Mail\Models\Sequence\SequenceMail;
 use Domain\Shared\Models\User;
 use Domain\Subscriber\Models\Subscriber;
 use Domain\Subscriber\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mail;
 use Tests\TestCase;
 
 class ProceedSequenceTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Mail::fake();
+    }
 
     /** @test */
     public function it_should_proceed_subscribers_at_a_different_phase()
@@ -204,6 +212,10 @@ class ProceedSequenceTest extends TestCase
             'sendable_id' => $mail->id,
             'subscriber_id' => $subscriber->id,
         ]);
+
+        Mail::assertQueued(EchoMail::class, fn (EchoMail $echoMail) =>
+            $echoMail->mail->id() === $mail->id
+        );
     }
 
     private function assertMailNotSent(SequenceMail $mail, Subscriber $subscriber): void
