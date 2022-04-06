@@ -146,10 +146,11 @@ class ProceedSequenceTest extends TestCase
         $mail2 = $this->createMail($sequence, $user);
 
         ProceedSequenceAction::execute($sequence);
-        ProceedSequenceAction::execute($sequence);
 
         $this->assertMailSent($mail1, $subscriber1);
         $this->assertMailSent($mail1, $subscriber2);
+
+        ProceedSequenceAction::execute($sequence);
 
         $this->assertMailNotSent($mail2, $subscriber1);
         $this->assertMailNotSent($mail2, $subscriber2);
@@ -224,6 +225,10 @@ class ProceedSequenceTest extends TestCase
             'sendable_id' => $mail->id,
             'subscriber_id' => $subscriber->id,
         ]);
+
+        Mail::assertNotQueued(EchoMail::class, fn (EchoMail $echoMail) =>
+            $echoMail->mail->id() === $mail->id
+        );
     }
 
     private function assertInProgress(Sequence $sequence, Subscriber $subscriber): void
