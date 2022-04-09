@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    private const DEMO_USER_EMAIL = 'demo@mailkit.com';
+    private const DEMO_USER_EMAIL = 'demo@mailtool.com';
 
     public function run()
     {

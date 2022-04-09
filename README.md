@@ -8,4 +8,4 @@
 - `php artisan queue:work`
 - `npm install'
 - `npm run dev`
-- Login with `demo@mailkit.com` and `password`
+- Login with `demo@mailtool.com` and `password`
