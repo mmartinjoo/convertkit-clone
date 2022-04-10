@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use DB;
 use Illuminate\Support\ServiceProvider;
-use Str;
+use Mail;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Mail::alwaysTo('m4rt1n.j00@gmail.com');
 //         DB::listen(function ($query) {
 //             logger(Str::replaceArray('?', $query->bindings, $query->sql));
 //         });
