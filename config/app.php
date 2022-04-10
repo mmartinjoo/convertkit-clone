@@ -123,6 +123,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'seeder_email' => 'demo@mailtool.biz',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

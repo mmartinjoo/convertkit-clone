@@ -3,6 +3,7 @@
 namespace App\Http\Web\Controllers\Auth;
 
 use App\Providers\RouteServiceProvider;
+use Artisan;
 use Domain\Shared\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -48,6 +49,10 @@ class RegisteredUserController
         event(new Registered($user));
 
         Auth::login($user);
+
+        config(['app.seeder_email' => $user->email]);
+
+        Artisan::call('db:seed');
 
         return redirect(RouteServiceProvider::HOME);
     }

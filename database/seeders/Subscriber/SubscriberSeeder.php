@@ -25,7 +25,7 @@ class SubscriberSeeder extends DatabaseSeeder
             Form::factory(compact('title'))->for($demoUser)->create()
         );
 
-        $subscribers = $this->range(1, 200)->map(fn () =>
+        $subscribers = $this->range(1, 20)->map(fn () =>
             Subscriber::factory([
                 'form_id' => $this->byChance(0.67, $forms, fn (Collection $forms) => $forms->random()),
                 'subscribed_at' => $this->last30Days(),

@@ -14,16 +14,24 @@ use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    private const DEMO_USER_EMAIL = 'demo@mailtool.com';
+    protected string $email;
+    private const DEMO_USER_EMAIL = 'demo@mailtool.biz';
+
+    public function __construct()
+    {
+        $this->email = config('app.seeder_email', self::DEMO_USER_EMAIL);
+    }
 
     public function run()
     {
-        User::factory([
-            'name' => 'Demo User',
-            'email' => self::DEMO_USER_EMAIL,
-            'email_verified_at' => now(),
-            'password' => Hash::make('password'),
-        ])->create();
+        if ($this->email === self::DEMO_USER_EMAIL) {
+            User::factory([
+                'name' => 'Demo User',
+                'email' => self::DEMO_USER_EMAIL,
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+            ])->create();
+        }
 
         $this->call([
             SubscriberSeeder::class,
@@ -35,7 +43,7 @@ class DatabaseSeeder extends Seeder
 
     protected function demoUser(): User
     {
-        return User::whereEmail(self::DEMO_USER_EMAIL)->firstOrFail();
+        return User::whereEmail($this->email)->firstOrFail();
     }
 
     protected function tagId(string $title): int
