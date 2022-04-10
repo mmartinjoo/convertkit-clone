@@ -4,6 +4,10 @@ namespace App\Http\Web\Controllers\Auth;
 
 use App\Providers\RouteServiceProvider;
 use Artisan;
+use Database\Seeders\Automation\AutomationSeeder;
+use Database\Seeders\Mail\BroadcastSeeder;
+use Database\Seeders\Mail\SequenceSeeder;
+use Database\Seeders\Subscriber\SubscriberSeeder;
 use Domain\Shared\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -52,7 +56,18 @@ class RegisteredUserController
 
         config(['app.seeder_email' => $user->email]);
 
-        Artisan::call('db:seed');
+        $seeder = app(SubscriberSeeder::class);
+        $seeder->run();
+
+        $seeder = app(BroadcastSeeder::class);
+        $seeder->run();
+
+        $seeder = app(SequenceSeeder::class);
+        $seeder->run();
+
+        $seeder = app(AutomationSeeder::class);
+        $seeder->run();
+
 
         return redirect(RouteServiceProvider::HOME);
     }
