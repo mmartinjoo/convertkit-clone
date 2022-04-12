@@ -1,4 +1,4 @@
-name: Laravel
+name: phpinsights
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  quality-check:
+  phpinsights:
 
     runs-on: ubuntu-latest
 

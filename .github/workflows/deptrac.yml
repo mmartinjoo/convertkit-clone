@@ -1,4 +1,4 @@
-name: Laravel
+name: deptrac
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  quality-check:
+  deptrac:
 
     runs-on: ubuntu-latest
 
